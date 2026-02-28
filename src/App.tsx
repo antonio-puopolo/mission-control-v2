@@ -1,5 +1,9 @@
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
+import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
+import { Agents } from '@/features/Agents/Agents'
+import { Activity } from '@/features/Activity/Activity'
+import { Team } from '@/features/Team/Team'
 
 function App() {
   const { activeTab, setActiveTab } = useDashboardStore()
@@ -50,13 +54,10 @@ function App() {
       {/* Main Content */}
       <main style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
         {activeTab === 'dashboard' && <Dashboard />}
-
-        {activeTab !== 'dashboard' && (
-          <div style={{ background: '#0f0f14', padding: '2rem', borderRadius: '8px', color: '#a0a0b0' }}>
-            <h2>{activeTab.toUpperCase()}</h2>
-            <p>Coming soon in Phase 3...</p>
-          </div>
-        )}
+        {activeTab === 'lap-tracker' && <LAPTracker />}
+        {activeTab === 'agents' && <Agents />}
+        {activeTab === 'activity' && <Activity />}
+        {activeTab === 'team' && <Team />}
       </main>
 
       {/* Footer */}

@@ -83,6 +83,30 @@ export const useLogActivity = () => {
   })
 }
 
+// Fetch this month's activity
+export const useActivityThisMonth = () => {
+  const firstDay = new Date()
+  firstDay.setDate(1)
+  const startDate = firstDay.toISOString().split('T')[0]
+  const today = new Date().toISOString().split('T')[0]
+
+  return useQuery({
+    queryKey: ['activity', 'month'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('activity_log')
+        .select('*')
+        .gte('created_at', `${startDate}T00:00:00`)
+        .lte('created_at', `${today}T23:59:59`)
+        .order('created_at', { ascending: false })
+
+      if (error) throw error
+      return data as ActivityRecord[]
+    },
+    staleTime: 10 * 60 * 1000,
+  })
+}
+
 // Get total points (this month)
 export const useTotalPointsThisMonth = () => {
   return useQuery({
