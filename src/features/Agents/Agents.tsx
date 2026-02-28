@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAgentSpawn } from '@/hooks/useAgentSpawn'
 
 interface Agent {
   id: string
@@ -72,8 +73,9 @@ export function Agents() {
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null)
   const [task, setTask] = useState('')
   const [selectedModel, setSelectedModel] = useState<string>('')
-  const [isSpawning, setIsSpawning] = useState(false)
-  const [results, setResults] = useState<Array<{ agentId: string; task: string; result: string; timestamp: string; model: string }>>([])
+  const [showModal, setShowModal] = useState(false)
+
+  const { spawn, isSpawning, results, error } = useAgentSpawn()
 
   const agent = agents.find((a) => a.id === selectedAgent)
   const defaultModel = agent?.defaultModel || 'sonnet'
@@ -81,204 +83,187 @@ export function Agents() {
   const handleSpawn = async () => {
     if (!selectedAgent || !task.trim()) return
 
-    setIsSpawning(true)
-    try {
-      // In real app, this would call the agent server with selectedModel
-      // For now, we simulate a response
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+    spawn({
+      agentId: selectedAgent,
+      task: task.trim(),
+      model: selectedModel || defaultModel,
+    })
 
-      const modelToUse = selectedModel || defaultModel
-      const modelName = availableModels.find((m) => m.id === modelToUse)?.name || modelToUse
-
-      const result = {
-        agentId: selectedAgent,
-        task: task,
-        result: `[${agent?.name} • ${modelName}] Completed task: "${task}"\n\nThis is a simulated response. In production, this would call your agent server with the selected model.`,
-        timestamp: new Date().toLocaleTimeString(),
-        model: modelToUse,
-      }
-
-      setResults([result, ...results])
-      setTask('')
-      setSelectedAgent(null)
-      setSelectedModel('')
-    } finally {
-      setIsSpawning(false)
-    }
+    // Clear form after spawn
+    setTask('')
+    setSelectedModel('')
+    setShowModal(false)
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h2>🤖 Agent System</h2>
-        <p style={{ color: '#a0a0b0', marginTop: '0.5rem' }}>
-          Spawn specialized AI agents to handle tasks autonomously
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Agent Spawning</h2>
+          <p className="text-gray-400 mt-1">Run specialized agents for complex tasks</p>
+        </div>
+        <button
+          onClick={() => setShowModal(true)}
+          className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-medium transition"
+        >
+          + Spawn Agent
+        </button>
       </div>
 
-      {/* Agent Selection */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem' }}>
+      {/* Agent Selection Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {agents.map((a) => (
           <div
             key={a.id}
-            onClick={() => setSelectedAgent(a.id)}
-            style={{
-              background: selectedAgent === a.id ? 'rgba(0, 212, 170, 0.1)' : '#0f0f14',
-              border: selectedAgent === a.id ? `2px solid ${a.color}` : '1px solid #333',
-              padding: '1.5rem',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
+            onClick={() => {
+              setSelectedAgent(a.id)
+              setShowModal(true)
             }}
+            className={`p-4 rounded-lg border-2 cursor-pointer transition ${
+              selectedAgent === a.id
+                ? 'border-teal-500 bg-teal-500/10'
+                : 'border-gray-700 hover:border-gray-600 bg-gray-900/50'
+            }`}
           >
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{a.icon}</div>
-            <h3 style={{ margin: '0 0 0.5rem 0' }}>{a.name}</h3>
-            <p style={{ margin: '0 0 1rem 0', color: '#a0a0b0', fontSize: '0.85rem' }}>{a.description}</p>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem' }}>
-              <span style={{ color: '#a0a0b0' }}>Model: {availableModels.find((m) => m.id === a.defaultModel)?.name || a.defaultModel}</span>
-              <span style={{ color: a.color, fontWeight: '600' }}>{a.successRate}% ✓</span>
+            <div className="text-3xl mb-2">{a.icon}</div>
+            <h3 className="text-white font-semibold">{a.name}</h3>
+            <p className="text-gray-400 text-sm mt-2">{a.description}</p>
+            <div className="mt-3 flex items-center justify-between">
+              <span className="text-xs text-gray-500">{a.defaultModel}</span>
+              <span className="text-xs font-semibold text-teal-400">{a.successRate}% success</span>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Task Input */}
-      {selectedAgent && (
-        <div style={{ background: '#0f0f14', padding: '2rem', borderRadius: '8px' }}>
-          <h3>Task for {agent?.name}</h3>
-          <textarea
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            placeholder="Describe what you need the agent to do..."
-            style={{
-              width: '100%',
-              height: '120px',
-              padding: '1rem',
-              background: '#141e1e',
-              border: '1px solid #333',
-              borderRadius: '4px',
-              color: '#fff',
-              fontFamily: 'inherit',
-              marginBottom: '1rem',
-              resize: 'vertical',
-            }}
-          />
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-xl font-bold text-white mb-4">
+              Spawn {agent?.name || 'Agent'}
+            </h3>
 
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#a0a0b0', fontSize: '0.9rem' }}>
-              Model (optional - default: {availableModels.find((m) => m.id === defaultModel)?.name})
-            </label>
-            <select
-              value={selectedModel}
-              onChange={(e) => setSelectedModel(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                background: '#141e1e',
-                border: '1px solid #333',
-                borderRadius: '4px',
-                color: '#fff',
-                fontFamily: 'inherit',
-                cursor: 'pointer',
-              }}
-            >
-              <option value="">Use default: {availableModels.find((m) => m.id === defaultModel)?.name}</option>
-              {availableModels.map((model) => (
-                <option key={model.id} value={model.id}>
-                  {model.name} ({model.provider})
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* Model Selection */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Model (default: {defaultModel})
+              </label>
+              <select
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:border-teal-500"
+              >
+                <option value="">Use default</option>
+                {availableModels.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.name} ({m.provider})
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <button
-              onClick={handleSpawn}
-              disabled={isSpawning || !task.trim()}
-              style={{
-                padding: '0.75rem 1.5rem',
-                background: agent?.color,
-                color: '#000',
-                border: 'none',
-                borderRadius: '4px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                opacity: isSpawning || !task.trim() ? 0.5 : 1,
-              }}
-            >
-              {isSpawning ? '⏳ Spawning...' : '🚀 Spawn Agent'}
-            </button>
-            <button
-              onClick={() => {
-                setSelectedAgent(null)
-                setTask('')
-                setSelectedModel('')
-              }}
-              style={{
-                padding: '0.75rem 1.5rem',
-                background: 'transparent',
-                color: '#a0a0b0',
-                border: '1px solid #333',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              Cancel
-            </button>
+            {/* Task Input */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">Task</label>
+              <textarea
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
+                placeholder="Describe what you want the agent to do..."
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:border-teal-500 min-h-24"
+              />
+            </div>
+
+            {/* Error Display */}
+            {error && (
+              <div className="mb-4 p-3 bg-red-900/20 border border-red-700 rounded text-red-400 text-sm">
+                {error instanceof Error ? error.message : 'Failed to spawn agent'}
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowModal(false)
+                  setSelectedAgent(null)
+                  setTask('')
+                  setSelectedModel('')
+                }}
+                disabled={isSpawning}
+                className="flex-1 px-4 py-2 bg-gray-800 hover:bg-gray-700 disabled:opacity-50 text-white rounded-lg font-medium transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSpawn}
+                disabled={!selectedAgent || !task.trim() || isSpawning}
+                className="flex-1 px-4 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white rounded-lg font-medium transition"
+              >
+                {isSpawning ? 'Spawning...' : 'Spawn'}
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Results */}
+      {/* Results Section */}
       {results.length > 0 && (
-        <div>
-          <h3>Recent Results</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {results.map((r, i) => {
-              const resultAgent = agents.find((a) => a.id === r.agentId)
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-white">Recent Results</h3>
+          <div className="space-y-3 max-h-96 overflow-y-auto">
+            {results.map((result) => {
+              const agentInfo = agents.find((a) => a.id === result.agent_type)
               return (
                 <div
-                  key={i}
-                  style={{
-                    background: '#0f0f14',
-                    padding: '1.5rem',
-                    borderRadius: '8px',
-                    borderLeft: `4px solid ${resultAgent?.color}`,
-                  }}
+                  key={result.id}
+                  className={`p-4 rounded-lg border-l-4 ${
+                    result.status === 'completed'
+                      ? 'border-l-green-500 bg-green-900/10'
+                      : result.status === 'failed'
+                        ? 'border-l-red-500 bg-red-900/10'
+                        : 'border-l-yellow-500 bg-yellow-900/10'
+                  }`}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem' }}>
-                    <div>
-                      <h4 style={{ margin: 0, marginBottom: '0.25rem' }}>
-                        {resultAgent?.icon} {resultAgent?.name}
-                      </h4>
-                      <p style={{ margin: 0, color: '#a0a0b0', fontSize: '0.85rem' }}>
-                        {availableModels.find((m) => m.id === r.model)?.name} • {r.timestamp}
-                      </p>
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">{agentInfo?.icon}</span>
+                      <div>
+                        <p className="font-semibold text-white">{agentInfo?.name}</p>
+                        <p className="text-xs text-gray-400">
+                          {new Date(result.created_at).toLocaleTimeString()}
+                        </p>
+                      </div>
                     </div>
-                    <span style={{ background: 'rgba(0, 212, 170, 0.2)', color: '#00D4AA', padding: '0.25rem 0.75rem', borderRadius: '4px', fontSize: '0.8rem' }}>
-                      ✅ Done
+                    <span
+                      className={`px-2 py-1 rounded text-xs font-medium ${
+                        result.status === 'completed'
+                          ? 'bg-green-900 text-green-200'
+                          : result.status === 'failed'
+                            ? 'bg-red-900 text-red-200'
+                            : 'bg-yellow-900 text-yellow-200'
+                      }`}
+                    >
+                      {result.status}
                     </span>
                   </div>
-                  <div style={{ marginBottom: '1rem' }}>
-                    <p style={{ color: '#a0a0b0', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Task:</p>
-                    <p style={{ margin: 0, fontSize: '0.9rem' }}>{r.task}</p>
-                  </div>
-                  <div>
-                    <p style={{ color: '#a0a0b0', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Result:</p>
-                    <pre
-                      style={{
-                        background: '#141e1e',
-                        padding: '1rem',
-                        borderRadius: '4px',
-                        overflow: 'auto',
-                        fontSize: '0.85rem',
-                        margin: 0,
-                      }}
-                    >
-                      {r.result}
-                    </pre>
-                  </div>
+
+                  <p className="text-sm text-gray-300 mb-2">
+                    <strong>Task:</strong> {result.task}
+                  </p>
+
+                  {result.output && (
+                    <div className="mt-3 p-3 bg-gray-900/50 rounded text-sm text-gray-200 font-mono max-h-32 overflow-y-auto">
+                      {result.output}
+                    </div>
+                  )}
+
+                  {result.error && (
+                    <div className="mt-3 p-3 bg-red-900/30 rounded text-sm text-red-400 font-mono">
+                      {result.error}
+                    </div>
+                  )}
                 </div>
               )
             })}

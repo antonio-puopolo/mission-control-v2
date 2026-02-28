@@ -1,0 +1,51 @@
+import { createClient } from '@supabase/supabase-js'
+import { logger } from '../utils/logger.js'
+
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL
+const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY
+
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  throw new Error('Missing Supabase credentials in environment')
+}
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+/**
+ * Update agent result status
+ */
+export async function updateAgentResult(
+  resultId: string,
+  data: {
+    status?: 'queued' | 'running' | 'completed' | 'failed'
+    output?: string | null
+    error?: string | null
+    completed_at?: string | null
+  }
+) {
+  const { error } = await supabase.from('agent_results').update(data).eq('id', resultId)
+
+  if (error) {
+    logger.error({ error, resultId }, 'Failed to update agent result')
+    throw error
+  }
+
+  logger.info({ resultId, data }, 'Updated agent result')
+}
+
+/**
+ * Get agent result by ID
+ */
+export async function getAgentResult(resultId: string) {
+  const { data, error } = await supabase
+    .from('agent_results')
+    .select('*')
+    .eq('id', resultId)
+    .single()
+
+  if (error) {
+    logger.error({ error, resultId }, 'Failed to fetch agent result')
+    throw error
+  }
+
+  return data
+}
