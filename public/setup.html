@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control v2 - Setup Database</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #00d4aa;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+        
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .status {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .status.pending {
+            background: #7c2d12;
+            border: 1px solid #ea580c;
+            color: #fda029;
+        }
+        
+        .status.warning {
+            background: #422006;
+            border: 1px solid #b45309;
+            color: #eab308;
+        }
+        
+        .status.success {
+            background: #064e3b;
+            border: 1px solid #10b981;
+            color: #6ee7b7;
+        }
+        
+        .step {
+            margin-bottom: 2rem;
+        }
+        
+        .step h2 {
+            color: #00d4aa;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #00d4aa;
+            color: #0f172a;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            margin-left: 2rem;
+        }
+        
+        .code-block {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+        
+        .copy-button {
+            background: #00d4aa;
+            color: #0f172a;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            transition: background 0.2s;
+        }
+        
+        .copy-button:hover {
+            background: #00b894;
+        }
+        
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #00d4aa;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #00d4aa;
+            border-radius: 4px;
+            transition: all 0.2s;
+            margin: 0.5rem 0;
+        }
+        
+        .external-link:hover {
+            background: #00d4aa;
+            color: #0f172a;
+        }
+        
+        .checklist {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .checklist-item input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .checklist-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .section-divider {
+            border-top: 1px solid #334155;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .step-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Mission Control v2 Setup</h1>
+        <p class="subtitle">Database initialization required to enable agent spawning</p>
+        
+        <!-- Status Card -->
+        <div class="card">
+            <div class="status warning">
+                ⚠️ Agent Results Table: NOT CREATED
+                <br>
+                <small>Agent spawning will not work until you run the SQL below</small>
+            </div>
+        </div>
+        
+        <!-- Step 1: Open Supabase SQL Editor -->
+        <div class="step">
+            <h2>
+                <span class="step-number">1</span>
+                Open Supabase SQL Editor
+            </h2>
+            <div class="step-content">
+                <p>Click the button below to open the Supabase SQL editor:</p>
+                <a href="https://app.supabase.com/project/zauqqaifszugluyactcv/sql/new" target="_blank" class="external-link">
+                    Open Supabase Dashboard →
+                </a>
+            </div>
+        </div>
+        
+        <!-- Step 2: Copy & Run SQL -->
+        <div class="step">
+            <h2>
+                <span class="step-number">2</span>
+                Copy & Run This SQL
+            </h2>
+            <div class="step-content">
+                <p>Copy the SQL below and paste it into the Supabase editor, then click "Run":</p>
+                <div class="code-block">
+                    <code id="sql-code">CREATE TABLE IF NOT EXISTS agent_results (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  agent_type TEXT NOT NULL,
+  task TEXT NOT NULL,
+  status TEXT DEFAULT 'queued',
+  output TEXT,
+  error TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  completed_at TIMESTAMP
+);
+
+ALTER TABLE agent_results ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Agent results are viewable by all users" ON agent_results FOR SELECT USING (true);
+CREATE POLICY "Agent results can be inserted" ON agent_results FOR INSERT WITH CHECK (true);
+CREATE POLICY "Agent results can be updated" ON agent_results FOR UPDATE USING (true);
+
+CREATE INDEX idx_agent_results_created_at ON agent_results(created_at);</code>
+                </div>
+                <button class="copy-button" onclick="copySql()">📋 Copy SQL</button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Verify -->
+        <div class="step">
+            <h2>
+                <span class="step-number">3</span>
+                Verify Installation
+            </h2>
+            <div class="step-content">
+                <p>After running the SQL, click the button below to verify the table was created:</p>
+                <button class="copy-button" onclick="verifyDatabase()">✓ Verify Database</button>
+                <p id="verify-status" style="margin-top: 1rem; color: #94a3b8;"></p>
+            </div>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <!-- Testing Checklist -->
+        <div class="step">
+            <h2>
+                <span class="step-number">4</span>
+                Test Agent Spawning
+            </h2>
+            <div class="step-content">
+                <p>Once the table is created, test the system:</p>
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">Open http://localhost:5173 in browser</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check2">
+                        <label for="check2">Click "Agents" tab in Mission Control</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check3">
+                        <label for="check3">Click "+ Spawn Agent" button</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check4">
+                        <label for="check4">Select "Coder Agent"</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check5">
+                        <label for="check5">Enter task: "Write a hello world Node.js script"</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check6">
+                        <label for="check6">Click "Spawn" and watch results appear</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <!-- Services Status -->
+        <div class="card">
+            <h2 style="color: #00d4aa; margin-bottom: 1rem;">Services Status</h2>
+            <div id="services-status">
+                <p style="color: #94a3b8;">Checking services...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function copySql() {
+            const code = document.getElementById('sql-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✓ SQL copied to clipboard!');
+            });
+        }
+        
+        async function verifyDatabase() {
+            const statusEl = document.getElementById('verify-status');
+            statusEl.textContent = 'Checking...';
+            
+            try {
+                const response = await fetch('http://localhost:3001/health');
+                if (response.ok) {
+                    const data = await response.json();
+                    statusEl.innerHTML = `
+                        <div style="padding: 1rem; background: #064e3b; border: 1px solid #10b981; border-radius: 6px; color: #6ee7b7;">
+                            ✓ Database check complete
+                            <br><small>If table creation was successful, agent spawning is ready!</small>
+                        </div>
+                    `;
+                } else {
+                    statusEl.innerHTML = `
+                        <div style="padding: 1rem; background: #7c2d12; border: 1px solid #ea580c; border-radius: 6px; color: #fda029;">
+                            Backend not responding. Make sure it's running!
+                            <br><small>Run: cd mission-control-v2/backend && npm run dev</small>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusEl.innerHTML = `
+                    <div style="padding: 1rem; background: #7c2d12; border: 1px solid #ea580c; border-radius: 6px; color: #fda029;">
+                        ❌ Cannot connect to backend
+                        <br><small>Make sure backend is running on localhost:3001</small>
+                    </div>
+                `;
+            }
+        }
+        
+        async function checkServices() {
+            const statusEl = document.getElementById('services-status');
+            let html = '<div style="space-y: 0.5rem;">';
+            
+            // Check backend
+            try {
+                const backendResponse = await fetch('http://localhost:3001/health');
+                if (backendResponse.ok) {
+                    html += '<div style="padding: 0.5rem; color: #6ee7b7;">✅ Backend: Running on localhost:3001</div>';
+                }
+            } catch {
+                html += '<div style="padding: 0.5rem; color: #fda029;">⚠️ Backend: Not responding (run: cd backend && npm run dev)</div>';
+            }
+            
+            // Check frontend
+            try {
+                const frontendResponse = await fetch('http://localhost:5173/');
+                if (frontendResponse.ok) {
+                    html += '<div style="padding: 0.5rem; color: #6ee7b7;">✅ Frontend: Running on localhost:5173</div>';
+                }
+            } catch {
+                html += '<div style="padding: 0.5rem; color: #fda029;">⚠️ Frontend: Not responding (run: npm run dev)</div>';
+            }
+            
+            html += '</div>';
+            statusEl.innerHTML = html;
+        }
+        
+        // Check services on page load
+        checkServices();
+        setInterval(checkServices, 5000);
+    </script>
+</body>
+</html>

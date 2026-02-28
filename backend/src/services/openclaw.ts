@@ -2,11 +2,9 @@ import axios from 'axios'
 import { logger } from '../utils/logger.js'
 
 const GATEWAY_URL = process.env.OPENCLAW_GATEWAY_URL || 'http://localhost:8080'
-const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN
+const GATEWAY_TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || ''
 
-if (!GATEWAY_URL) {
-  throw new Error('OPENCLAW_GATEWAY_URL not configured')
-}
+logger.info({ gateway: GATEWAY_URL }, 'OpenClaw gateway configured')
 
 const client = axios.create({
   baseURL: GATEWAY_URL,
