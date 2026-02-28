@@ -5,7 +5,7 @@ interface Agent {
   name: string
   icon: string
   description: string
-  model: string
+  defaultModel: string
   successRate: number
   color: string
 }
@@ -16,7 +16,7 @@ const agents: Agent[] = [
     name: 'Social Media Agent',
     icon: '🌐',
     description: 'Posts, tweets, captions, engagement',
-    model: 'Sonnet 4.5',
+    defaultModel: 'sonnet',
     successRate: 94,
     color: '#00D4AA',
   },
@@ -25,7 +25,7 @@ const agents: Agent[] = [
     name: 'Coder Agent',
     icon: '👨‍💻',
     description: 'Building, debugging, refactoring code',
-    model: 'Opus 4.5',
+    defaultModel: 'opus',
     successRate: 97,
     color: '#6c63ff',
   },
@@ -34,7 +34,7 @@ const agents: Agent[] = [
     name: 'Analyst Agent',
     icon: '📊',
     description: 'Market research, data analysis, insights',
-    model: 'Sonnet 4.5',
+    defaultModel: 'gemini',
     successRate: 92,
     color: '#ffa502',
   },
@@ -43,7 +43,7 @@ const agents: Agent[] = [
     name: 'Copywriter Agent',
     icon: '✍️',
     description: 'Email, landing pages, marketing copy',
-    model: 'Sonnet 4.5',
+    defaultModel: 'sonnet',
     successRate: 95,
     color: '#00D4AA',
   },
@@ -52,39 +52,56 @@ const agents: Agent[] = [
     name: 'Strategist Agent',
     icon: '🎯',
     description: 'Planning, positioning, GTM strategy',
-    model: 'Opus 4.5',
+    defaultModel: 'opus',
     successRate: 96,
     color: '#6c63ff',
   },
 ]
 
+const availableModels = [
+  { id: 'opus', name: 'Opus 4.5', provider: 'Anthropic' },
+  { id: 'sonnet', name: 'Sonnet 4.5', provider: 'Anthropic' },
+  { id: 'haiku', name: 'Haiku 4', provider: 'Anthropic' },
+  { id: 'gemini', name: 'Gemini Pro', provider: 'Google' },
+  { id: 'gemini-flash', name: 'Gemini Flash', provider: 'Google' },
+  { id: 'gpt', name: 'GPT-5.2', provider: 'OpenAI' },
+  { id: 'gpt-mini', name: 'GPT-4 Mini', provider: 'OpenAI' },
+]
+
 export function Agents() {
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null)
   const [task, setTask] = useState('')
+  const [selectedModel, setSelectedModel] = useState<string>('')
   const [isSpawning, setIsSpawning] = useState(false)
-  const [results, setResults] = useState<Array<{ agentId: string; task: string; result: string; timestamp: string }>>([])
+  const [results, setResults] = useState<Array<{ agentId: string; task: string; result: string; timestamp: string; model: string }>>([])
 
   const agent = agents.find((a) => a.id === selectedAgent)
+  const defaultModel = agent?.defaultModel || 'sonnet'
 
   const handleSpawn = async () => {
     if (!selectedAgent || !task.trim()) return
 
     setIsSpawning(true)
     try {
-      // In real app, this would call the agent server
+      // In real app, this would call the agent server with selectedModel
       // For now, we simulate a response
       await new Promise((resolve) => setTimeout(resolve, 2000))
+
+      const modelToUse = selectedModel || defaultModel
+      const modelName = availableModels.find((m) => m.id === modelToUse)?.name || modelToUse
 
       const result = {
         agentId: selectedAgent,
         task: task,
-        result: `[${agent?.name}] Completed task: "${task}"\n\nThis is a simulated response. In production, this would be the actual agent output.`,
+        result: `[${agent?.name} • ${modelName}] Completed task: "${task}"\n\nThis is a simulated response. In production, this would call your agent server with the selected model.`,
         timestamp: new Date().toLocaleTimeString(),
+        model: modelToUse,
       }
 
       setResults([result, ...results])
       setTask('')
       setSelectedAgent(null)
+      setSelectedModel('')
     } finally {
       setIsSpawning(false)
     }
@@ -119,7 +136,7 @@ export function Agents() {
             <h3 style={{ margin: '0 0 0.5rem 0' }}>{a.name}</h3>
             <p style={{ margin: '0 0 1rem 0', color: '#a0a0b0', fontSize: '0.85rem' }}>{a.description}</p>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem' }}>
-              <span style={{ color: '#a0a0b0' }}>Model: {a.model}</span>
+              <span style={{ color: '#a0a0b0' }}>Model: {availableModels.find((m) => m.id === a.defaultModel)?.name || a.defaultModel}</span>
               <span style={{ color: a.color, fontWeight: '600' }}>{a.successRate}% ✓</span>
             </div>
           </div>
@@ -148,6 +165,33 @@ export function Agents() {
             }}
           />
 
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#a0a0b0', fontSize: '0.9rem' }}>
+              Model (optional - default: {availableModels.find((m) => m.id === defaultModel)?.name})
+            </label>
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                background: '#141e1e',
+                border: '1px solid #333',
+                borderRadius: '4px',
+                color: '#fff',
+                fontFamily: 'inherit',
+                cursor: 'pointer',
+              }}
+            >
+              <option value="">Use default: {availableModels.find((m) => m.id === defaultModel)?.name}</option>
+              {availableModels.map((model) => (
+                <option key={model.id} value={model.id}>
+                  {model.name} ({model.provider})
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div style={{ display: 'flex', gap: '1rem' }}>
             <button
               onClick={handleSpawn}
@@ -169,6 +213,7 @@ export function Agents() {
               onClick={() => {
                 setSelectedAgent(null)
                 setTask('')
+                setSelectedModel('')
               }}
               style={{
                 padding: '0.75rem 1.5rem',
@@ -207,7 +252,9 @@ export function Agents() {
                       <h4 style={{ margin: 0, marginBottom: '0.25rem' }}>
                         {resultAgent?.icon} {resultAgent?.name}
                       </h4>
-                      <p style={{ margin: 0, color: '#a0a0b0', fontSize: '0.85rem' }}>{r.timestamp}</p>
+                      <p style={{ margin: 0, color: '#a0a0b0', fontSize: '0.85rem' }}>
+                        {availableModels.find((m) => m.id === r.model)?.name} • {r.timestamp}
+                      </p>
                     </div>
                     <span style={{ background: 'rgba(0, 212, 170, 0.2)', color: '#00D4AA', padding: '0.25rem 0.75rem', borderRadius: '4px', fontSize: '0.8rem' }}>
                       ✅ Done
