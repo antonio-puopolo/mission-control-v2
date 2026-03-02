@@ -62,7 +62,7 @@ export function Calendar() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(`https://corsproxy.io/?${encodeURIComponent(ICS_URL)}`)
+    fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(ICS_URL)}`)
       .then(r => r.text())
       .then(text => {
         const parsed = parseICS(text)
