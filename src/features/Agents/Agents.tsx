@@ -20,9 +20,13 @@ const agents: Agent[] = [
 ]
 
 const availableModels = [
-  { id: 'sonnet', name: 'Claude Sonnet 4' },
-  { id: 'opus', name: 'Claude Opus 4' },
-  { id: 'haiku', name: 'Claude Haiku' },
+  { id: 'sonnet', name: 'Claude Sonnet 4 (default)' },
+  { id: 'opus', name: 'Claude Opus 4 (powerful)' },
+  { id: 'haiku', name: 'Claude Haiku (fast)' },
+  { id: 'gpt-4o', name: 'GPT-4o (OpenAI)' },
+  { id: 'gemini-pro', name: 'Gemini 2.5 Pro (Google)' },
+  { id: 'deepseek', name: 'DeepSeek v3 (fast & cheap)' },
+  { id: 'llama', name: 'Llama 3.3 70B (open source)' },
 ]
 
 export function Agents() {
