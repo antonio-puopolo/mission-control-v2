@@ -3,7 +3,6 @@ import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
 import { Agents } from '@/features/Agents/Agents'
 import { Activity } from '@/features/Activity/Activity'
-import { Team } from '@/features/Team/Team'
 import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
 import './App.css'
@@ -15,7 +14,7 @@ const tabs = [
   { id: 'calendar', label: 'Calendar', icon: '📅' },
   { id: 'agents', label: 'Agents', icon: '🤖' },
   { id: 'activity', label: 'Activity', icon: '📈' },
-  { id: 'team', label: 'Team', icon: '👥' },
+
 ]
 
 function App() {
@@ -68,7 +67,7 @@ function App() {
         {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'agents' && <Agents />}
         {activeTab === 'activity' && <Activity />}
-        {activeTab === 'team' && <Team />}
+
       </main>
 
       <footer className="mc-footer">
