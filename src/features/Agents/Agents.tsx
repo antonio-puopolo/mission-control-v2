@@ -75,6 +75,12 @@ export function Agents() {
         ))}
       </div>
 
+      {/* Debug: show task count always */}
+      <div style={{ color: '#a0a0b0', fontSize: '0.8rem' }}>
+        {isLoadingResults ? 'Loading results...' : `${results.length} task(s) in history`}
+        {error && <span style={{ color: '#ff6b6b', marginLeft: '1rem' }}>Error: {error instanceof Error ? error.message : 'Unknown error'}</span>}
+      </div>
+
       {/* Results */}
       {results.length > 0 && (
         <div>
