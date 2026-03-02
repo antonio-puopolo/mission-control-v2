@@ -4,82 +4,75 @@ import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
 import { Agents } from '@/features/Agents/Agents'
 import { Activity } from '@/features/Activity/Activity'
 import { Team } from '@/features/Team/Team'
+import { Projects } from '@/features/Projects/Projects'
+import { Calendar } from '@/features/Calendar/Calendar'
+import './App.css'
+
+const tabs = [
+  { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+  { id: 'lap-tracker', label: 'LAP Tracker', icon: '🏠' },
+  { id: 'projects', label: 'Projects', icon: '🗂️' },
+  { id: 'calendar', label: 'Calendar', icon: '📅' },
+  { id: 'agents', label: 'Agents', icon: '🤖' },
+  { id: 'activity', label: 'Activity', icon: '📈' },
+  { id: 'team', label: 'Team', icon: '👥' },
+]
 
 function App() {
   const { activeTab, setActiveTab } = useDashboardStore()
 
+  const now = new Date()
+  const hour = now.getHours()
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+
   return (
-    <div style={{ fontFamily: 'sans-serif', background: '#050508', color: '#fff', minHeight: '100vh' }}>
+    <div className="mc-app">
       {/* Header */}
-      <header style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #333' }}>
-        <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
-          <h1 style={{ margin: 0, marginBottom: '0.5rem' }}>🎯 Mission Control</h1>
-          <p style={{ margin: 0, color: '#a0a0b0', fontSize: '0.9rem' }}>
-            Antonio's Real Estate Command Center • React v2
-          </p>
+      <header className="mc-header">
+        <div className="mc-header-inner">
+          <div className="mc-brand">
+            <span className="mc-logo">🎯</span>
+            <div>
+              <div className="mc-title">Mission Control</div>
+              <div className="mc-subtitle">{greeting}, Antonio</div>
+            </div>
+          </div>
+          <div className="mc-header-right">
+            <div className="mc-clock">{now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' })}</div>
+            <div className="mc-status"><span className="mc-status-dot" />Live</div>
+          </div>
         </div>
       </header>
 
       {/* Navigation */}
-      <nav style={{ padding: '0 2rem', borderBottom: '1px solid #333' }}>
-        <div style={{ maxWidth: '1600px', margin: '0 auto', display: 'flex', gap: '0.5rem' }}>
-          {[
-            { id: 'dashboard', label: '📊 Dashboard' },
-            { id: 'lap-tracker', label: '📋 LAP Tracker' },
-            { id: 'agents', label: '🤖 Agents' },
-            { id: 'activity', label: '📈 Activity' },
-            { id: 'team', label: '👥 Team' },
-          ].map((tab) => (
+      <nav className="mc-nav">
+        <div className="mc-nav-inner">
+          {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              style={{
-                padding: '1rem 1.5rem',
-                background: activeTab === tab.id ? 'rgba(0, 212, 170, 0.1)' : 'transparent',
-                color: activeTab === tab.id ? '#00D4AA' : '#a0a0b0',
-                border: 'none',
-                cursor: 'pointer',
-                borderBottom: activeTab === tab.id ? '2px solid #00D4AA' : '2px solid transparent',
-                transition: 'all 0.2s ease',
-                fontSize: '0.95rem',
-                fontWeight: activeTab === tab.id ? '600' : '400',
-              }}
+              className={`mc-nav-btn ${activeTab === tab.id ? 'active' : ''}`}
             >
-              {tab.label}
+              <span className="mc-nav-icon">{tab.icon}</span>
+              <span className="mc-nav-label">{tab.label}</span>
             </button>
           ))}
         </div>
       </nav>
 
       {/* Main Content */}
-      <main style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
+      <main className="mc-main">
         {activeTab === 'dashboard' && <Dashboard />}
         {activeTab === 'lap-tracker' && <LAPTracker />}
+        {activeTab === 'projects' && <Projects />}
+        {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'agents' && <Agents />}
         {activeTab === 'activity' && <Activity />}
         {activeTab === 'team' && <Team />}
       </main>
 
-      {/* Footer */}
-      <footer
-        style={{
-          marginTop: '2rem',
-          padding: '1.5rem 2rem',
-          borderTop: '1px solid #333',
-          color: '#a0a0b0',
-          fontSize: '0.85rem',
-          textAlign: 'center',
-        }}
-      >
-        <p style={{ margin: 0 }}>
-          Mission Control v2 • React + TypeScript + Zustand + Supabase + Real-time Sync
-        </p>
-        <p style={{ margin: '0.5rem 0 0 0' }}>
-          GitHub:{' '}
-          <a href="https://github.com/antonio-puopolo/mission-control-v2" style={{ color: '#00D4AA', textDecoration: 'none' }}>
-            antonio-puopolo/mission-control-v2
-          </a>
-        </p>
+      <footer className="mc-footer">
+        Mission Control v3 • Antonio Puopolo × Hamm 🐷
       </footer>
     </div>
   )
