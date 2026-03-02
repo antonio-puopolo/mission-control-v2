@@ -52,6 +52,7 @@ export function useAgentSpawn() {
       if (error) throw new Error(error.message)
       return (data || []) as AgentResult[]
     },
+    refetchInterval: 8000, // Poll every 8s so results appear automatically
   })
 
   // Mutation: Spawn agent (calls sessions_spawn)
@@ -66,6 +67,7 @@ export function useAgentSpawn() {
         .insert({
           agent_type: validated.agentId,
           task: validated.task,
+          model: validated.model || 'sonnet',
           status: 'queued',
           output: null,
           error: null,
@@ -84,48 +86,14 @@ export function useAgentSpawn() {
       // - Results written to Supabase
       // - Status updated: running → completed/failed
 
-      try {
-        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001'
-        
-        const spawnResponse = await fetch(`${BACKEND_URL}/api/agents/spawn`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            resultId: result.id, // Link to tracking record
-            task: validated.task,
-            agentId: validated.agentId,
-            model: validated.model,
-            thinking: validated.thinking,
-          }),
-        })
+      // Also store model in the record so poller knows which to use
+      await supabase
+        .from('agent_results')
+        .update({ model: validated.model || 'sonnet' })
+        .eq('id', result.id)
 
-        if (!spawnResponse.ok) {
-          // If spawn API fails, mark result as failed
-          await supabase
-            .from('agent_results')
-            .update({
-              status: 'failed',
-              error: `API error: ${spawnResponse.statusText}`,
-            })
-            .eq('id', result.id)
-
-          throw new Error(`Failed to spawn agent: ${spawnResponse.statusText}`)
-        }
-
-        // Return result record (will update in real-time via subscription)
-        return result
-      } catch (error) {
-        // If spawn fails, update result with error
-        await supabase
-          .from('agent_results')
-          .update({
-            status: 'failed',
-            error: error instanceof Error ? error.message : 'Unknown error',
-          })
-          .eq('id', result.id)
-
-        throw error
-      }
+      // Task is now queued — poller on the server will pick it up within 10s
+      return result
     },
     onSuccess: () => {
       // Refresh results list
