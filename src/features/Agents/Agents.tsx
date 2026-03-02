@@ -35,7 +35,7 @@ export function Agents() {
   const [selectedModel, setSelectedModel] = useState('')
   const [showModal, setShowModal] = useState(false)
 
-  const { spawn, isSpawning, results, error } = useAgentSpawn()
+  const { spawn, isSpawning, results, isLoadingResults, error } = useAgentSpawn()
 
   const agent = agents.find(a => a.id === selectedAgent)
 
