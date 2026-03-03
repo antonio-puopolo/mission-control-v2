@@ -3,7 +3,8 @@ import { useLaps } from '@/hooks/useLaps'
 import { useActivityThisWeek, useTotalPointsThisMonth } from '@/hooks/useActivity'
 import { useRealtimeSync } from '@/hooks/useRealtimeSync'
 
-const GOALS_KEY = 'mc_goals'
+const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzQwODIsImV4cCI6MjA4ODAxMDA4Mn0.POMFruggeywzN3cEA6ZfQu2CAQS2mnlc0OQEA3pEbto'
 
 interface Goals {
   gciCurrent: number
@@ -23,20 +24,77 @@ const defaultGoals: Goals = {
   lapsTarget: 4,
 }
 
+const GOALS_LS_KEY = 'mc_goals'
+
+async function fetchGoals(): Promise<Goals> {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 5000) // 5s timeout
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/goals?id=eq.main`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
+      signal: controller.signal,
+    })
+    clearTimeout(timeout)
+    const rows = await res.json()
+    if (!rows || rows.length === 0 || rows.message) {
+      // Fall back to localStorage
+      const saved = localStorage.getItem(GOALS_LS_KEY)
+      return saved ? JSON.parse(saved) : defaultGoals
+    }
+    const r = rows[0]
+    const g = {
+      gciCurrent: r.gci_current ?? 0,
+      gciTarget: r.gci_target ?? 60000,
+      listingsCurrent: r.listings_current ?? 0,
+      listingsTarget: r.listings_target ?? 3,
+      lapsCurrent: r.laps_current ?? 0,
+      lapsTarget: r.laps_target ?? 4,
+    }
+    localStorage.setItem(GOALS_LS_KEY, JSON.stringify(g)) // cache locally too
+    return g
+  } catch {
+    clearTimeout(timeout)
+    // Fall back to localStorage on any error/timeout
+    const saved = localStorage.getItem(GOALS_LS_KEY)
+    return saved ? JSON.parse(saved) : defaultGoals
+  }
+}
+
+async function persistGoals(g: Goals): Promise<void> {
+  await fetch(`${SUPABASE_URL}/rest/v1/goals?id=eq.main`, {
+    method: 'PATCH',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal',
+    },
+    body: JSON.stringify({
+      gci_current: g.gciCurrent,
+      gci_target: g.gciTarget,
+      listings_current: g.listingsCurrent,
+      listings_target: g.listingsTarget,
+      laps_current: g.lapsCurrent,
+      laps_target: g.lapsTarget,
+      updated_at: new Date().toISOString(),
+    })
+  })
+}
+
 export function Dashboard() {
   const [goals, setGoals] = useState<Goals>(defaultGoals)
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState<Goals>(defaultGoals)
+  const [syncing, setSyncing] = useState(true)
 
   useEffect(() => {
-    const saved = localStorage.getItem(GOALS_KEY)
-    if (saved) { const g = JSON.parse(saved); setGoals(g); setDraft(g) }
+    fetchGoals().then(g => { setGoals(g); setDraft(g); setSyncing(false) })
   }, [])
 
-  const saveGoals = () => {
+  const saveGoals = async () => {
     setGoals(draft)
-    localStorage.setItem(GOALS_KEY, JSON.stringify(draft))
     setEditing(false)
+    await persistGoals(draft)
   }
 
   // Real-time sync
@@ -66,6 +124,7 @@ export function Dashboard() {
           <h2 style={{ margin: 0 }}>Dashboard</h2>
           <p style={{ color: '#a0a0b0', margin: '0.25rem 0 0' }}>Business metrics • Hicks Team • Camp Hill</p>
         </div>
+        {syncing && <span style={{ color: '#a0a0b0', fontSize: '0.8rem' }}>⏳ Syncing...</span>}
         <button onClick={() => { setDraft(goals); setEditing(true) }}
           style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.5rem 1rem', color: '#a0a0b0', cursor: 'pointer', fontSize: '0.85rem' }}>
           ✏️ Edit Goals

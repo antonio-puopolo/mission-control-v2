@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
@@ -20,7 +21,11 @@ const tabs = [
 function App() {
   const { activeTab, setActiveTab } = useDashboardStore()
 
-  const now = new Date()
+  const [now, setNow] = useState(new Date())
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(t)
+  }, [])
   const hour = now.getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
 

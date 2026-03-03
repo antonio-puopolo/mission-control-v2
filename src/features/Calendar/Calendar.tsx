@@ -8,7 +8,6 @@ interface CalEvent {
   isAllDay: boolean
 }
 
-const ICS_URL = 'https://outlook.office365.com/owa/calendar/07f56935aa514c53a9b25c4cd91ab770@eplace.com.au/15298fe26beb432fa81e6a151d8ea95c8741059819679929176/S-1-8-4263074342-955477810-1291768194-2244477723/reachcalendar.ics'
 
 function parseICS(text: string): CalEvent[] {
   const events: CalEvent[] = []
@@ -61,8 +60,8 @@ export function Calendar() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(ICS_URL)}`)
+  const loadCalendar = () => {
+    fetch(`/api/calendar`)
       .then(r => r.text())
       .then(text => {
         const parsed = parseICS(text)
@@ -74,6 +73,12 @@ export function Calendar() {
         setError('Could not load calendar. Check network connection.')
         setLoading(false)
       })
+  }
+
+  useEffect(() => {
+    loadCalendar()
+    const interval = setInterval(loadCalendar, 30 * 60 * 1000) // refresh every 30 min
+    return () => clearInterval(interval)
   }, [])
 
   const now = new Date()
