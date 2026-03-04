@@ -2,131 +2,396 @@ import { useState } from 'react'
 import { useLapsByStatus, useCreateLap, useUpdateLap, useDeleteLap } from '@/hooks/useLaps'
 import { useRealtimeSync } from '@/hooks/useRealtimeSync'
 
+const STATUSES = ['LAP', 'Listed', 'Sold', 'Withdrawn'] as const
+type Status = typeof STATUSES[number]
+
+const PRIORITIES = ['urgent', 'high', 'normal', 'low'] as const
+
+const PIPELINE_SECTIONS = [
+  { value: 'under_construction', label: '🏗️ Under Construction', color: '#a78bfa' },
+  { value: 'pipeline_a', label: '🔥 Pipeline A (1–3 months)', color: '#00D4AA' },
+  { value: 'pipeline_b', label: '📋 Pipeline B (3–6 months)', color: '#60a5fa' },
+  { value: 'pipeline_c', label: '🕐 Pipeline C (6+ months)', color: '#f59e0b' },
+]
+
+function getSectionTag(section?: string | null) {
+  return PIPELINE_SECTIONS.find(s => s.value === section) || null
+}
+const PRIORITY_COLORS: Record<string, string> = {
+  urgent: '#ff4444',
+  high: '#ff9500',
+  normal: '#00D4AA',
+  low: '#666',
+}
+
+function isOverdue(date?: string | null) {
+  if (!date) return false
+  return new Date(date) < new Date(new Date().toDateString())
+}
+
+function isDueSoon(date?: string | null) {
+  if (!date) return false
+  const d = new Date(date)
+  const today = new Date(new Date().toDateString())
+  const diff = (d.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+  return diff >= 0 && diff <= 2
+}
+
+function formatDate(date?: string | null) {
+  if (!date) return null
+  return new Date(date).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
+interface Lap {
+  id: string
+  address: string
+  client_name: string
+  status: Status
+  follow_up_date?: string | null
+  phone?: string | null
+  email?: string | null
+  price_expectation?: string | null
+  priority?: string | null
+  next_action?: string | null
+  note_text?: string | null
+  pipeline_section?: string | null
+  created_at?: string
+}
+
+interface EditState {
+  address: string
+  client_name: string
+  follow_up_date: string
+  phone: string
+  email: string
+  price_expectation: string
+  priority: string
+  next_action: string
+  note_text: string
+  pipeline_section: string
+}
+
+function LapCard({ lap, onUpdate, onDelete }: {
+  lap: Lap
+  onUpdate: (id: string, data: Partial<Lap>) => void
+  onDelete: (id: string) => void
+}) {
+  const [expanded, setExpanded] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState<EditState>({
+    address: lap.address || '',
+    client_name: lap.client_name || '',
+    follow_up_date: lap.follow_up_date || '',
+    phone: lap.phone || '',
+    email: lap.email || '',
+    price_expectation: lap.price_expectation || '',
+    priority: lap.priority || 'normal',
+    next_action: lap.next_action || '',
+    note_text: lap.note_text || '',
+    pipeline_section: lap.pipeline_section || 'pipeline_b',
+  })
+
+  const overdue = isOverdue(lap.follow_up_date)
+  const dueSoon = isDueSoon(lap.follow_up_date)
+  const priorityColor = PRIORITY_COLORS[lap.priority || 'normal']
+  const sectionTag = getSectionTag(lap.pipeline_section)
+
+  const save = () => {
+    onUpdate(lap.id, draft)
+    setEditing(false)
+  }
+
+  const inputStyle = {
+    padding: '0.5rem',
+    background: '#0a0a10',
+    border: '1px solid #333',
+    borderRadius: '4px',
+    color: '#fff',
+    fontFamily: 'inherit',
+    fontSize: '0.85rem',
+    width: '100%',
+  }
+
+  return (
+    <div style={{
+      background: '#0f0f14',
+      borderRadius: '8px',
+      borderLeft: `4px solid ${priorityColor}`,
+      overflow: 'hidden',
+      transition: 'all 0.2s ease',
+    }}>
+      {/* Card Header - always visible */}
+      <div
+        style={{ padding: '1.25rem', cursor: 'pointer' }}
+        onClick={() => !editing && setExpanded(!expanded)}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+              <h4 style={{ margin: 0, fontSize: '1rem' }}>{lap.client_name}</h4>
+              {lap.priority && lap.priority !== 'normal' && (
+                <span style={{
+                  fontSize: '0.7rem',
+                  padding: '0.1rem 0.4rem',
+                  borderRadius: '999px',
+                  background: `${priorityColor}22`,
+                  color: priorityColor,
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                }}>
+                  {lap.priority}
+                </span>
+              )}
+            </div>
+            <p style={{ margin: 0, color: '#a0a0b0', fontSize: '0.85rem' }}>{lap.address}</p>
+            {sectionTag && (
+              <span style={{ display: 'inline-block', marginTop: '0.4rem', fontSize: '0.72rem', padding: '0.15rem 0.5rem', borderRadius: '999px', background: `${sectionTag.color}22`, color: sectionTag.color, fontWeight: 600 }}>
+                {sectionTag.label}
+              </span>
+            )}
+          </div>
+          <span style={{ color: '#555', fontSize: '0.8rem', marginLeft: '0.5rem' }}>{expanded ? '▲' : '▼'}</span>
+        </div>
+
+        {/* Follow-up badge */}
+        {lap.follow_up_date && (
+          <div style={{
+            marginTop: '0.75rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            padding: '0.25rem 0.6rem',
+            borderRadius: '4px',
+            fontSize: '0.8rem',
+            background: overdue ? '#ff444422' : dueSoon ? '#ff950022' : '#ffffff11',
+            color: overdue ? '#ff4444' : dueSoon ? '#ff9500' : '#a0a0b0',
+            fontWeight: overdue || dueSoon ? 600 : 400,
+          }}>
+            {overdue ? '🔴 Overdue' : dueSoon ? '🟡 Due soon'  : '📅'} {formatDate(lap.follow_up_date)}
+          </div>
+        )}
+
+        {lap.next_action && (
+          <p style={{ margin: '0.5rem 0 0', fontSize: '0.8rem', color: '#00D4AA' }}>
+            → {lap.next_action}
+          </p>
+        )}
+      </div>
+
+      {/* Expanded content */}
+      {expanded && (
+        <div style={{ padding: '0 1.25rem 1.25rem', borderTop: '1px solid #1a1a24' }}>
+          {!editing ? (
+            // View mode
+            <div style={{ paddingTop: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
+                {lap.phone && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>PHONE</span><p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{lap.phone}</p></div>}
+                {lap.email && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>EMAIL</span><p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{lap.email}</p></div>}
+                {lap.price_expectation && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>PRICE EXPECTATION</span><p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{lap.price_expectation}</p></div>}
+              </div>
+
+              {lap.note_text && (
+                <div style={{ marginBottom: '1rem', padding: '0.75rem', background: '#141e1e', borderRadius: '6px', fontSize: '0.85rem', color: '#c0c0d0', lineHeight: 1.5 }}>
+                  {lap.note_text}
+                </div>
+              )}
+
+              {/* Actions */}
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <select
+                  value={lap.status}
+                  onChange={(e) => onUpdate(lap.id, { status: e.target.value as Status })}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ padding: '0.5rem', background: '#141e1e', border: '1px solid #333', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.85rem' }}
+                >
+                  {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+
+                <button
+                  onClick={(e) => { e.stopPropagation(); setDraft({ address: lap.address||'', client_name: lap.client_name||'', follow_up_date: lap.follow_up_date||'', phone: lap.phone||'', email: lap.email||'', price_expectation: lap.price_expectation||'', priority: lap.priority||'normal', next_action: lap.next_action||'', note_text: lap.note_text||'', pipeline_section: lap.pipeline_section||'pipeline_b' }); setEditing(true) }}
+                  style={{ padding: '0.5rem 1rem', background: '#1a2a3a', color: '#00D4AA', border: '1px solid #00D4AA44', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
+                >
+                  ✏️ Edit
+                </button>
+
+                <button
+                  onClick={(e) => { e.stopPropagation(); if (confirm('Delete this LAP?')) onDelete(lap.id) }}
+                  style={{ padding: '0.5rem 0.75rem', background: '#2a1a1a', color: '#ff6b6b', border: '1px solid #ff6b6b44', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
+                >
+                  🗑️
+                </button>
+              </div>
+            </div>
+          ) : (
+            // Edit mode
+            <div style={{ paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>CLIENT NAME</label>
+                  <input style={inputStyle} value={draft.client_name} onChange={e => setDraft({...draft, client_name: e.target.value})} />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>ADDRESS</label>
+                  <input style={inputStyle} value={draft.address} onChange={e => setDraft({...draft, address: e.target.value})} />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>PHONE</label>
+                  <input style={inputStyle} value={draft.phone} onChange={e => setDraft({...draft, phone: e.target.value})} placeholder="04xx xxx xxx" />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>EMAIL</label>
+                  <input style={inputStyle} value={draft.email} onChange={e => setDraft({...draft, email: e.target.value})} placeholder="client@email.com" />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>PRICE EXPECTATION</label>
+                  <input style={inputStyle} value={draft.price_expectation} onChange={e => setDraft({...draft, price_expectation: e.target.value})} placeholder="e.g. $850K–$900K" />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>FOLLOW-UP DATE</label>
+                  <input type="date" style={inputStyle} value={draft.follow_up_date} onChange={e => setDraft({...draft, follow_up_date: e.target.value})} />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>PRIORITY</label>
+                  <select style={inputStyle} value={draft.priority} onChange={e => setDraft({...draft, priority: e.target.value})}>
+                    {PRIORITIES.map(p => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>NEXT ACTION</label>
+                  <input style={inputStyle} value={draft.next_action} onChange={e => setDraft({...draft, next_action: e.target.value})} placeholder="e.g. Call back Thursday" />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>PIPELINE SECTION</label>
+                  <select style={inputStyle} value={draft.pipeline_section} onChange={e => setDraft({...draft, pipeline_section: e.target.value})}>
+                    {PIPELINE_SECTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>NOTES</label>
+                <textarea
+                  style={{ ...inputStyle, minHeight: '80px', resize: 'vertical' }}
+                  value={draft.note_text}
+                  onChange={e => setDraft({...draft, note_text: e.target.value})}
+                  placeholder="Any notes about this client, conversation, objections..."
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button onClick={save} style={{ padding: '0.6rem 1.5rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}>
+                  Save
+                </button>
+                <button onClick={() => setEditing(false)} style={{ padding: '0.6rem 1rem', background: 'transparent', color: '#a0a0b0', border: '1px solid #333', borderRadius: '4px', cursor: 'pointer' }}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function LAPTracker() {
-  const [activeStatus, setActiveStatus] = useState<'LAP' | 'Listed' | 'Sold' | 'Withdrawn'>('LAP')
+  const [activeStatus, setActiveStatus] = useState<Status>('LAP')
   const [searchTerm, setSearchTerm] = useState('')
   const [isCreating, setIsCreating] = useState(false)
-  const [newLap, setNewLap] = useState({ address: '', client_name: '', follow_up_date: '' })
+  const [newLap, setNewLap] = useState({ address: '', client_name: '', follow_up_date: '', phone: '', priority: 'normal', pipeline_section: 'pipeline_b' })
 
-  // Real-time sync
   useRealtimeSync('laps', ['laps'])
 
-  // Fetch LAPs
   const { data: lapsByStatus = [], isLoading } = useLapsByStatus(activeStatus)
   const { mutateAsync: createAsync, isPending: isCreatingLap } = useCreateLap()
   const updateMutation = useUpdateLap()
   const deleteMutation = useDeleteLap()
 
-  // Filter by search term
   const filtered = lapsByStatus.filter(
     (lap) =>
       lap.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lap.client_name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  // Count overdue/due soon across all visible
+  const overdueCount = filtered.filter(l => isOverdue((l as any).follow_up_date)).length
+  const dueSoonCount = filtered.filter(l => isDueSoon((l as any).follow_up_date)).length
+
   const handleCreate = async () => {
     if (!newLap.address || !newLap.client_name) return
-    await createAsync({
-      ...newLap,
-      status: 'LAP',
-      notes: {},
-    } as any)
-    setNewLap({ address: '', client_name: '', follow_up_date: '' })
-    setIsCreating(false)
+    try {
+      await createAsync({
+        address: newLap.address,
+        client_name: newLap.client_name,
+        follow_up_date: newLap.follow_up_date || null,
+        phone: newLap.phone || null,
+        email: null,
+        price_expectation: null,
+        priority: newLap.priority,
+        pipeline_section: newLap.pipeline_section,
+        next_action: null,
+        note_text: null,
+        status: 'LAP',
+        notes: {},
+      } as any)
+      setNewLap({ address: '', client_name: '', follow_up_date: '', phone: '', priority: 'normal', pipeline_section: 'pipeline_b' })
+      setIsCreating(false)
+    } catch (e) {
+      alert('Failed to create LAP. Please try again.')
+      console.error(e)
+    }
   }
 
-  const handleUpdateStatus = async (id: string, newStatus: string) => {
-    await updateMutation.mutateAsync({
-      id,
-      status: newStatus as any,
-    })
+  const inputStyle = {
+    padding: '0.75rem',
+    background: '#141e1e',
+    border: '1px solid #333',
+    borderRadius: '4px',
+    color: '#fff',
+    fontFamily: 'inherit',
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
         <div>
-          <h2>LAP Tracker</h2>
-          <p style={{ color: '#a0a0b0', marginTop: '0.5rem' }}>
+          <h2 style={{ margin: 0 }}>LAP Tracker</h2>
+          <p style={{ color: '#a0a0b0', marginTop: '0.5rem', marginBottom: 0 }}>
             Manage listings, track conversions, follow-ups
           </p>
         </div>
         <button
           onClick={() => setIsCreating(!isCreating)}
-          style={{
-            padding: '0.75rem 1.5rem',
-            background: '#00D4AA',
-            color: '#000',
-            border: 'none',
-            borderRadius: '4px',
-            fontWeight: '600',
-            cursor: 'pointer',
-          }}
+          style={{ padding: '0.75rem 1.5rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '4px', fontWeight: '600', cursor: 'pointer' }}
         >
           {isCreating ? '✕ Cancel' : '+ New LAP'}
         </button>
       </div>
 
+      {/* Attention banner */}
+      {(overdueCount > 0 || dueSoonCount > 0) && (
+        <div style={{ padding: '0.75rem 1.25rem', borderRadius: '8px', background: overdueCount > 0 ? '#ff444415' : '#ff950015', border: `1px solid ${overdueCount > 0 ? '#ff444433' : '#ff950033'}`, display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          {overdueCount > 0 && <span style={{ color: '#ff4444', fontWeight: 600 }}>🔴 {overdueCount} overdue follow-up{overdueCount > 1 ? 's' : ''}</span>}
+          {dueSoonCount > 0 && <span style={{ color: '#ff9500', fontWeight: 600 }}>🟡 {dueSoonCount} due within 2 days</span>}
+        </div>
+      )}
+
       {/* Create Form */}
       {isCreating && (
         <div style={{ background: '#0f0f14', padding: '1.5rem', borderRadius: '8px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-            <input
-              type="text"
-              placeholder="Address"
-              value={newLap.address}
-              onChange={(e) => setNewLap({ ...newLap, address: e.target.value })}
-              style={{
-                padding: '0.75rem',
-                background: '#141e1e',
-                border: '1px solid #333',
-                borderRadius: '4px',
-                color: '#fff',
-                fontFamily: 'inherit',
-              }}
-            />
-            <input
-              type="text"
-              placeholder="Client Name"
-              value={newLap.client_name}
-              onChange={(e) => setNewLap({ ...newLap, client_name: e.target.value })}
-              style={{
-                padding: '0.75rem',
-                background: '#141e1e',
-                border: '1px solid #333',
-                borderRadius: '4px',
-                color: '#fff',
-                fontFamily: 'inherit',
-              }}
-            />
-            <input
-              type="date"
-              value={newLap.follow_up_date}
-              onChange={(e) => setNewLap({ ...newLap, follow_up_date: e.target.value })}
-              style={{
-                padding: '0.75rem',
-                background: '#141e1e',
-                border: '1px solid #333',
-                borderRadius: '4px',
-                color: '#fff',
-                fontFamily: 'inherit',
-              }}
-            />
-            <button
-              onClick={handleCreate}
-              disabled={isCreatingLap}
-              style={{
-                padding: '0.75rem',
-                background: '#00D4AA',
-                color: '#000',
-                border: 'none',
-                borderRadius: '4px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                opacity: isCreatingLap ? 0.5 : 1,
-              }}
-            >
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
+            <input type="text" placeholder="Client Name *" value={newLap.client_name} onChange={(e) => setNewLap({ ...newLap, client_name: e.target.value })} style={inputStyle} />
+            <input type="text" placeholder="Address *" value={newLap.address} onChange={(e) => setNewLap({ ...newLap, address: e.target.value })} style={inputStyle} />
+            <input type="text" placeholder="Phone" value={newLap.phone} onChange={(e) => setNewLap({ ...newLap, phone: e.target.value })} style={inputStyle} />
+            <input type="date" value={newLap.follow_up_date} onChange={(e) => setNewLap({ ...newLap, follow_up_date: e.target.value })} style={inputStyle} />
+            <select value={newLap.priority} onChange={(e) => setNewLap({ ...newLap, priority: e.target.value })} style={inputStyle}>
+              {PRIORITIES.map(p => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)} Priority</option>)}
+            </select>
+            <select value={newLap.pipeline_section} onChange={(e) => setNewLap({ ...newLap, pipeline_section: e.target.value })} style={inputStyle}>
+              {PIPELINE_SECTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+            </select>
+            <button onClick={handleCreate} disabled={isCreatingLap} style={{ padding: '0.75rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '4px', fontWeight: '600', cursor: 'pointer', opacity: isCreatingLap ? 0.5 : 1 }}>
               {isCreatingLap ? 'Creating...' : 'Create LAP'}
             </button>
           </div>
@@ -135,107 +400,30 @@ export function LAPTracker() {
 
       {/* Status Tabs */}
       <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid #333', paddingBottom: '1rem' }}>
-        {(['LAP', 'Listed', 'Sold', 'Withdrawn'] as const).map((status) => (
-          <button
-            key={status}
-            onClick={() => setActiveStatus(status)}
-            style={{
-              padding: '0.5rem 1rem',
-              background: activeStatus === status ? 'rgba(0, 212, 170, 0.2)' : 'transparent',
-              color: activeStatus === status ? '#00D4AA' : '#a0a0b0',
-              border: 'none',
-              cursor: 'pointer',
-              borderBottom: activeStatus === status ? '2px solid #00D4AA' : 'none',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            {status} ({lapsByStatus.length})
+        {STATUSES.map((status) => (
+          <button key={status} onClick={() => setActiveStatus(status)} style={{ padding: '0.5rem 1rem', background: activeStatus === status ? 'rgba(0, 212, 170, 0.2)' : 'transparent', color: activeStatus === status ? '#00D4AA' : '#a0a0b0', border: 'none', cursor: 'pointer', borderBottom: activeStatus === status ? '2px solid #00D4AA' : 'none', transition: 'all 0.2s ease' }}>
+            {status} ({activeStatus === status ? filtered.length : '•'})
           </button>
         ))}
       </div>
 
       {/* Search */}
-      <input
-        type="text"
-        placeholder="Search by address or client name..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{
-          padding: '0.75rem 1rem',
-          background: '#0f0f14',
-          border: '1px solid #333',
-          borderRadius: '4px',
-          color: '#fff',
-          fontFamily: 'inherit',
-          width: '100%',
-        }}
-      />
+      <input type="text" placeholder="Search by address or client name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: '0.75rem 1rem', background: '#0f0f14', border: '1px solid #333', borderRadius: '4px', color: '#fff', fontFamily: 'inherit', width: '100%' }} />
 
       {/* LAPs List */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1rem' }}>
         {isLoading ? (
           <p style={{ color: '#a0a0b0' }}>Loading...</p>
         ) : filtered.length === 0 ? (
           <p style={{ color: '#a0a0b0' }}>No LAPs in {activeStatus} status</p>
         ) : (
           filtered.map((lap) => (
-            <div
+            <LapCard
               key={lap.id}
-              style={{
-                background: '#0f0f14',
-                padding: '1.5rem',
-                borderRadius: '8px',
-                borderLeft: '4px solid #00D4AA',
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <h4 style={{ margin: '0 0 0.25rem 0' }}>{lap.client_name}</h4>
-                <p style={{ margin: '0', color: '#a0a0b0', fontSize: '0.9rem' }}>{lap.address}</p>
-              </div>
-
-              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
-                <select
-                  value={lap.status}
-                  onChange={(e) => handleUpdateStatus(lap.id, e.target.value)}
-                  style={{
-                    padding: '0.5rem',
-                    background: '#141e1e',
-                    border: '1px solid #333',
-                    borderRadius: '4px',
-                    color: '#fff',
-                    cursor: 'pointer',
-                    fontSize: '0.85rem',
-                  }}
-                >
-                  <option value="LAP">LAP</option>
-                  <option value="Listed">Listed</option>
-                  <option value="Sold">Sold</option>
-                  <option value="Withdrawn">Withdrawn</option>
-                </select>
-                <button
-                  onClick={() => deleteMutation.mutate(lap.id)}
-                  disabled={deleteMutation.isPending}
-                  style={{
-                    padding: '0.5rem 1rem',
-                    background: '#ff6b6b',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '0.85rem',
-                    opacity: deleteMutation.isPending ? 0.5 : 1,
-                  }}
-                >
-                  🗑️
-                </button>
-              </div>
-
-              {lap.follow_up_date && (
-                <div style={{ fontSize: '0.85rem', color: '#a0a0b0' }}>
-                  Follow-up: {new Date(lap.follow_up_date).toLocaleDateString()}
-                </div>
-              )}
-            </div>
+              lap={lap as any}
+              onUpdate={(id, data) => updateMutation.mutate({ id, ...data } as any)}
+              onDelete={(id) => deleteMutation.mutate(id)}
+            />
           ))
         )}
       </div>
