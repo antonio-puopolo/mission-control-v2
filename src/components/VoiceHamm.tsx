@@ -43,10 +43,11 @@ export function VoiceHamm() {
     <>
       {/* Floating button — bottom-right, iOS safe area aware */}
       <div
-        className="fixed z-50 flex flex-col items-end gap-2"
+        className="fixed z-50 flex flex-col items-center gap-2"
         style={{
           bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))',
-          right: '1.25rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
         }}
       >
         {/* Error toast */}
