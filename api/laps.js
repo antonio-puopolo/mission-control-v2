@@ -14,45 +14,36 @@ export default async function handler(req, res) {
     const { data, error } = await supabase
       .from('laps')
       .select('*')
-      .order('priority', { ascending: true });
+      .not('status', 'eq', 'Dead')
+      .order('follow_up_date', { ascending: true });
 
     if (error) throw error;
 
-    // Priority order for sorting
-    const priorityOrder = { urgent: 0, high: 1, normal: 2, low: 3 };
+    const today = new Date().toISOString().split('T')[0];
 
-    const sorted = [...(data || [])].sort((a, b) => {
-      const pa = priorityOrder[a.priority?.toLowerCase()] ?? 99;
-      const pb = priorityOrder[b.priority?.toLowerCase()] ?? 99;
-      return pa - pb;
+    const overdue = (data || []).filter(l => l.follow_up_date && l.follow_up_date < today);
+    const dueThisWeek = (data || []).filter(l => {
+      if (!l.follow_up_date || l.follow_up_date < today) return false;
+      const diff = (new Date(l.follow_up_date) - new Date(today)) / (1000 * 60 * 60 * 24);
+      return diff <= 7;
     });
 
-    // Build a voice-friendly summary
-    const urgent = sorted.filter(l => l.priority?.toLowerCase() === 'urgent');
-    const high = sorted.filter(l => l.priority?.toLowerCase() === 'high');
-    const today = new Date().toISOString().split('T')[0];
-    const overdue = sorted.filter(l => l.follow_up_date && l.follow_up_date < today);
+    const format = l => ({
+      name: l.client_name,
+      address: l.address,
+      status: l.status,
+      follow_up_date: l.follow_up_date,
+      notes: l.notes,
+      phone: l.phone,
+    });
 
     const summary = {
-      total: sorted.length,
-      urgent_count: urgent.length,
-      high_count: high.length,
+      total_active: (data || []).length,
       overdue_count: overdue.length,
-      top_priority: sorted.slice(0, 5).map(l => ({
-        name: l.name,
-        address: l.address,
-        priority: l.priority,
-        pipeline: l.pipeline_section,
-        next_action: l.next_action,
-        follow_up_date: l.follow_up_date,
-        notes: l.notes,
-      })),
-      overdue: overdue.slice(0, 3).map(l => ({
-        name: l.name,
-        address: l.address,
-        follow_up_date: l.follow_up_date,
-        next_action: l.next_action,
-      })),
+      due_this_week_count: dueThisWeek.length,
+      next_follow_ups: (data || []).slice(0, 5).map(format),
+      overdue: overdue.slice(0, 5).map(format),
+      due_this_week: dueThisWeek.slice(0, 5).map(format),
     };
 
     res.status(200).json(summary);
