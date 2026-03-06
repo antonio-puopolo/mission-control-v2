@@ -41,8 +41,14 @@ export function VoiceHamm() {
 
   return (
     <>
-      {/* Floating button */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+      {/* Floating button — bottom-right, iOS safe area aware */}
+      <div
+        className="fixed z-50 flex flex-col items-end gap-2"
+        style={{
+          bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))',
+          right: '1.25rem',
+        }}
+      >
         {/* Error toast */}
         {error && (
           <div className="bg-red-900/90 text-red-200 text-sm px-3 py-2 rounded-lg max-w-xs">
@@ -53,7 +59,6 @@ export function VoiceHamm() {
         {/* Status panel when active */}
         {isOpen && (
           <div className="bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 flex items-center gap-3 shadow-xl">
-            {/* Audio visualiser — simple pulsing dot */}
             <div className={`w-2.5 h-2.5 rounded-full ${
               isSpeaking
                 ? 'bg-emerald-400 animate-pulse'
@@ -73,32 +78,21 @@ export function VoiceHamm() {
           </div>
         )}
 
-        {/* Main mic button */}
+        {/* Main button */}
         <button
           onClick={isOpen ? stopConversation : startConversation}
           title={isOpen ? 'End conversation' : 'Talk to Hamm'}
           className={`
-            w-14 h-14 rounded-full shadow-xl flex items-center justify-center
-            transition-all duration-200 active:scale-95
+            w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl
+            transition-all duration-200 active:scale-90
             ${isOpen
-              ? 'bg-red-600 hover:bg-red-700 ring-2 ring-red-400/50'
-              : 'bg-emerald-600 hover:bg-emerald-700'
+              ? 'bg-red-600 ring-2 ring-red-400/50'
+              : 'bg-gray-800 ring-2 ring-emerald-500/60 hover:ring-emerald-400'
             }
             ${isConnected && !isSpeaking ? 'ring-2 ring-blue-400/50 animate-pulse' : ''}
           `}
         >
-          {isOpen ? (
-            // Stop icon
-            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <rect x="6" y="6" width="12" height="12" rx="1" />
-            </svg>
-          ) : (
-            // Mic icon
-            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4z"/>
-              <path d="M19 10a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 7 7 0 0 0 6 6.92V19H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.08A7 7 0 0 0 19 10z"/>
-            </svg>
-          )}
+          {isOpen ? '✕' : '🐷'}
         </button>
 
         {/* Label */}
