@@ -3,9 +3,10 @@ import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
 import { Agents } from '@/features/Agents/Agents'
-import { Activity } from '@/features/Activity/Activity'
+import { Health } from '@/features/Health/Health'
 import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
+import { VoiceHamm } from '@/components/VoiceHamm'
 import './App.css'
 
 const tabs = [
@@ -14,7 +15,7 @@ const tabs = [
   { id: 'projects', label: 'Projects', icon: '🗂️' },
   { id: 'calendar', label: 'Calendar', icon: '📅' },
   { id: 'agents', label: 'Agents', icon: '🤖' },
-  { id: 'activity', label: 'Activity', icon: '📈' },
+  { id: 'health', label: 'Health', icon: '💪' },
 
 ]
 
@@ -71,13 +72,15 @@ function App() {
         {activeTab === 'projects' && <Projects />}
         {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'agents' && <Agents />}
-        {activeTab === 'activity' && <Activity />}
+        {activeTab === 'health' && <Health />}
 
       </main>
 
       <footer className="mc-footer">
         Mission Control v3 • Antonio Puopolo × Hamm 🐷
       </footer>
+
+      <VoiceHamm />
     </div>
   )
 }
