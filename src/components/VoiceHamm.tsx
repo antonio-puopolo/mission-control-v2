@@ -102,7 +102,7 @@ export function VoiceHamm() {
 
         {/* Label */}
         {!isOpen && (
-          <span className="text-xs text-gray-500 font-medium">Talk to Hamm</span>
+          <span className="text-xs text-gray-500 font-medium">Talk to George</span>
         )}
       </div>
   );
