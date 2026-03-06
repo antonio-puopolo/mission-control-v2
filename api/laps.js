@@ -14,15 +14,17 @@ export default async function handler(req, res) {
     const { data, error } = await supabase
       .from('laps')
       .select('*')
-      .not('status', 'eq', 'Dead')
       .order('follow_up_date', { ascending: true });
 
     if (error) throw error;
 
+    const all = data || [];
     const today = new Date().toISOString().split('T')[0];
 
-    const overdue = (data || []).filter(l => l.follow_up_date && l.follow_up_date < today);
-    const dueThisWeek = (data || []).filter(l => {
+    // Only LAPs (not Listed/Sold/Dead) need follow-up calls
+    const needsAction = all.filter(l => l.status === 'LAP');
+    const overdue = needsAction.filter(l => l.follow_up_date && l.follow_up_date < today);
+    const dueThisWeek = needsAction.filter(l => {
       if (!l.follow_up_date || l.follow_up_date < today) return false;
       const diff = (new Date(l.follow_up_date) - new Date(today)) / (1000 * 60 * 60 * 24);
       return diff <= 7;
@@ -38,10 +40,16 @@ export default async function handler(req, res) {
     });
 
     const summary = {
-      total_active: (data || []).length,
+      total_active: needsAction.length,
       overdue_count: overdue.length,
       due_this_week_count: dueThisWeek.length,
-      next_follow_ups: (data || []).slice(0, 5).map(format),
+      // Pipeline counts (for context, not for calling)
+      pipeline: {
+        lap: needsAction.length,
+        listed: all.filter(l => l.status === 'Listed').length,
+        sold: all.filter(l => l.status === 'Sold').length,
+      },
+      next_follow_ups: needsAction.slice(0, 5).map(format),
       overdue: overdue.slice(0, 5).map(format),
       due_this_week: dueThisWeek.slice(0, 5).map(format),
     };
