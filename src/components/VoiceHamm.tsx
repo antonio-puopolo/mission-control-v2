@@ -1,5 +1,6 @@
 import { useConversation } from '@11labs/react';
 import { useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 
 const AGENT_ID = 'agent_9501kk0dwrjheyy8qwbkxwznm8jr';
 
@@ -39,20 +40,20 @@ export function VoiceHamm() {
   const isConnected = conversation.status === 'connected';
   const isSpeaking = conversation.isSpeaking;
 
-  return (
-    <>
-      {/* Floating button — bottom-right, iOS safe area aware */}
-      <div
-        className="fixed z-50 flex flex-col items-center gap-2"
-        style={{
-          bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))',
-          left: 0,
-          right: 0,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          width: 'fit-content',
-        }}
-      >
+  const button = (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '8px',
+      }}
+    >
         {/* Error toast */}
         {error && (
           <div className="bg-red-900/90 text-red-200 text-sm px-3 py-2 rounded-lg max-w-xs">
@@ -104,6 +105,7 @@ export function VoiceHamm() {
           <span className="text-xs text-gray-500 font-medium">Talk to Hamm</span>
         )}
       </div>
-    </>
   );
+
+  return createPortal(button, document.body);
 }
