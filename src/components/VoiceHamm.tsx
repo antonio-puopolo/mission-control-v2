@@ -46,8 +46,11 @@ export function VoiceHamm() {
         className="fixed z-50 flex flex-col items-center gap-2"
         style={{
           bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: 0,
+          right: 0,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          width: 'fit-content',
         }}
       >
         {/* Error toast */}
