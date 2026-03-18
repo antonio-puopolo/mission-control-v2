@@ -1,10 +1,11 @@
 import { useConversation } from '@11labs/react'
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { Application } from 'pixi.js'
-import { Live2DModel } from 'pixi-live2d-display/cubism4'
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 const AGENT_ID = 'agent_9501kk0dwrjheyy8qwbkxwznm8jr'
-const MODEL_PATH = '/models/mark/Mark.model3.json'
+const MODEL_PATH = '/models/character/character.glb'
 
 type State = 'idle' | 'connecting' | 'listening' | 'speaking'
 
@@ -21,12 +22,16 @@ export function HammCharacter() {
   const [modelReady, setModelReady] = useState(false)
   const [waveAmplitudes, setWaveAmplitudes] = useState<number[]>(Array(12).fill(0))
 
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const appRef = useRef<Application | null>(null)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const modelRef = useRef<any>(null)
+  const mountRef = useRef<HTMLDivElement>(null)
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
+  const sceneRef = useRef<THREE.Scene | null>(null)
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
+  const mixerRef = useRef<THREE.AnimationMixer | null>(null)
+  const clockRef = useRef(new THREE.Clock())
+  const jawBoneRef = useRef<THREE.Bone | null>(null)
+  const morphMeshRef = useRef<THREE.SkinnedMesh | null>(null)
   const rafRef = useRef<number | null>(null)
-  const motionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const stateRef = useRef<State>('idle')
 
   const conversation = useConversation({
     onConnect: () => { setState('listening'); setError(null) },
@@ -38,6 +43,10 @@ export function HammCharacter() {
   })
 
   useEffect(() => {
+    stateRef.current = state
+  }, [state])
+
+  useEffect(() => {
     if (conversation.status === 'connected') {
       setState(conversation.isSpeaking ? 'speaking' : 'listening')
     } else if (conversation.status === 'connecting') {
@@ -45,101 +54,211 @@ export function HammCharacter() {
     }
   }, [conversation.status, conversation.isSpeaking])
 
-  // Init Live2D
+  // Three.js scene setup
   useEffect(() => {
-    if (!canvasRef.current) return
+    if (!mountRef.current) return
+    const mount = mountRef.current
+    const W = mount.clientWidth || 400
+    const H = mount.clientHeight || 560
 
-    const canvas = canvasRef.current
-    const w = canvas.clientWidth || 400
-    const h = canvas.clientHeight || 600
+    // Scene
+    const scene = new THREE.Scene()
+    sceneRef.current = scene
 
-    const app = new Application({
-      view: canvas,
-      width: w,
-      height: h,
-      backgroundAlpha: 0,
-      antialias: true,
-      autoDensity: true,
-      resolution: window.devicePixelRatio || 1,
-    })
-    appRef.current = app
+    // Camera — framed on upper body
+    const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100)
+    camera.position.set(0, 1.4, 2.8)
+    camera.lookAt(0, 1.1, 0)
+    cameraRef.current = camera
 
-    Live2DModel.from(MODEL_PATH, { autoInteract: false })
-      .then((model) => {
-        modelRef.current = model
-        app.stage.addChild(model as unknown as import('pixi.js').DisplayObject)
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    renderer.setSize(W, H)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    renderer.outputColorSpace = THREE.SRGBColorSpace
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
+    renderer.toneMappingExposure = 1.2
+    rendererRef.current = renderer
+    mount.appendChild(renderer.domElement)
 
-        // Centre and scale model to fill the canvas nicely
-        model.anchor.set(0.5, 0.5)
-        model.x = w / 2
-        model.y = h / 2 + 40
-        const scale = Math.min(w / model.internalModel.originalWidth, h / model.internalModel.originalHeight) * 1.1
-        model.scale.set(scale)
+    // Lighting
+    const ambient = new THREE.AmbientLight(0x404060, 0.6)
+    scene.add(ambient)
 
-        // Start idle motion loop
-        const playIdleMotion = () => {
-          const idx = Math.floor(Math.random() * 6)
-          model.motion('Idle', idx)
-          motionTimerRef.current = setTimeout(playIdleMotion, 8000 + Math.random() * 4000)
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.8)
+    keyLight.position.set(1, 3, 2)
+    keyLight.castShadow = true
+    scene.add(keyLight)
+
+    const fillLight = new THREE.DirectionalLight(0x00d4ff, 0.4)
+    fillLight.position.set(-2, 1, 1)
+    scene.add(fillLight)
+
+    const rimLight = new THREE.DirectionalLight(0x0044aa, 0.6)
+    rimLight.position.set(0, 2, -3)
+    scene.add(rimLight)
+
+    // Subtle orbit (no pan, limited range)
+    const controls = new OrbitControls(camera, renderer.domElement)
+    controls.target.set(0, 1.1, 0)
+    controls.enablePan = false
+    controls.enableZoom = false
+    controls.minPolarAngle = Math.PI * 0.3
+    controls.maxPolarAngle = Math.PI * 0.6
+    controls.minAzimuthAngle = -0.4
+    controls.maxAzimuthAngle = 0.4
+    controls.dampingFactor = 0.08
+    controls.enableDamping = true
+
+    // Load character
+    const loader = new GLTFLoader()
+    loader.load(
+      MODEL_PATH,
+      (gltf) => {
+        const model = gltf.scene
+        scene.add(model)
+
+        // Centre + scale
+        const box = new THREE.Box3().setFromObject(model)
+        const size = box.getSize(new THREE.Vector3())
+        const centre = box.getCenter(new THREE.Vector3())
+        const scale = 1.8 / size.y
+        model.scale.setScalar(scale)
+        model.position.sub(centre.multiplyScalar(scale))
+        model.position.y += size.y * scale * 0.05
+
+        // Find jaw bone for lip sync
+        model.traverse((obj) => {
+          if (obj instanceof THREE.Bone) {
+            const name = obj.name.toLowerCase()
+            if (name.includes('jaw') || name.includes('mouth') || name.includes('lowerjaw')) {
+              jawBoneRef.current = obj
+            }
+          }
+          if (obj instanceof THREE.SkinnedMesh && obj.morphTargetDictionary) {
+            const keys = Object.keys(obj.morphTargetDictionary)
+            const mouthKey = keys.find(k =>
+              k.toLowerCase().includes('open') ||
+              k.toLowerCase().includes('mouth') ||
+              k.toLowerCase().includes('_a') ||
+              k.toLowerCase().includes('jawopen')
+            )
+            if (mouthKey) morphMeshRef.current = obj
+          }
+        })
+
+        // Animation mixer
+        if (gltf.animations.length > 0) {
+          const mixer = new THREE.AnimationMixer(model)
+          mixerRef.current = mixer
+          // Find idle animation
+          const idle = gltf.animations.find(a =>
+            a.name.toLowerCase().includes('idle') ||
+            a.name.toLowerCase().includes('standing')
+          ) || gltf.animations[0]
+          const action = mixer.clipAction(idle)
+          action.play()
         }
-        playIdleMotion()
 
         setModelReady(true)
-      })
-      .catch((err) => {
-        console.error('Live2D load error:', err)
-        setError('Failed to load character')
-      })
+      },
+      undefined,
+      (err) => {
+        console.error('Model load error:', err)
+        setError('Could not load character')
+      }
+    )
+
+    // Render loop
+    const animate = () => {
+      rafRef.current = requestAnimationFrame(animate)
+      const delta = clockRef.current.getDelta()
+      mixerRef.current?.update(delta)
+      controls.update()
+      renderer.render(scene, camera)
+    }
+    animate()
+
+    // Resize
+    const onResize = () => {
+      const W2 = mount.clientWidth
+      const H2 = mount.clientHeight
+      camera.aspect = W2 / H2
+      camera.updateProjectionMatrix()
+      renderer.setSize(W2, H2)
+    }
+    window.addEventListener('resize', onResize)
 
     return () => {
-      if (motionTimerRef.current) clearTimeout(motionTimerRef.current)
-      app.destroy(false, { children: true })
+      window.removeEventListener('resize', onResize)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      renderer.dispose()
+      mount.removeChild(renderer.domElement)
     }
   }, [])
 
   // Lip sync loop
   useEffect(() => {
-    const animate = () => {
-      const model = modelRef.current
-      if (model && conversation.status === 'connected' && conversation.isSpeaking) {
+    const lipSync = () => {
+      if (conversation.status === 'connected' && conversation.isSpeaking) {
         try {
           const freqData = conversation.getOutputByteFrequencyData()
+          let mouthValue = 0
+
           if (freqData && freqData.length > 0) {
-            const voiceRange = freqData.slice(0, Math.floor(freqData.length * 0.35))
-            const avg = voiceRange.reduce((a: number, b: number) => a + b, 0) / voiceRange.length
-            const mouthValue = Math.min(avg / 85, 1)
+            const voice = freqData.slice(0, Math.floor(freqData.length * 0.35))
+            const avg = voice.reduce((a: number, b: number) => a + b, 0) / voice.length
+            mouthValue = Math.min(avg / 85, 1)
 
-            // Set mouth open parameter
-            model.internalModel.coreModel.setParameterValueById('ParamMouthOpenY', mouthValue)
-
-            // Waveform bars
             const bars = 12
-            const chunkSize = Math.floor(freqData.length / bars)
+            const chunk = Math.floor(freqData.length / bars)
             setWaveAmplitudes(Array.from({ length: bars }, (_, i) => {
-              const chunk = freqData.slice(i * chunkSize, (i + 1) * chunkSize)
-              return Math.min(chunk.reduce((a: number, b: number) => a + b, 0) / chunk.length / 128, 1)
+              const c = freqData.slice(i * chunk, (i + 1) * chunk)
+              return Math.min(c.reduce((a: number, b: number) => a + b, 0) / c.length / 128, 1)
             }))
           } else {
-            // Fallback: simulate mouth movement
-            const v = Math.abs(Math.sin(Date.now() / 120)) * 0.7
-            model.internalModel.coreModel.setParameterValueById('ParamMouthOpenY', v)
+            mouthValue = Math.abs(Math.sin(Date.now() / 100)) * 0.6
             setWaveAmplitudes(Array(12).fill(0).map(() => Math.random() * 0.5))
           }
-        } catch {
-          // silently ignore
-        }
-      } else if (model) {
-        // Close mouth when not speaking
-        try {
-          model.internalModel.coreModel.setParameterValueById('ParamMouthOpenY', 0)
+
+          // Apply to morph targets
+          if (morphMeshRef.current?.morphTargetDictionary) {
+            const dict = morphMeshRef.current.morphTargetDictionary
+            const keys = Object.keys(dict)
+            const mouthKey = keys.find(k =>
+              k.toLowerCase().includes('open') ||
+              k.toLowerCase().includes('mouth') ||
+              k.toLowerCase().includes('_a') ||
+              k.toLowerCase().includes('jawopen')
+            )
+            if (mouthKey && morphMeshRef.current.morphTargetInfluences) {
+              morphMeshRef.current.morphTargetInfluences[dict[mouthKey]] = mouthValue
+            }
+          }
+
+          // Apply to jaw bone
+          if (jawBoneRef.current) {
+            jawBoneRef.current.rotation.x = mouthValue * 0.25
+          }
         } catch { /* ignore */ }
+      } else {
         setWaveAmplitudes(Array(12).fill(0))
+        if (jawBoneRef.current) jawBoneRef.current.rotation.x = 0
+        if (morphMeshRef.current?.morphTargetDictionary) {
+          const dict = morphMeshRef.current.morphTargetDictionary
+          const keys = Object.keys(dict)
+          const k = keys.find(k => k.toLowerCase().includes('open') || k.toLowerCase().includes('mouth'))
+          if (k && morphMeshRef.current.morphTargetInfluences) {
+            morphMeshRef.current.morphTargetInfluences[dict[k]] = 0
+          }
+        }
       }
-      rafRef.current = requestAnimationFrame(animate)
     }
 
-    rafRef.current = requestAnimationFrame(animate)
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+    const id = setInterval(lipSync, 50) // ~20fps for lip sync
+    return () => clearInterval(id)
   }, [conversation])
 
   const startConversation = useCallback(async () => {
@@ -164,25 +283,18 @@ export function HammCharacter() {
 
   return (
     <div className={`hamm-root ${state}`}>
-      {/* Header */}
       <div className="hamm-header">
         <span className="hamm-pig">🐷</span>
         <span className="hamm-name">Hamm</span>
       </div>
 
-      {/* Live2D Stage */}
       <div className="hamm-stage">
-        {/* Sonar rings */}
         <div className="hamm-rings">
           <div className="hamm-ring" />
           <div className="hamm-ring" />
           <div className="hamm-ring" />
         </div>
 
-        {/* Glow */}
-        <div className="hamm-glow" />
-
-        {/* Loading overlay */}
         {!modelReady && (
           <div className="hamm-loading">
             <div className="hamm-loading-spinner" />
@@ -190,14 +302,13 @@ export function HammCharacter() {
           </div>
         )}
 
-        <canvas
-          ref={canvasRef}
+        <div
+          ref={mountRef}
           className="hamm-canvas"
           style={{ opacity: modelReady ? 1 : 0 }}
         />
       </div>
 
-      {/* Waveform */}
       <div className="hamm-waveform">
         {waveAmplitudes.map((amp, i) => (
           <div
@@ -214,13 +325,11 @@ export function HammCharacter() {
         ))}
       </div>
 
-      {/* Status */}
       <div className="hamm-status">
         <div className="hamm-status-dot" />
         {STATUS_TEXT[state]}
       </div>
 
-      {/* Button */}
       <div className="hamm-btn-wrap">
         {error && <div className="hamm-error">{error}</div>}
         <button

@@ -139,13 +139,18 @@ body {
   box-shadow: 0 0 80px rgba(0, 212, 255, 0.2);
 }
 
-/* Live2D Canvas */
+/* Three.js mount */
 .hamm-canvas {
   width: 380px;
-  height: 520px;
+  height: 500px;
   position: relative;
   z-index: 2;
   transition: opacity 0.5s ease;
+}
+
+.hamm-canvas canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Loading */
