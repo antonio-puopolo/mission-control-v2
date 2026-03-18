@@ -1,7 +1,10 @@
 import { useConversation } from '@11labs/react'
 import { useState, useCallback, useEffect, useRef } from 'react'
+import { Application } from 'pixi.js'
+import { Live2DModel } from 'pixi-live2d-display/cubism4'
 
 const AGENT_ID = 'agent_9501kk0dwrjheyy8qwbkxwznm8jr'
+const MODEL_PATH = '/models/mark/Mark.model3.json'
 
 type State = 'idle' | 'connecting' | 'listening' | 'speaking'
 
@@ -15,15 +18,19 @@ const STATUS_TEXT: Record<State, string> = {
 export function HammCharacter() {
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
-  const [mouthOpen, setMouthOpen] = useState(0)
-  const [blinkLeft, setBlinkLeft] = useState(false)
-  const [blinkRight, setBlinkRight] = useState(false)
+  const [modelReady, setModelReady] = useState(false)
   const [waveAmplitudes, setWaveAmplitudes] = useState<number[]>(Array(12).fill(0))
+
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const appRef = useRef<Application | null>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const modelRef = useRef<any>(null)
   const rafRef = useRef<number | null>(null)
+  const motionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const conversation = useConversation({
     onConnect: () => { setState('listening'); setError(null) },
-    onDisconnect: () => { setState('idle'); setMouthOpen(0) },
+    onDisconnect: () => { setState('idle') },
     onError: (err: unknown) => {
       setError(typeof err === 'string' ? err : 'Connection failed')
       setState('idle')
@@ -38,60 +45,102 @@ export function HammCharacter() {
     }
   }, [conversation.status, conversation.isSpeaking])
 
-  // Real-time lip sync + waveform via audio frequency data
+  // Init Live2D
+  useEffect(() => {
+    if (!canvasRef.current) return
+
+    const canvas = canvasRef.current
+    const w = canvas.clientWidth || 400
+    const h = canvas.clientHeight || 600
+
+    const app = new Application({
+      view: canvas,
+      width: w,
+      height: h,
+      backgroundAlpha: 0,
+      antialias: true,
+      autoDensity: true,
+      resolution: window.devicePixelRatio || 1,
+    })
+    appRef.current = app
+
+    Live2DModel.from(MODEL_PATH, { autoInteract: false })
+      .then((model) => {
+        modelRef.current = model
+        app.stage.addChild(model as unknown as import('pixi.js').DisplayObject)
+
+        // Centre and scale model to fill the canvas nicely
+        model.anchor.set(0.5, 0.5)
+        model.x = w / 2
+        model.y = h / 2 + 40
+        const scale = Math.min(w / model.internalModel.originalWidth, h / model.internalModel.originalHeight) * 1.1
+        model.scale.set(scale)
+
+        // Start idle motion loop
+        const playIdleMotion = () => {
+          const idx = Math.floor(Math.random() * 6)
+          model.motion('Idle', idx)
+          motionTimerRef.current = setTimeout(playIdleMotion, 8000 + Math.random() * 4000)
+        }
+        playIdleMotion()
+
+        setModelReady(true)
+      })
+      .catch((err) => {
+        console.error('Live2D load error:', err)
+        setError('Failed to load character')
+      })
+
+    return () => {
+      if (motionTimerRef.current) clearTimeout(motionTimerRef.current)
+      app.destroy(false, { children: true })
+    }
+  }, [])
+
+  // Lip sync loop
   useEffect(() => {
     const animate = () => {
-      if (conversation.status === 'connected' && conversation.isSpeaking) {
+      const model = modelRef.current
+      if (model && conversation.status === 'connected' && conversation.isSpeaking) {
         try {
           const freqData = conversation.getOutputByteFrequencyData()
           if (freqData && freqData.length > 0) {
-            // Mouth openness from lower frequencies
             const voiceRange = freqData.slice(0, Math.floor(freqData.length * 0.35))
             const avg = voiceRange.reduce((a: number, b: number) => a + b, 0) / voiceRange.length
-            setMouthOpen(Math.min(avg / 85, 1))
+            const mouthValue = Math.min(avg / 85, 1)
 
-            // Waveform bars from across spectrum
+            // Set mouth open parameter
+            model.internalModel.coreModel.setParameterValueById('ParamMouthOpenY', mouthValue)
+
+            // Waveform bars
             const bars = 12
             const chunkSize = Math.floor(freqData.length / bars)
-            const amps = Array.from({ length: bars }, (_, i) => {
+            setWaveAmplitudes(Array.from({ length: bars }, (_, i) => {
               const chunk = freqData.slice(i * chunkSize, (i + 1) * chunkSize)
-              const chunkAvg = chunk.reduce((a: number, b: number) => a + b, 0) / chunk.length
-              return Math.min(chunkAvg / 128, 1)
-            })
-            setWaveAmplitudes(amps)
+              return Math.min(chunk.reduce((a: number, b: number) => a + b, 0) / chunk.length / 128, 1)
+            }))
           } else {
-            // Fallback oscillation
-            setMouthOpen(prev => Math.max(0, Math.min(1, prev + (Math.random() > 0.5 ? 0.2 : -0.2))))
-            setWaveAmplitudes(Array(12).fill(0).map(() => Math.random() * 0.6))
+            // Fallback: simulate mouth movement
+            const v = Math.abs(Math.sin(Date.now() / 120)) * 0.7
+            model.internalModel.coreModel.setParameterValueById('ParamMouthOpenY', v)
+            setWaveAmplitudes(Array(12).fill(0).map(() => Math.random() * 0.5))
           }
         } catch {
-          setMouthOpen(0)
-          setWaveAmplitudes(Array(12).fill(0))
+          // silently ignore
         }
-      } else {
-        setMouthOpen(0)
+      } else if (model) {
+        // Close mouth when not speaking
+        try {
+          model.internalModel.coreModel.setParameterValueById('ParamMouthOpenY', 0)
+        } catch { /* ignore */ }
         setWaveAmplitudes(Array(12).fill(0))
       }
       rafRef.current = requestAnimationFrame(animate)
     }
+
     rafRef.current = requestAnimationFrame(animate)
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
   }, [conversation])
-
-  // Natural eye blinking
-  useEffect(() => {
-    const scheduleBlink = () => {
-      const delay = 2000 + Math.random() * 3500
-      return setTimeout(() => {
-        setBlinkLeft(true)
-        setTimeout(() => setBlinkLeft(false), 110)
-        setTimeout(() => { setBlinkRight(true); setTimeout(() => setBlinkRight(false), 110) }, 35)
-        scheduleBlink()
-      }, delay)
-    }
-    const t = scheduleBlink()
-    return () => clearTimeout(t)
-  }, [])
 
   const startConversation = useCallback(async () => {
     try {
@@ -108,18 +157,10 @@ export function HammCharacter() {
   const stopConversation = useCallback(async () => {
     await conversation.endSession()
     setState('idle')
-    setMouthOpen(0)
   }, [conversation])
 
   const isActive = state !== 'idle'
   const isConnecting = state === 'connecting'
-
-  // Mouth path morphing (closed → open oval)
-  const mouthY = 54.5  // % from top of image — tweak if needed
-  const mouthOpenPx = mouthOpen * 2.2  // vh units
-
-  const eyeScaleLeft = blinkLeft ? 'scaleY(0.05)' : 'scaleY(1)'
-  const eyeScaleRight = blinkRight ? 'scaleY(0.05)' : 'scaleY(1)'
 
   return (
     <div className={`hamm-root ${state}`}>
@@ -129,7 +170,7 @@ export function HammCharacter() {
         <span className="hamm-name">Hamm</span>
       </div>
 
-      {/* Character Stage */}
+      {/* Live2D Stage */}
       <div className="hamm-stage">
         {/* Sonar rings */}
         <div className="hamm-rings">
@@ -138,88 +179,25 @@ export function HammCharacter() {
           <div className="hamm-ring" />
         </div>
 
-        <div className="hamm-character-wrap">
-          {/* Glow behind character */}
-          <div className="hamm-glow" />
+        {/* Glow */}
+        <div className="hamm-glow" />
 
-          {/* Character image */}
-          <div className="hamm-img-wrap">
-            <img
-              src="/hamm-avatar.png"
-              alt="Hamm"
-              className="hamm-img"
-              draggable={false}
-            />
-
-            {/* Eye blink overlays — positioned over the character's eyes */}
-            <div
-              className="hamm-eye-overlay hamm-eye-left"
-              style={{ transform: eyeScaleLeft }}
-            />
-            <div
-              className="hamm-eye-overlay hamm-eye-right"
-              style={{ transform: eyeScaleRight }}
-            />
-
-            {/* Mouth overlay for lip sync */}
-            <div className="hamm-mouth-wrap" style={{ bottom: `${100 - mouthY}%` }}>
-              <svg
-                className="hamm-mouth-svg"
-                viewBox="0 0 60 30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* Dark mouth interior */}
-                {mouthOpen > 0.05 && (
-                  <ellipse
-                    cx="30"
-                    cy="15"
-                    rx="22"
-                    ry={Math.max(mouthOpenPx * 4, 0.5)}
-                    fill="#1a0510"
-                  />
-                )}
-                {/* Teeth when open enough */}
-                {mouthOpen > 0.25 && (
-                  <rect
-                    x="12"
-                    y="14"
-                    width="36"
-                    height={Math.min(mouthOpenPx * 2, 6)}
-                    rx="1"
-                    fill="#f0ede8"
-                    opacity="0.9"
-                  />
-                )}
-                {/* Lip line */}
-                <path
-                  d={
-                    mouthOpen < 0.05
-                      ? 'M 8 15 Q 30 18 52 15'
-                      : `M 8 ${15 - mouthOpenPx} Q 30 ${12 - mouthOpenPx} 52 ${15 - mouthOpenPx}`
-                  }
-                  stroke="#7a4a40"
-                  strokeWidth="2"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-                <path
-                  d={
-                    mouthOpen < 0.05
-                      ? 'M 8 15 Q 30 18 52 15'
-                      : `M 8 ${15 + mouthOpenPx} Q 30 ${18 + mouthOpenPx} 52 ${15 + mouthOpenPx}`
-                  }
-                  stroke="#7a4a40"
-                  strokeWidth="2"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
+        {/* Loading overlay */}
+        {!modelReady && (
+          <div className="hamm-loading">
+            <div className="hamm-loading-spinner" />
+            <span>Loading character...</span>
           </div>
-        </div>
+        )}
+
+        <canvas
+          ref={canvasRef}
+          className="hamm-canvas"
+          style={{ opacity: modelReady ? 1 : 0 }}
+        />
       </div>
 
-      {/* Audio waveform */}
+      {/* Waveform */}
       <div className="hamm-waveform">
         {waveAmplitudes.map((amp, i) => (
           <div
@@ -227,10 +205,10 @@ export function HammCharacter() {
             className="hamm-wave-bar"
             style={{
               height: `${Math.max(amp * 40, 3)}px`,
-              opacity: state === 'speaking' ? 0.7 + amp * 0.3 : 0.15,
+              opacity: state === 'speaking' ? 0.6 + amp * 0.4 : 0.12,
               background: state === 'speaking'
-                ? `rgba(0, 212, 255, ${0.5 + amp * 0.5})`
-                : 'rgba(255,255,255,0.2)',
+                ? `rgba(0,212,255,${0.4 + amp * 0.6})`
+                : 'rgba(255,255,255,0.15)',
             }}
           />
         ))}
