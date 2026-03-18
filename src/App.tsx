@@ -6,7 +6,6 @@ import { Agents } from '@/features/Agents/Agents'
 import { Health } from '@/features/Health/Health'
 import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
-import { VoiceHamm } from '@/components/VoiceHamm'
 import './App.css'
 
 const tabs = [
@@ -107,7 +106,7 @@ function App() {
         Mission Control v3 • Antonio Puopolo × Hamm 🐷
       </footer>
 
-      <VoiceHamm />
+
     </div>
   )
 }
