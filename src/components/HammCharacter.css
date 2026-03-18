@@ -1,309 +1,251 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   background: #0d0d0f;
   overflow: hidden;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 .hamm-root {
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(ellipse at 50% 40%, #0f1a2e 0%, #0d0d0f 70%);
+  background: radial-gradient(ellipse at 50% 30%, #0f1829 0%, #0d0d0f 65%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 2rem 1rem;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  justify-content: center;
+  gap: 1.8rem;
   color: #fff;
   position: relative;
   overflow: hidden;
 }
 
-/* Background grid */
+/* Subtle grid */
 .hamm-root::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+  background-size: 50px 50px;
   pointer-events: none;
 }
 
-/* Header */
-.hamm-header {
+/* ── Avatar ── */
+.hamm-avatar-wrap {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  width: 180px;
+  height: 180px;
+}
+
+.hamm-avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
+  border: 3px solid rgba(255,255,255,0.08);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.hamm-avatar.listening {
+  border-color: rgba(0,212,255,0.4);
+  box-shadow: 0 0 30px rgba(0,212,255,0.25);
+  animation: float 3s ease-in-out infinite;
+}
+
+.hamm-avatar.speaking {
+  border-color: rgba(0,212,255,0.7);
+  box-shadow: 0 0 50px rgba(0,212,255,0.4);
+  animation: float-speaking 0.5s ease-in-out infinite;
+}
+
+.hamm-avatar.idle {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes float-speaking {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.02); }
+}
+
+/* Pulse rings */
+.hamm-avatar-ring {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,212,255,0);
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+.hamm-avatar-ring-2 {
+  width: 190px;
+  height: 190px;
+}
+
+.hamm-avatar-ring.listening {
+  border-color: rgba(0,212,255,0.25);
+  animation: ring-pulse 2s ease-out infinite;
+}
+.hamm-avatar-ring-2.listening {
+  border-color: rgba(0,212,255,0.12);
+  animation: ring-pulse 2s ease-out 0.6s infinite;
+}
+
+.hamm-avatar-ring.speaking {
+  border-color: rgba(0,212,255,0.5);
+  animation: ring-pulse-fast 1s ease-out infinite;
+}
+.hamm-avatar-ring-2.speaking {
+  border-color: rgba(0,212,255,0.25);
+  animation: ring-pulse-fast 1s ease-out 0.3s infinite;
+}
+
+@keyframes ring-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes ring-pulse-fast {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* ── Header ── */
+.hamm-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
   z-index: 10;
 }
 
 .hamm-name {
-  font-size: 0.8rem;
-  letter-spacing: 0.4em;
-  color: #00d4ff;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #fff;
+}
+
+.hamm-tagline {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.hamm-pig {
-  font-size: 1.1rem;
-}
-
-/* Character stage */
-.hamm-stage {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-}
-
-/* Outer glow rings (speaking state) */
-.hamm-rings {
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.hamm-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.speaking .hamm-ring:nth-child(1) {
-  animation: sonar 2s ease-out infinite;
-}
-.speaking .hamm-ring:nth-child(2) {
-  animation: sonar 2s ease-out 0.6s infinite;
-}
-.speaking .hamm-ring:nth-child(3) {
-  animation: sonar 2s ease-out 1.2s infinite;
-}
-
-.listening .hamm-ring:nth-child(1) {
-  animation: sonar-slow 3s ease-out infinite;
-  border-color: rgba(0, 212, 255, 0.15);
-}
-
-@keyframes sonar {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(2.2); opacity: 0; }
-}
-
-@keyframes sonar-slow {
-  0% { transform: scale(1); opacity: 0.3; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-
-/* Character wrapper */
-.hamm-character-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Glow behind character */
-.hamm-glow {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
-  transition: all 0.4s ease;
-}
-
-.listening .hamm-glow {
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
-  box-shadow: 0 0 60px rgba(0, 212, 255, 0.1);
-}
-
-.speaking .hamm-glow {
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.25) 0%, transparent 70%);
-  box-shadow: 0 0 80px rgba(0, 212, 255, 0.2);
-}
-
-/* Three.js mount */
-.hamm-canvas {
-  width: 380px;
-  height: 500px;
-  position: relative;
-  z-index: 2;
-  transition: opacity 0.5s ease;
-}
-
-.hamm-canvas canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* Loading */
-.hamm-loading {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  color: rgba(255,255,255,0.4);
-  font-size: 0.85rem;
-  z-index: 3;
-}
-
-.hamm-loading-spinner {
-  width: 32px;
-  height: 32px;
-  border: 2px solid rgba(0,212,255,0.2);
-  border-top-color: #00d4ff;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Waveform */
+/* ── Waveform ── */
 .hamm-waveform {
   display: flex;
   align-items: center;
-  gap: 4px;
-  height: 48px;
+  gap: 3px;
+  height: 60px;
   z-index: 10;
 }
 
 .hamm-wave-bar {
-  width: 4px;
-  border-radius: 4px;
-  transition: height 0.06s ease, opacity 0.15s ease, background 0.3s ease;
-  min-height: 3px;
+  width: 3px;
+  border-radius: 3px;
+  transition: height 0.06s ease, opacity 0.2s ease;
+  transform-origin: center;
 }
 
-@keyframes breathe {
-  0%, 100% { transform: translateY(0) scaleY(1); }
-  50% { transform: translateY(-8px) scaleY(1.01); }
-}
-
-@keyframes speaking-anim {
-  0%, 100% { transform: translateY(0); }
-  25% { transform: translateY(-3px) rotate(0.5deg); }
-  75% { transform: translateY(-1px) rotate(-0.5deg); }
-}
-
-/* Eye blink */
-.eye-lid {
-  transition: transform 0.08s ease;
-}
-
-/* Status */
+/* ── Status ── */
 .hamm-status {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  height: 1.5rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   z-index: 10;
 }
 
 .hamm-status-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: #555;
+  background: #444;
   transition: all 0.3s ease;
 }
 
-.idle .hamm-status-dot { background: #555; }
-.listening .hamm-status-dot {
+.hamm-status-dot.listening {
   background: #00d4ff;
   box-shadow: 0 0 8px #00d4ff;
-  animation: pulse-dot 1.5s ease infinite;
+  animation: dot-pulse 1.5s ease infinite;
 }
-.speaking .hamm-status-dot {
-  background: #00ff9f;
-  box-shadow: 0 0 8px #00ff9f;
-  animation: pulse-dot 0.6s ease infinite;
+
+.hamm-status-dot.speaking {
+  background: #00ffaa;
+  box-shadow: 0 0 8px #00ffaa;
+  animation: dot-pulse 0.6s ease infinite;
 }
-.connecting .hamm-status-dot {
+
+.hamm-status-dot.connecting {
   background: #ff9900;
-  animation: pulse-dot 1s ease infinite;
+  animation: dot-pulse 1s ease infinite;
 }
 
-@keyframes pulse-dot {
+@keyframes dot-pulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.4); }
+  50% { transform: scale(1.5); }
 }
 
-/* Button */
-.hamm-btn-wrap {
+/* ── Error ── */
+.hamm-error {
+  font-size: 0.75rem;
+  color: #ff6b6b;
+  text-align: center;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
 }
 
+/* ── Button ── */
 .hamm-btn {
-  padding: 0.9rem 2.5rem;
+  padding: 0.85rem 2.8rem;
   border-radius: 50px;
   border: none;
   font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  outline: none;
+  z-index: 10;
 }
 
-.hamm-btn:active {
-  transform: scale(0.95);
-}
+.hamm-btn:active { transform: scale(0.95); }
 
 .hamm-btn-start {
   background: linear-gradient(135deg, #00d4ff, #0099cc);
   color: #000;
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 30px rgba(0,212,255,0.35);
 }
-
 .hamm-btn-start:hover {
-  box-shadow: 0 0 45px rgba(0, 212, 255, 0.6);
+  box-shadow: 0 0 45px rgba(0,212,255,0.55);
   transform: scale(1.04);
 }
 
 .hamm-btn-end {
   background: linear-gradient(135deg, #ff4444, #cc2222);
   color: #fff;
-  box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+  box-shadow: 0 0 25px rgba(255,68,68,0.3);
 }
 
 .hamm-btn-connecting {
-  background: rgba(255, 153, 0, 0.2);
-  border: 1px solid rgba(255, 153, 0, 0.5);
+  background: rgba(255,153,0,0.15);
+  border: 1px solid rgba(255,153,0,0.4);
   color: #ff9900;
   cursor: not-allowed;
-}
-
-.hamm-error {
-  font-size: 0.75rem;
-  color: #ff6b6b;
-  text-align: center;
-  max-width: 260px;
 }
