@@ -53,7 +53,7 @@ cp .env.example .env.local
 Edit `.env.local`:
 
 ```
-VITE_SUPABASE_URL=https://zauqqaifszugluyactcv.supabase.co
+VITE_SUPABASE_URL=https://zjyrillpennxowntwebo.supabase.co
 VITE_SUPABASE_ANON_KEY=sb_publishable_ZTH04R87aWDjog6FpG7wAw_stLW9yqc
 OPENCLAW_GATEWAY_URL=http://localhost:8080
 OPENCLAW_GATEWAY_TOKEN=
@@ -101,7 +101,7 @@ ExecStart=/usr/bin/node --loader ts-node/esm src/index.ts
 Restart=always
 RestartSec=10
 Environment="NODE_ENV=production"
-Environment="VITE_SUPABASE_URL=https://zauqqaifszugluyactcv.supabase.co"
+Environment="VITE_SUPABASE_URL=https://zjyrillpennxowntwebo.supabase.co"
 Environment="VITE_SUPABASE_ANON_KEY=sb_publishable_ZTH04R87aWDjog6FpG7wAw_stLW9yqc"
 Environment="OPENCLAW_GATEWAY_URL=http://localhost:8080"
 Environment="OPENCLAW_GATEWAY_TOKEN="

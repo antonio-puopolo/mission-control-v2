@@ -5,7 +5,7 @@ import { logger } from '../utils/logger.js'
 const SUPABASE_URL =
   process.env.VITE_SUPABASE_URL ||
   process.env.SUPABASE_URL ||
-  'https://zauqqaifszugluyactcv.supabase.co'
+  'https://zjyrillpennxowntwebo.supabase.co'
 
 const SUPABASE_KEY =
   process.env.VITE_SUPABASE_ANON_KEY ||

@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const supabaseUrl = 'https://zauqqaifszugluyactcv.supabase.co'
+const supabaseUrl = 'https://zjyrillpennxowntwebo.supabase.co'
 const supabaseKey = 'sb_publishable_ZTH04R87aWDjog6FpG7wAw_stLW9yqc'
 
 const supabase = createClient(supabaseUrl, supabaseKey)
@@ -58,7 +58,7 @@ async function runMigrations() {
 
     console.log('\n⚠️  Manual step required:')
     console.log('Run this SQL in the Supabase dashboard:')
-    console.log('https://app.supabase.com/project/zauqqaifszugluyactcv/sql/new')
+    console.log('https://app.supabase.com/project/zjyrillpennxowntwebo/sql/new')
     console.log('\nSQL:')
     console.log(migrationSql)
   } else {

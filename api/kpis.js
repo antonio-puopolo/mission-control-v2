@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-  'https://zauqqaifszugluyactcv.supabase.co',
-  'sb_publishable_ZTH04R87aWDjog6FpG7wAw_stLW9yqc'
+  'https://zjyrillpennxowntwebo.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjQzNDA4MiwiZXhwIjoyMDg4MDEwMDgyfQ.qs_YCiL_rfyVVNl2jHyFGDi9lhafOXXSnXjYtogUmXY'
 );
 
 // Known targets from Antonio's goals

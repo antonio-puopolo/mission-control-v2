@@ -88,6 +88,24 @@ const agents: Agent[] = [
     smartReason: 'Code quality and reasoning matters — Sonnet handles this well.',
     color: '#6c63ff',
   },
+  {
+    id: 'lap-prep',
+    name: 'LAP Prep',
+    icon: '🏠',
+    description: 'Full listing appointment brief — comps, price range, talking points, objection handlers',
+    smartModel: 'sonnet',
+    smartReason: 'LAP prep needs nuance and local market knowledge — Sonnet is the right call.',
+    color: '#00D4AA',
+  },
+  {
+    id: 'pipeline',
+    name: 'Pipeline',
+    icon: '📋',
+    description: 'Who to call today, overdue follow-ups, next actions across your LAP tracker',
+    smartModel: 'haiku',
+    smartReason: 'Pipeline reviews are fast and structured — Haiku handles this quickly and cheaply.',
+    color: '#ffa502',
+  },
 ]
 
 const availableModels = Object.entries(MODEL_META).map(([id, m]) => ({ id, ...m }))

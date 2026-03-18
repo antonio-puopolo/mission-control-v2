@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { ZodError } from 'zod'
-import { SpawnRequestSchema } from '../types/index.js'
+import { SpawnRequestSchema, AGENT_SYSTEM_PROMPTS } from '../types/index.js'
 import { spawnAgent } from '../services/openclaw.js'
 import { updateAgentResult, getAgentResult } from '../services/supabase.js'
 import { logger } from '../utils/logger.js'
@@ -40,9 +40,15 @@ agentRouter.post('/spawn', async (req: Request, res: Response, next: NextFunctio
     // Update Supabase: mark as running
     await updateAgentResult(request.resultId, { status: 'running' })
 
+    // Prepend agent-specific system prompt to task
+    const systemPrompt = AGENT_SYSTEM_PROMPTS[request.agentId]
+    const fullTask = systemPrompt
+      ? `${systemPrompt}\n\n---\n\n${request.task}`
+      : request.task
+
     // Call OpenClaw to spawn the agent
     const result = await spawnAgent({
-      task: request.task,
+      task: fullTask,
       agentId: request.agentId,
       model: request.model,
       thinking: request.thinking as 'on' | 'off' | undefined,

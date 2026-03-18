@@ -185,7 +185,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
             // View mode
             <div style={{ paddingTop: '1rem' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
-                {lap.phone && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>PHONE</span><p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{lap.phone}</p></div>}
+                {lap.phone && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>PHONE</span><div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.2rem' }}><p style={{ margin: 0, fontSize: '0.9rem' }}>{lap.phone}</p><a href={`tel:${lap.phone.replace(/\s/g, '')}`} onClick={e => e.stopPropagation()} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.2rem 0.6rem', background: '#1a3a2a', border: '1px solid #00ff9d44', borderRadius: '4px', color: '#00ff9d', fontSize: '0.75rem', textDecoration: 'none', fontWeight: 600, letterSpacing: '0.03em' }}>📞 Call</a></div></div>}
                 {lap.email && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>EMAIL</span><p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{lap.email}</p></div>}
                 {lap.price_expectation && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>PRICE EXPECTATION</span><p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{lap.price_expectation}</p></div>}
               </div>

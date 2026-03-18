@@ -5,7 +5,7 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const SUPABASE_URL = 'https://zauqqaifszugluyactcv.supabase.co'
+const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co'
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY
 
 // Use admin key for DDL operations (if available)
@@ -35,7 +35,7 @@ async function initializeDatabase() {
     if (checkError.code === 'PGRST205') {
       console.log('⚠️  agent_results table not found')
       console.log('\n📋 To create the table, run this SQL in Supabase dashboard:')
-      console.log('   https://app.supabase.com/project/zauqqaifszugluyactcv/sql/new\n')
+      console.log('   https://app.supabase.com/project/zjyrillpennxowntwebo/sql/new\n')
 
       const sql = `CREATE TABLE agent_results (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

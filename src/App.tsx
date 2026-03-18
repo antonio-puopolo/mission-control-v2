@@ -76,6 +76,33 @@ function App() {
 
       </main>
 
+      {/* Talk to Hamm floating button */}
+      <button
+        onClick={() => window.open('/hamm', '_blank', 'width=480,height=820,toolbar=no,menubar=no,resizable=yes')}
+        style={{
+          position: 'fixed',
+          bottom: '1.5rem',
+          right: '1.5rem',
+          background: 'linear-gradient(135deg, #00d4ff, #0099cc)',
+          color: '#000',
+          border: 'none',
+          borderRadius: '50px',
+          padding: '0.65rem 1.2rem',
+          fontWeight: 700,
+          fontSize: '0.85rem',
+          cursor: 'pointer',
+          boxShadow: '0 0 25px rgba(0,212,255,0.4)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.4rem',
+          letterSpacing: '0.03em',
+        }}
+        title="Talk to Hamm"
+      >
+        🐷 Talk to Hamm
+      </button>
+
       <footer className="mc-footer">
         Mission Control v3 • Antonio Puopolo × Hamm 🐷
       </footer>
