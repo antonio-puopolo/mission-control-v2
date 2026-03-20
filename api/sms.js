@@ -1,11 +1,32 @@
-export default function handler(req, res) {
-  const { to, body } = req.query;
+const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjQzNDA4MiwiZXhwIjoyMDg4MDEwMDgyfQ.qs_YCiL_rfyVVNl2jHyFGDi9lhafOXXSnXjYtogUmXY';
 
-  if (!to || !body) {
-    return res.status(400).send('Missing to or body parameters');
+export default async function handler(req, res) {
+  const { id } = req.query;
+
+  if (!id) {
+    return res.status(400).send('Missing id parameter');
   }
 
-  const smsUrl = `sms:${to}?body=${encodeURIComponent(body)}`;
+  // Look up draft from Supabase
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/sms_drafts?id=eq.${id}&select=to_number,body`,
+    {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+      }
+    }
+  );
+
+  const drafts = await response.json();
+
+  if (!drafts || drafts.length === 0) {
+    return res.status(404).send('Draft not found or expired');
+  }
+
+  const { to_number, body } = drafts[0];
+  const smsUrl = `sms:${to_number}?body=${encodeURIComponent(body)}`;
 
   res.setHeader('Content-Type', 'text/html');
   res.status(200).send(`<!DOCTYPE html>
