@@ -28,12 +28,12 @@ body {
 
 a {
   font-weight: 500;
-  color: #00D4AA;
+  color: #F59E0B;
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #00b894;
+  color: #D97706;
 }
 
 button {
@@ -49,7 +49,7 @@ button {
 }
 
 button:hover {
-  border-color: #00D4AA;
+  border-color: #F59E0B;
 }
 
 button:focus,
