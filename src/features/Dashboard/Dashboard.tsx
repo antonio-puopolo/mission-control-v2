@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useLaps } from '@/hooks/useLaps'
+import { useLaps, usePipelineValue } from '@/hooks/useLaps'
 import { useActivityThisWeek, useTotalPointsThisMonth, useWeeklyKPIs, useLogActivity } from '@/hooks/useActivity'
 import { useRealtimeSync } from '@/hooks/useRealtimeSync'
 
@@ -107,6 +107,7 @@ export function Dashboard() {
   const { mutateAsync: logActivity, isPending: isLogging } = useLogActivity()
 
   const { data: laps = [], isLoading: lapsLoading } = useLaps()
+  const { data: pipelineValue } = usePipelineValue()
   const { data: activity = [], isLoading: activityLoading } = useActivityThisWeek()
   const { data: pointsThisMonth = 0 } = useTotalPointsThisMonth()
   const { data: weeklyKpis = { bap: 0, map: 0, lap: 0 }, isLoading: kpisLoading } = useWeeklyKPIs()
@@ -207,6 +208,31 @@ export function Dashboard() {
           <StatusBox label="Listed" count={lapsByStatus.listed} color="#6c63ff" />
           <StatusBox label="Sold" count={lapsByStatus.sold} color="#F59E0B" />
         </div>
+        {pipelineValue && pipelineValue.total > 0 && (
+          <div style={{ marginTop: "1.25rem", paddingTop: "1.25rem", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.75rem" }}>
+              <span style={{ color: "#94a3b8", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>Pipeline Value</span>
+              <span style={{ fontSize: "1.4rem", fontWeight: 700, color: "#F59E0B" }}>
+                ${(pipelineValue.total / 1_000_000).toFixed(1)}M
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+              {[
+                { key: "under_construction", label: "🏗️ Build", color: "#a78bfa" },
+                { key: "pipeline_a", label: "🔥 A", color: "#F59E0B" },
+                { key: "pipeline_b", label: "📋 B", color: "#60a5fa" },
+                { key: "pipeline_c", label: "🕐 C", color: "#94a3b8" },
+              ].filter(s => pipelineValue.bySection[s.key] > 0).map(s => (
+                <div key={s.key} style={{ fontSize: "0.78rem", color: s.color }}>
+                  {s.label} <strong>${(pipelineValue.bySection[s.key] / 1_000_000).toFixed(1)}M</strong>
+                </div>
+              ))}
+              <div style={{ fontSize: "0.78rem", color: "#475569", marginLeft: "auto" }}>
+                {pipelineValue.count} of {laps.length} LAPs priced
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Today's Activity */}

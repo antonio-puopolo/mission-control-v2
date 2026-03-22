@@ -95,3 +95,56 @@ export const useDeleteLap = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: lapKeys.all }),
   })
 }
+
+export const useLapStatusCounts = () => {
+  return useQuery({
+    queryKey: ['laps', 'statusCounts'],
+    queryFn: async () => {
+      const data = await lapFetch('/laps?select=status') as { status: string }[]
+      const counts: Record<string, number> = { LAP: 0, Listed: 0, Sold: 0, Withdrawn: 0 }
+      data?.forEach(r => { if (counts[r.status] !== undefined) counts[r.status]++ })
+      return counts
+    },
+    staleTime: 30 * 1000,
+  })
+}
+
+export const usePipelineValue = () => {
+  return useQuery({
+    queryKey: ['laps', 'pipelineValue'],
+    queryFn: async () => {
+      const data = await lapFetch('/laps?status=eq.LAP&select=price_expectation,pipeline_section') as { price_expectation: string | null; pipeline_section: string | null }[]
+
+      function parsePrice(s: string | null | undefined): number | null {
+        if (!s || s.trim() === '') return null
+        const clean = s.replace(/[$,\s]/g, '')
+        if (clean.includes('-')) {
+          const parts = clean.split('-').map(Number).filter(n => !isNaN(n))
+          if (parts.length === 2) return (parts[0] + parts[1]) / 2
+        }
+        const num = parseFloat(clean.replace('+', ''))
+        return isNaN(num) ? null : num
+      }
+
+      let total = 0
+      let count = 0
+      const bySection: Record<string, number> = {
+        pipeline_a: 0, pipeline_b: 0, pipeline_c: 0, under_construction: 0,
+      }
+
+      data?.forEach(r => {
+        const val = parsePrice(r.price_expectation)
+        if (val) {
+          total += val
+          count++
+          if (r.pipeline_section && bySection[r.pipeline_section] !== undefined) {
+            bySection[r.pipeline_section] += val
+          }
+        }
+      })
+
+      return { total, count, bySection }
+    },
+    staleTime: 60 * 1000,
+  })
+}

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLapsByStatus, useCreateLap, useUpdateLap, useDeleteLap } from '@/hooks/useLaps'
+import { useLapsByStatus, useCreateLap, useUpdateLap, useDeleteLap, useLapStatusCounts } from '@/hooks/useLaps'
 import { useRealtimeSync } from '@/hooks/useRealtimeSync'
 
 const STATUSES = ['LAP', 'Listed', 'Sold', 'Withdrawn'] as const
@@ -303,6 +303,7 @@ export function LAPTracker() {
   useRealtimeSync('laps', ['laps'])
 
   const { data: lapsByStatus = [], isLoading } = useLapsByStatus(activeStatus)
+  const { data: statusCounts = {} } = useLapStatusCounts()
   const { mutateAsync: createAsync, isPending: isCreatingLap } = useCreateLap()
   const updateMutation = useUpdateLap()
   const deleteMutation = useDeleteLap()
@@ -399,8 +400,19 @@ export function LAPTracker() {
       {/* Status Tabs */}
       <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid #333', paddingBottom: '1rem' }}>
         {STATUSES.map((status) => (
-          <button key={status} onClick={() => setActiveStatus(status)} style={{ padding: '0.5rem 1rem', background: activeStatus === status ? 'rgba(0, 212, 170, 0.2)' : 'transparent', color: activeStatus === status ? '#F59E0B' : '#a0a0b0', border: 'none', cursor: 'pointer', borderBottom: activeStatus === status ? '2px solid #F59E0B' : 'none', transition: 'all 0.2s ease' }}>
-            {status} ({activeStatus === status ? filtered.length : '•'})
+          <button key={status} onClick={() => setActiveStatus(status)} style={{
+            padding: "0.5rem 1rem",
+            background: activeStatus === status ? "rgba(245,158,11,0.15)" : "transparent",
+            color: activeStatus === status ? "#F59E0B" : "#a0a0b0",
+            border: "none",
+            cursor: "pointer",
+            borderBottom: activeStatus === status ? "2px solid #F59E0B" : "2px solid transparent",
+            transition: "all 0.2s ease",
+            fontFamily: "inherit",
+            fontSize: "0.85rem",
+            whiteSpace: "nowrap",
+          }}>
+            {status} <span style={{ opacity: 0.7, fontSize: "0.78rem" }}>({statusCounts[status] ?? "…"})</span>
           </button>
         ))}
       </div>
