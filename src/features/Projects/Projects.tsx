@@ -36,12 +36,12 @@ async function dbFetch(path: string, options?: RequestInit) {
 const priorityColors: Record<Priority, string> = {
   high: '#ff6b6b',
   medium: '#ffa502',
-  low: '#00D4AA',
+  low: '#F59E0B',
 }
 
 const categoryLabels: Record<Category, { label: string; color: string }> = {
   'mc-build': { label: 'MC Build', color: '#6c63ff' },
-  'business': { label: 'Business', color: '#00D4AA' },
+  'business': { label: 'Business', color: '#F59E0B' },
   'personal': { label: 'Personal', color: '#ffa502' },
 }
 
@@ -125,7 +125,7 @@ export function Projects() {
           <p style={{ color: '#a0a0b0', margin: '0.25rem 0 0' }}>Hamm + Antonio — experiments & next steps</p>
         </div>
         <button onClick={() => { setShowForm(!showForm); setEditingId(null); setForm(emptyForm) }}
-          style={{ background: '#00D4AA', color: '#050508', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>
+          style={{ background: '#F59E0B', color: '#080c14', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>
           + New
         </button>
       </div>
@@ -136,7 +136,7 @@ export function Projects() {
             style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box' }} />
           <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Description / next steps..." rows={3}
             style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box', resize: 'vertical' }} />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '0.75rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
             <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value as Category })}
               style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
               <option value="mc-build">MC Build</option>
@@ -159,7 +159,7 @@ export function Projects() {
               style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }} />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button onClick={saveProject} style={{ background: '#00D4AA', color: '#050508', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>
+            <button onClick={saveProject} style={{ background: '#F59E0B', color: '#080c14', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>
               {editingId ? 'Update' : 'Add'}
             </button>
             <button onClick={() => { setShowForm(false); setEditingId(null) }}
@@ -170,7 +170,7 @@ export function Projects() {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
         {columns.map(col => (
           <div key={col.id} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '1rem', minHeight: '200px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
@@ -196,18 +196,18 @@ export function Projects() {
                         </span>
                       )}
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', gap: '0.3rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
+                      <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
                         {columns.filter(c => c.id !== col.id).map(c => (
                           <button key={c.id} onClick={() => moveProject(p.id, c.id)} title={`Move to ${c.label}`}
-                            style={{ background: 'none', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '0.1rem 0.4rem', color: '#a0a0b0', cursor: 'pointer', fontSize: '0.7rem' }}>
-                            → {c.label}
+                            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.25rem 0.6rem', color: '#94a3b8', cursor: 'pointer', fontSize: '0.72rem', fontFamily: 'inherit', transition: 'all 0.15s' }}>
+                            {c.id === 'in-progress' ? '▶ In Progress' : c.id === 'done' ? '✓ Done' : '← Backlog'}
                           </button>
                         ))}
                       </div>
-                      <div style={{ display: 'flex', gap: '0.3rem' }}>
-                        <button onClick={() => startEdit(p)} style={{ background: 'none', border: 'none', color: '#a0a0b0', cursor: 'pointer', fontSize: '0.8rem' }}>✏️</button>
-                        <button onClick={() => deleteProject(p.id)} style={{ background: 'none', border: 'none', color: '#ff6b6b', cursor: 'pointer', fontSize: '0.8rem' }}>✕</button>
+                      <div style={{ display: 'flex', gap: '0.25rem' }}>
+                        <button onClick={() => startEdit(p)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✏️</button>
+                        <button onClick={() => deleteProject(p.id)} style={{ background: 'none', border: 'none', color: '#ff6b6b', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✕</button>
                       </div>
                     </div>
                   </div>
