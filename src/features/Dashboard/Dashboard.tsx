@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLaps } from '@/hooks/useLaps'
-import { useActivityThisWeek, useTotalPointsThisMonth } from '@/hooks/useActivity'
+import { useActivityThisWeek, useTotalPointsThisMonth, useWeeklyKPIs, useLogActivity } from '@/hooks/useActivity'
 import { useRealtimeSync } from '@/hooks/useRealtimeSync'
 
 const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co'
@@ -101,9 +101,15 @@ export function Dashboard() {
   useRealtimeSync('laps', ['laps'])
   useRealtimeSync('activity_log', ['activity'])
 
+  const [showKpiLog, setShowKpiLog] = useState(false)
+  const [kpiType, setKpiType] = useState<"BAP"|"MAP"|"LAP">("BAP")
+  const [kpiNote, setKpiNote] = useState("")
+  const { mutateAsync: logActivity, isPending: isLogging } = useLogActivity()
+
   const { data: laps = [], isLoading: lapsLoading } = useLaps()
   const { data: activity = [], isLoading: activityLoading } = useActivityThisWeek()
   const { data: pointsThisMonth = 0 } = useTotalPointsThisMonth()
+  const { data: weeklyKpis = { bap: 0, map: 0, lap: 0 }, isLoading: kpisLoading } = useWeeklyKPIs()
 
   const lapsByStatus = {
     lap: laps.filter(l => l.status === 'LAP').length,
@@ -169,6 +175,31 @@ export function Dashboard() {
         <MetricCard label="Points (Month)" value={pointsThisMonth.toString()} sub="Target: 250 pts" percent={pct(pointsThisMonth, 250)} color="#ff6b6b" />
       </div>
 
+      {/* Weekly KPIs */}
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", padding: "1.5rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+          <div>
+            <h3 style={{ margin: 0, fontSize: "1rem" }}>Weekly KPIs</h3>
+            <p style={{ margin: "0.2rem 0 0", color: "#94a3b8", fontSize: "0.78rem" }}>Mon–Sun • Resets each week</p>
+          </div>
+          <button
+            onClick={() => setShowKpiLog(true)}
+            style={{ padding: "0.5rem 1rem", background: "#F59E0B", color: "#000", border: "none", borderRadius: "8px", fontWeight: 700, cursor: "pointer", fontSize: "0.82rem" }}
+          >
+            + Log
+          </button>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "1rem" }}>
+          {kpisLoading ? <p style={{ color: "#94a3b8" }}>Loading...</p> : (
+            <>
+              <KpiBar label="BAP" sublabel="Buyer Appts" current={weeklyKpis.bap} target={5} color="#F59E0B" />
+              <KpiBar label="MAP" sublabel="Mkt Appraisals" current={weeklyKpis.map} target={2} color="#6c63ff" />
+              <KpiBar label="LAP" sublabel="Listing Appts" current={weeklyKpis.lap} target={1} color="#ff6b6b" />
+            </>
+          )}
+        </div>
+      </div>
+
       {/* LAP Status Breakdown */}
       <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: '1.5rem' }}>
         <h3 style={{ margin: '0 0 1rem' }}>LAP Pipeline</h3>
@@ -200,6 +231,44 @@ export function Dashboard() {
           </div>
         )}
       </div>
+      {showKpiLog && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
+          <div style={{ background: "#080c14", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "16px", padding: "2rem", width: "100%", maxWidth: "380px", margin: "1rem" }}>
+            <h3 style={{ margin: "0 0 1.5rem" }}>Log KPI Activity</h3>
+            <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem" }}>
+              {(["BAP","MAP","LAP"] as const).map(t => (
+                <button key={t} onClick={() => setKpiType(t)}
+                  style={{ flex: 1, padding: "0.75rem", background: kpiType === t ? "#F59E0B" : "rgba(255,255,255,0.05)", color: kpiType === t ? "#000" : "#94a3b8", border: "1px solid " + (kpiType === t ? "#F59E0B" : "rgba(255,255,255,0.1)"), borderRadius: "8px", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", fontSize: "0.9rem" }}>
+                  {t}
+                </button>
+              ))}
+            </div>
+            <div style={{ marginBottom: "1.25rem" }}>
+              <label style={{ fontSize: "0.75rem", color: "#94a3b8", display: "block", marginBottom: "0.3rem" }}>NOTE (OPTIONAL)</label>
+              <input
+                value={kpiNote}
+                onChange={e => setKpiNote(e.target.value)}
+                placeholder={kpiType === "BAP" ? "e.g. Smith family, 4 Glen Rd" : kpiType === "MAP" ? "e.g. 12 Park Ave appraisal" : "e.g. LAP at 7 Hill St"}
+                style={{ width: "100%", background: "#0d1320", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "0.6rem 0.75rem", color: "#fff", fontFamily: "inherit", boxSizing: "border-box" as const }}
+              />
+            </div>
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              <button onClick={() => { setShowKpiLog(false); setKpiNote("") }} style={{ flex: 1, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "0.75rem", color: "#fff", cursor: "pointer", fontFamily: "inherit" }}>Cancel</button>
+              <button
+                disabled={isLogging}
+                onClick={async () => {
+                  await logActivity({ activity_type: kpiType, description: kpiNote || `${kpiType} logged`, points_awarded: kpiType === "LAP" ? 10 : kpiType === "MAP" ? 5 : 3 })
+                  setShowKpiLog(false)
+                  setKpiNote("")
+                }}
+                style={{ flex: 2, background: "#F59E0B", border: "none", borderRadius: "8px", padding: "0.75rem", color: "#000", cursor: "pointer", fontWeight: 700, fontFamily: "inherit", opacity: isLogging ? 0.5 : 1 }}
+              >
+                {isLogging ? "Logging..." : `Log ${kpiType}`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -223,6 +292,26 @@ function StatusBox({ label, count, color }: { label: string; count: number; colo
     <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '8px', padding: '1rem', textAlign: 'center' }}>
       <div style={{ fontSize: '2rem', fontWeight: '700', color }}>{count}</div>
       <div style={{ fontSize: '0.85rem', color: '#a0a0b0', marginTop: '0.25rem' }}>{label}</div>
+    </div>
+  )
+}
+
+function KpiBar({ label, sublabel, current, target, color }: { label: string; sublabel: string; current: number; target: number; color: string }) {
+  const pct = Math.min(100, Math.round((current / target) * 100))
+  const done = current >= target
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+        <div>
+          <span style={{ fontWeight: 700, fontSize: "1rem", color: done ? color : "#f1f5f9" }}>{label}</span>
+          <span style={{ color: "#94a3b8", fontSize: "0.72rem", marginLeft: "0.4rem" }}>{sublabel}</span>
+        </div>
+        <span style={{ fontWeight: 700, fontSize: "1rem", color: done ? color : "#f1f5f9" }}>{current}<span style={{ color: "#94a3b8", fontWeight: 400, fontSize: "0.8rem" }}>/{target}</span></span>
+      </div>
+      <div style={{ height: "8px", background: "rgba(255,255,255,0.07)", borderRadius: "999px", overflow: "hidden" }}>
+        <div style={{ height: "100%", borderRadius: "999px", background: done ? color : `${color}bb`, width: `${pct}%`, transition: "width 0.5s ease", boxShadow: done ? `0 0 10px ${color}66` : "none" }} />
+      </div>
+      {done && <span style={{ fontSize: "0.72rem", color, fontWeight: 600 }}>✓ Target hit!</span>}
     </div>
   )
 }

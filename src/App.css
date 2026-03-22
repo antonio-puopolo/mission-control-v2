@@ -50,6 +50,9 @@ body {
   font-size: 0.95rem; font-weight: 600;
   color: var(--accent); font-variant-numeric: tabular-nums;
 }
+.mc-weather { display: flex; align-items: center; gap: 0.3rem; }
+.mc-weather-icon { font-size: 1rem; line-height: 1; }
+.mc-weather-temp { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 .mc-status { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--muted); }
 .mc-status-dot {
   width: 7px; height: 7px; border-radius: 50%;

@@ -107,6 +107,43 @@ export const useActivityThisMonth = () => {
   })
 }
 
+// Fetch weekly KPI counts (Mon–Sun)
+function getMonday() {
+  const d = new Date()
+  const day = d.getDay()
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1)
+  const mon = new Date(d)
+  mon.setDate(diff)
+  mon.setHours(0, 0, 0, 0)
+  return mon.toISOString()
+}
+
+export const useWeeklyKPIs = () => {
+  return useQuery({
+    queryKey: activityKeys.thisWeek(),
+    queryFn: async () => {
+      const monday = getMonday()
+      const sunday = new Date(monday)
+      sunday.setDate(sunday.getDate() + 6)
+      sunday.setHours(23, 59, 59, 999)
+
+      const { data, error } = await supabase
+        .from('activity_log')
+        .select('activity_type')
+        .gte('created_at', monday)
+        .lte('created_at', sunday.toISOString())
+
+      if (error) throw error
+
+      const bap = data.filter(r => r.activity_type === 'BAP').length
+      const map = data.filter(r => r.activity_type === 'MAP').length
+      const lap = data.filter(r => r.activity_type === 'LAP').length
+      return { bap, map, lap }
+    },
+    staleTime: 1 * 60 * 1000,
+  })
+}
+
 // Get total points (this month)
 export const useTotalPointsThisMonth = () => {
   return useQuery({

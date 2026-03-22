@@ -18,6 +18,18 @@ const tabs = [
   { id: "health", label: "Health", icon: Activity },
 ]
 
+function weatherIcon(code: number): string {
+  if (code === 0) return '☀️'
+  if (code <= 3) return '🌤️'
+  if (code <= 48) return '🌫️'
+  if (code <= 55) return '🌦️'
+  if (code <= 67) return '🌧️'
+  if (code <= 77) return '❄️'
+  if (code <= 82) return '🌧️'
+  if (code >= 95) return '⛈️'
+  return '🌡️'
+}
+
 function App() {
   const { activeTab, setActiveTab } = useDashboardStore()
 
@@ -28,6 +40,21 @@ function App() {
   }, [])
   const hour = now.getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+
+  const [weather, setWeather] = useState<{ temp: number; icon: string } | null>(null)
+  useEffect(() => {
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=-27.4698&longitude=153.0251&current=temperature_2m,weather_code&timezone=Australia/Brisbane')
+      .then(r => r.json())
+      .then(d => setWeather({ temp: Math.round(d.current.temperature_2m), icon: weatherIcon(d.current.weather_code) }))
+      .catch(() => {})
+    const wt = setInterval(() => {
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=-27.4698&longitude=153.0251&current=temperature_2m,weather_code&timezone=Australia/Brisbane')
+        .then(r => r.json())
+        .then(d => setWeather({ temp: Math.round(d.current.temperature_2m), icon: weatherIcon(d.current.weather_code) }))
+        .catch(() => {})
+    }, 30 * 60 * 1000)
+    return () => clearInterval(wt)
+  }, [])
 
   return (
     <div className="mc-app">
@@ -42,6 +69,12 @@ function App() {
             </div>
           </div>
           <div className="mc-header-right">
+            {weather && (
+              <div className="mc-weather">
+                <span className="mc-weather-icon">{weather.icon}</span>
+                <span className="mc-weather-temp">{weather.temp}°</span>
+              </div>
+            )}
             <div className="mc-clock">{now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' })}</div>
             <div className="mc-status"><span className="mc-status-dot" />Live</div>
           </div>
