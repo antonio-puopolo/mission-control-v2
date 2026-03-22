@@ -125,7 +125,7 @@ export function Projects() {
           <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Hamm × Antonio — experiments & builds</p>
         </div>
         <button onClick={() => { setShowForm(!showForm); setEditingId(null); setForm(emptyForm) }}
-          style={{ background: '#F59E0B', color: '#080c14', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>
+          style={{ background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', padding: '0.5rem 1.1rem', cursor: 'pointer', fontWeight: '700', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
           + New
         </button>
       </div>

@@ -361,7 +361,7 @@ export function LAPTracker() {
         </div>
         <button
           onClick={() => setIsCreating(!isCreating)}
-          style={{ padding: '0.5rem 1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem' }}
+          style={{ padding: '0.5rem 1.1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
         >
           {isCreating ? '✕ Cancel' : '+ New LAP'}
         </button>
