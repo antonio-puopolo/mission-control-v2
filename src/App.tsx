@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { LayoutDashboard, Home, FolderKanban, CalendarDays, Bot, Activity } from "lucide-react"
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
@@ -9,13 +10,12 @@ import { Calendar } from '@/features/Calendar/Calendar'
 import './App.css'
 
 const tabs = [
-  { id: 'dashboard', label: 'Dashboard', icon: '📊' },
-  { id: 'lap-tracker', label: 'LAP Tracker', icon: '🏠' },
-  { id: 'projects', label: 'Projects', icon: '🗂️' },
-  { id: 'calendar', label: 'Calendar', icon: '📅' },
-  { id: 'agents', label: 'Agents', icon: '🤖' },
-  { id: 'health', label: 'Health', icon: '💪' },
-
+  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { id: "lap-tracker", label: "LAP Tracker", icon: Home },
+  { id: "projects", label: "Projects", icon: FolderKanban },
+  { id: "calendar", label: "Calendar", icon: CalendarDays },
+  { id: "agents", label: "Agents", icon: Bot },
+  { id: "health", label: "Health", icon: Activity },
 ]
 
 function App() {
@@ -57,7 +57,7 @@ function App() {
               onClick={() => setActiveTab(tab.id)}
               className={`mc-nav-btn ${activeTab === tab.id ? 'active' : ''}`}
             >
-              <span className="mc-nav-icon">{tab.icon}</span>
+              <span className="mc-nav-icon"><tab.icon size={15} strokeWidth={1.8} /></span>
               <span className="mc-nav-label">{tab.label}</span>
             </button>
           ))}
@@ -82,15 +82,15 @@ function App() {
           position: 'fixed',
           bottom: '1.5rem',
           right: '1.5rem',
-          background: 'linear-gradient(135deg, #00d4ff, #0099cc)',
-          color: '#000',
+          background: "linear-gradient(135deg, #F59E0B, #D97706)",
+          color: "#000",
           border: 'none',
           borderRadius: '50px',
           padding: '0.65rem 1.2rem',
           fontWeight: 700,
           fontSize: '0.85rem',
           cursor: 'pointer',
-          boxShadow: '0 0 25px rgba(0,212,255,0.4)',
+          boxShadow: "0 0 20px rgba(245,158,11,0.35)",
           zIndex: 1000,
           display: 'flex',
           alignItems: 'center',
