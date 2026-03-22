@@ -121,8 +121,8 @@ export function Projects() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h2 style={{ margin: 0 }}>Projects</h2>
-          <p style={{ color: '#a0a0b0', margin: '0.25rem 0 0' }}>Hamm + Antonio — experiments & next steps</p>
+          <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Projects</h3>
+          <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Hamm × Antonio — experiments & builds</p>
         </div>
         <button onClick={() => { setShowForm(!showForm); setEditingId(null); setForm(emptyForm) }}
           style={{ background: '#F59E0B', color: '#080c14', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>

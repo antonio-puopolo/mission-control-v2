@@ -49,8 +49,8 @@ export function Calendar() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <h2 style={{ margin: 0 }}>Calendar</h2>
-        <p style={{ color: '#a0a0b0', margin: '0.25rem 0 0' }}>{dateLabel} • Work schedule</p>
+        <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Calendar</h3>
+        <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>{dateLabel} • Work schedule</p>
       </div>
 
       {/* Today */}

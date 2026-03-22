@@ -160,8 +160,8 @@ export function Agents() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <h2 style={{ margin: 0 }}>Agents</h2>
-        <p style={{ color: '#a0a0b0', margin: '0.25rem 0 0' }}>Spawn specialised agents — Hamm picks the right model automatically</p>
+        <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Agents</h3>
+        <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Spawn a specialist — Hamm picks the right model</p>
       </div>
 
       {/* Agent Grid */}

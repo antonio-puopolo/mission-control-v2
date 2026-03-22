@@ -196,8 +196,8 @@ export function Health() {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h2 style={{ margin: 0 }}>Health & Fitness</h2>
-          <p style={{ color: '#a0a0b0', margin: '0.25rem 0 0' }}>Track your body, build your habits, own the process</p>
+          <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Health & Fitness</h3>
+          <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Body • Habits • Process</p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <button onClick={() => setShowWorkoutModal(true)} style={{ padding: '0.6rem 1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}>+ Workout</button>

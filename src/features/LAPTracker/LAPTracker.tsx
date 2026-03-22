@@ -354,16 +354,14 @@ export function LAPTracker() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h2 style={{ margin: 0 }}>LAP Tracker</h2>
-          <p style={{ color: '#a0a0b0', marginTop: '0.5rem', marginBottom: 0 }}>
-            Manage listings, track conversions, follow-ups
-          </p>
+          <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>LAP Tracker</h3>
+          <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Listings • Conversions • Follow-ups</p>
         </div>
         <button
           onClick={() => setIsCreating(!isCreating)}
-          style={{ padding: '0.75rem 1.5rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '4px', fontWeight: '600', cursor: 'pointer' }}
+          style={{ padding: '0.5rem 1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem' }}
         >
           {isCreating ? '✕ Cancel' : '+ New LAP'}
         </button>
