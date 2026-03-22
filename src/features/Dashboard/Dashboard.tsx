@@ -125,15 +125,14 @@ export function Dashboard() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h2 style={{ margin: 0 }}>Dashboard</h2>
-          <p style={{ color: '#a0a0b0', margin: '0.25rem 0 0' }}>Business metrics • Hicks Team • Camp Hill</p>
+          <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Dashboard</h3>
+          <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem', whiteSpace: 'nowrap' }}>Hicks Team • Camp Hill{syncing ? ' • syncing…' : ''}</p>
         </div>
-        {syncing && <span style={{ color: '#a0a0b0', fontSize: '0.8rem' }}>⏳ Syncing...</span>}
         <button onClick={() => { setDraft(goals); setEditing(true) }}
-          style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.5rem 1rem', color: '#a0a0b0', cursor: 'pointer', fontSize: '0.85rem' }}>
-          ✏️ Edit Goals
+          style={{ background: 'transparent', border: 'none', color: '#475569', cursor: 'pointer', fontSize: '0.78rem', padding: '0.25rem 0.5rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+          ✏️ <span>Edit goals</span>
         </button>
       </div>
 
