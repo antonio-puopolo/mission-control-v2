@@ -35,7 +35,7 @@ function calcStreak(workouts: Workout[]): number {
   return streak
 }
 
-function MiniLineGraph({ data, color = '#00D4AA', label = '' }: { data: number[]; color?: string; label?: string }) {
+function MiniLineGraph({ data, color = '#F59E0B', label = '' }: { data: number[]; color?: string; label?: string }) {
   if (data.length < 2) return <div style={{ color: '#555', fontSize: '0.8rem', textAlign: 'center', padding: '2rem' }}>Log more entries to see trend</div>
   const min = Math.min(...data); const max = Math.max(...data)
   const range = max - min || 1
@@ -200,19 +200,21 @@ export function Health() {
           <p style={{ color: '#a0a0b0', margin: '0.25rem 0 0' }}>Track your body, build your habits, own the process</p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <button onClick={() => setShowWorkoutModal(true)} style={{ padding: '0.6rem 1rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}>+ Workout</button>
+          <button onClick={() => setShowWorkoutModal(true)} style={{ padding: '0.6rem 1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}>+ Workout</button>
           <button onClick={() => setShowWeightModal(true)} style={{ padding: '0.6rem 1rem', background: '#1a2a3a', color: '#60a5fa', border: '1px solid #60a5fa44', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '0.85rem' }}>⚖️ Weight</button>
           <button onClick={() => setShowMetricModal(true)} style={{ padding: '0.6rem 1rem', background: '#1a1a2a', color: '#a78bfa', border: '1px solid #a78bfa44', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '0.85rem' }}>📏 Metrics</button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '0.25rem', borderBottom: '1px solid #1a1a24', paddingBottom: '0' }}>
-        {TABS.map(t => (
-          <button key={t} onClick={() => setTab(t)} style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', borderBottom: tab === t ? '2px solid #00D4AA' : '2px solid transparent', color: tab === t ? '#00D4AA' : '#666', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'capitalize', fontWeight: tab === t ? 600 : 400 }}>
-            {t}
-          </button>
-        ))}
+      <div style={{ overflowX: 'auto', borderBottom: '1px solid #1a1a24', WebkitOverflowScrolling: 'touch' }}>
+        <div style={{ display: 'flex', gap: '0.25rem', minWidth: 'max-content' }}>
+          {TABS.map(t => (
+            <button key={t} onClick={() => setTab(t)} style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', borderBottom: tab === t ? '2px solid #F59E0B' : '2px solid transparent', color: tab === t ? '#F59E0B' : '#666', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'capitalize', fontWeight: tab === t ? 600 : 400, whiteSpace: 'nowrap' }}>
+              {t}
+            </button>
+          ))}
+        </div>
       </div>
 
       {loading ? <p style={{ color: '#a0a0b0' }}>Loading...</p> : (
@@ -228,7 +230,7 @@ export function Health() {
                 {latestWeight && <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
                   <span style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>{latestWeight}</span>
                   <span style={{ color: '#a0a0b0', marginLeft: '4px' }}>kg</span>
-                  {weightChange !== null && <span style={{ marginLeft: '8px', fontSize: '0.85rem', color: weightChange < 0 ? '#00D4AA' : weightChange > 0 ? '#ff6b6b' : '#666' }}>
+                  {weightChange !== null && <span style={{ marginLeft: '8px', fontSize: '0.85rem', color: weightChange < 0 ? '#F59E0B' : weightChange > 0 ? '#ff6b6b' : '#666' }}>
                     {weightChange > 0 ? '+' : ''}{weightChange} kg
                   </span>}
                 </div>}
@@ -239,14 +241,14 @@ export function Health() {
                 <div style={cardStyle}>
                   <div style={{ color: '#a0a0b0', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>This Week</div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '2.5rem', fontWeight: 700, color: thisWeekWorkouts.length >= goals.weekly_workout_target ? '#00D4AA' : '#fff' }}>
+                    <span style={{ fontSize: '2.5rem', fontWeight: 700, color: thisWeekWorkouts.length >= goals.weekly_workout_target ? '#F59E0B' : '#fff' }}>
                       {thisWeekWorkouts.length}
                     </span>
                     <span style={{ color: '#555', marginBottom: '0.5rem' }}>/ {goals.weekly_workout_target} workouts</span>
                   </div>
                   {/* Progress bar */}
                   <div style={{ height: '6px', background: '#1a1a24', borderRadius: '999px', marginTop: '0.5rem' }}>
-                    <div style={{ height: '100%', borderRadius: '999px', background: '#00D4AA', width: `${Math.min(100, (thisWeekWorkouts.length / goals.weekly_workout_target) * 100)}%`, transition: 'width 0.5s ease' }} />
+                    <div style={{ height: '100%', borderRadius: '999px', background: '#F59E0B', width: `${Math.min(100, (thisWeekWorkouts.length / goals.weekly_workout_target) * 100)}%`, transition: 'width 0.5s ease' }} />
                   </div>
                 </div>
 
@@ -263,7 +265,7 @@ export function Health() {
                     <div style={{ color: '#a0a0b0', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Weight Goal</div>
                     <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>
                       {latestWeight} → {goals.weight_goal_kg} kg
-                      <span style={{ marginLeft: '8px', color: '#00D4AA', fontSize: '0.85rem' }}>
+                      <span style={{ marginLeft: '8px', color: '#F59E0B', fontSize: '0.85rem' }}>
                         {Math.abs(+(latestWeight - goals.weight_goal_kg).toFixed(1))} kg to go
                       </span>
                     </div>
@@ -305,7 +307,7 @@ export function Health() {
                     {w.notes && <div style={{ color: '#a0a0b0', fontSize: '0.82rem', marginTop: '0.2rem' }}>{w.notes}</div>}
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: '1rem' }}>
-                    <div style={{ color: '#00D4AA', fontWeight: 600 }}>{w.duration_mins} min</div>
+                    <div style={{ color: '#F59E0B', fontWeight: 600 }}>{w.duration_mins} min</div>
                     <div style={{ color: '#555', fontSize: '0.78rem' }}>{new Date(w.logged_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</div>
                   </div>
                 </div>
@@ -328,7 +330,7 @@ export function Health() {
                   <div key={w.id} style={{ ...cardStyle, textAlign: 'center', borderLeft: i === 0 ? '3px solid #60a5fa' : '3px solid #1a1a24' }}>
                     <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{w.weight_kg}<span style={{ fontSize: '0.8rem', color: '#a0a0b0' }}>kg</span></div>
                     <div style={{ color: '#555', fontSize: '0.75rem', marginTop: '0.25rem' }}>{new Date(w.logged_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</div>
-                    {i > 0 && (() => { const diff = +(w.weight_kg - weights[i-1].weight_kg).toFixed(1); return <div style={{ fontSize: '0.75rem', color: diff < 0 ? '#00D4AA' : diff > 0 ? '#ff6b6b' : '#555' }}>{diff > 0 ? '+' : ''}{diff}kg</div> })()}
+                    {i > 0 && (() => { const diff = +(w.weight_kg - weights[i-1].weight_kg).toFixed(1); return <div style={{ fontSize: '0.75rem', color: diff < 0 ? '#F59E0B' : diff > 0 ? '#ff6b6b' : '#555' }}>{diff > 0 ? '+' : ''}{diff}kg</div> })()}
                   </div>
                 ))}
               </div>
@@ -384,7 +386,7 @@ export function Health() {
                 <div style={cardStyle}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
                     <h4 style={{ margin: 0 }}>Fitness Goals</h4>
-                    <button onClick={() => setEditingGoals(true)} style={{ padding: '0.4rem 0.75rem', background: '#1a2a3a', color: '#00D4AA', border: '1px solid #00D4AA44', borderRadius: '6px', cursor: 'pointer', fontSize: '0.8rem' }}>✏️ Edit</button>
+                    <button onClick={() => setEditingGoals(true)} style={{ padding: '0.4rem 0.75rem', background: '#1a2a3a', color: '#F59E0B', border: '1px solid #F59E0B44', borderRadius: '6px', cursor: 'pointer', fontSize: '0.8rem' }}>✏️ Edit</button>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -415,7 +417,7 @@ export function Health() {
                       <textarea style={{ ...inputStyle, minHeight: '80px', resize: 'vertical' }} value={goalDraft.goal_notes || ''} onChange={e => setGoalDraft({...goalDraft, goal_notes: e.target.value})} placeholder="e.g. Get lean before winter" />
                     </div>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
-                      <button onClick={saveGoals} style={{ flex: 1, padding: '0.7rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer' }}>Save Goals</button>
+                      <button onClick={saveGoals} style={{ flex: 1, padding: '0.7rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer' }}>Save Goals</button>
                       <button onClick={() => setEditingGoals(false)} style={{ padding: '0.7rem 1rem', background: 'transparent', color: '#a0a0b0', border: '1px solid #333', borderRadius: '6px', cursor: 'pointer' }}>Cancel</button>
                     </div>
                   </div>
@@ -444,7 +446,7 @@ export function Health() {
                   {MUSCLE_GROUPS.map(m => {
                     const active = wMuscles.includes(m)
                     return <button key={m} type="button" onClick={() => setWMuscles(prev => active ? prev.filter(x => x !== m) : [...prev, m])}
-                      style={{ padding: '0.35rem 0.75rem', borderRadius: '20px', border: active ? '1px solid #00D4AA' : '1px solid #333', background: active ? 'rgba(0,212,170,0.15)' : 'transparent', color: active ? '#00D4AA' : '#666', cursor: 'pointer', fontSize: '0.8rem', fontFamily: 'inherit', transition: 'all 0.15s' }}>
+                      style={{ padding: '0.35rem 0.75rem', borderRadius: '20px', border: active ? '1px solid #F59E0B' : '1px solid #333', background: active ? 'rgba(0,212,170,0.15)' : 'transparent', color: active ? '#F59E0B' : '#666', cursor: 'pointer', fontSize: '0.8rem', fontFamily: 'inherit', transition: 'all 0.15s' }}>
                       {m}
                     </button>
                   })}
@@ -460,7 +462,7 @@ export function Health() {
               </div>
               <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
                 <button onClick={() => setShowWorkoutModal(false)} style={{ flex: 1, padding: '0.75rem', background: 'transparent', color: '#a0a0b0', border: '1px solid #333', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
-                <button onClick={logWorkout} disabled={!wDuration} style={{ flex: 2, padding: '0.75rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', opacity: !wDuration ? 0.5 : 1 }}>Log It ✓</button>
+                <button onClick={logWorkout} disabled={!wDuration} style={{ flex: 2, padding: '0.75rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', opacity: !wDuration ? 0.5 : 1 }}>Log It ✓</button>
               </div>
             </div>
           </div>
