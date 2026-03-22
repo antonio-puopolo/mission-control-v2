@@ -133,30 +133,30 @@ export function Projects() {
       {showForm && (
         <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="Project title"
-            style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box' }} />
+            style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box' }} />
           <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Description / next steps..." rows={3}
-            style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box', resize: 'vertical' }} />
+            style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box', resize: 'vertical' }} />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
             <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value as Category })}
-              style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
+              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
               <option value="mc-build">MC Build</option>
               <option value="business">Business</option>
               <option value="personal">Personal</option>
             </select>
             <select value={form.priority} onChange={e => setForm({ ...form, priority: e.target.value as Priority })}
-              style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
+              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
               <option value="high">High</option>
               <option value="medium">Medium</option>
               <option value="low">Low</option>
             </select>
             <select value={form.status} onChange={e => setForm({ ...form, status: e.target.value as Status })}
-              style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
+              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
               <option value="backlog">Backlog</option>
               <option value="in-progress">In Progress</option>
               <option value="done">Done</option>
             </select>
             <input type="date" value={form.due_date} onChange={e => setForm({ ...form, due_date: e.target.value })}
-              style={{ background: '#0f0f14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }} />
+              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }} />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button onClick={saveProject} style={{ background: '#F59E0B', color: '#080c14', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>

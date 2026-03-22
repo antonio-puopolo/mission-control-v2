@@ -55,14 +55,14 @@ export function Calendar() {
 
       {/* Today */}
       <div>
-        <h3 style={{ color: '#00D4AA', marginBottom: '0.75rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+        <h3 style={{ color: '#F59E0B', marginBottom: '0.75rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
           Today — {today.length} event{today.length !== 1 ? 's' : ''}
         </h3>
         {today.length === 0 ? (
           <div style={{ color: '#a0a0b0', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', padding: '1rem', textAlign: 'center' }}>No events today 🎉</div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {today.map((e, i) => <EventCard key={i} event={e} accent="#00D4AA" />)}
+            {today.map((e, i) => <EventCard key={i} event={e} accent="#F59E0B" />)}
           </div>
         )}
       </div>

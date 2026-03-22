@@ -134,7 +134,7 @@ export function Dashboard() {
       {/* Edit Goals Modal */}
       {editing && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: '#0a0a10', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '480px', margin: '1rem' }}>
+          <div style={{ background: '#080c14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '480px', margin: '1rem' }}>
             <h3 style={{ margin: '0 0 1.5rem' }}>Edit Goals & Metrics</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {([
@@ -149,13 +149,13 @@ export function Dashboard() {
                   <label style={{ display: 'block', fontSize: '0.8rem', color: '#a0a0b0', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</label>
                   <input type="number" value={draft[key]}
                     onChange={e => setDraft({ ...draft, [key]: parseFloat(e.target.value) || 0 })}
-                    style={{ width: '100%', background: '#050508', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.6rem 0.75rem', color: '#fff', fontFamily: 'inherit', boxSizing: 'border-box' }} />
+                    style={{ width: '100%', background: '#080c14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.6rem 0.75rem', color: '#fff', fontFamily: 'inherit', boxSizing: 'border-box' }} />
                 </div>
               ))}
             </div>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
               <button onClick={() => setEditing(false)} style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.75rem', color: '#fff', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
-              <button onClick={saveGoals} style={{ flex: 1, background: '#00D4AA', border: 'none', borderRadius: '8px', padding: '0.75rem', color: '#050508', cursor: 'pointer', fontWeight: '700', fontFamily: 'inherit' }}>Save</button>
+              <button onClick={saveGoals} style={{ flex: 1, background: '#F59E0B', border: 'none', borderRadius: '8px', padding: '0.75rem', color: '#080c14', cursor: 'pointer', fontWeight: '700', fontFamily: 'inherit' }}>Save</button>
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@ export function Dashboard() {
 
       {/* Metric Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '1rem' }}>
-        <MetricCard label="GCI This Quarter" value={`$${goals.gciCurrent.toLocaleString()}`} sub={`Target: $${goals.gciTarget.toLocaleString()}`} percent={pct(goals.gciCurrent, goals.gciTarget)} color="#00D4AA" />
+        <MetricCard label="GCI This Quarter" value={`$${goals.gciCurrent.toLocaleString()}`} sub={`Target: $${goals.gciTarget.toLocaleString()}`} percent={pct(goals.gciCurrent, goals.gciTarget)} color="#F59E0B" />
         <MetricCard label="Listings" value={goals.listingsCurrent.toString()} sub={`Target: ${goals.listingsTarget}/qtr`} percent={pct(goals.listingsCurrent, goals.listingsTarget)} color="#6c63ff" />
         <MetricCard label="LAPs" value={goals.lapsCurrent.toString()} sub={`Target: ${goals.lapsTarget}/qtr · ${lapsLoading ? '...' : laps.length} in tracker`} percent={pct(goals.lapsCurrent, goals.lapsTarget)} color="#ffa502" />
         <MetricCard label="Points (Month)" value={pointsThisMonth.toString()} sub="Target: 250 pts" percent={pct(pointsThisMonth, 250)} color="#ff6b6b" />
@@ -175,7 +175,7 @@ export function Dashboard() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '1rem' }}>
           <StatusBox label="In Progress" count={lapsByStatus.lap} color="#ffa502" />
           <StatusBox label="Listed" count={lapsByStatus.listed} color="#6c63ff" />
-          <StatusBox label="Sold" count={lapsByStatus.sold} color="#00D4AA" />
+          <StatusBox label="Sold" count={lapsByStatus.sold} color="#F59E0B" />
         </div>
       </div>
 
@@ -189,12 +189,12 @@ export function Dashboard() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {todayActivity.slice(0, 5).map(act => (
-              <div key={act.id} style={{ background: 'rgba(255,255,255,0.03)', padding: '0.75rem 1rem', borderRadius: '8px', borderLeft: '3px solid #00D4AA', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={act.id} style={{ background: 'rgba(255,255,255,0.03)', padding: '0.75rem 1rem', borderRadius: '8px', borderLeft: '3px solid #F59E0B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <div style={{ fontSize: '0.9rem' }}>{act.activity_type}</div>
                   {act.description && <div style={{ color: '#a0a0b0', fontSize: '0.8rem', marginTop: '0.2rem' }}>{act.description}</div>}
                 </div>
-                <span style={{ color: '#00D4AA', fontWeight: '600', fontSize: '0.85rem' }}>+{act.points_awarded} pts</span>
+                <span style={{ color: '#F59E0B', fontWeight: '600', fontSize: '0.85rem' }}>+{act.points_awarded} pts</span>
               </div>
             ))}
           </div>

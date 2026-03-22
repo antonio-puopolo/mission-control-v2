@@ -187,8 +187,8 @@ export function Health() {
     setGoals(goalDraft); setEditingGoals(false)
   }
 
-  const inputStyle: React.CSSProperties = { padding: '0.6rem 0.75rem', background: '#0a0a10', border: '1px solid #333', borderRadius: '6px', color: '#fff', fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' }
-  const cardStyle: React.CSSProperties = { background: '#0f0f14', borderRadius: '12px', padding: '1.25rem' }
+  const inputStyle: React.CSSProperties = { padding: '0.6rem 0.75rem', background: '#080c14', border: '1px solid #333', borderRadius: '6px', color: '#fff', fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' }
+  const cardStyle: React.CSSProperties = { background: '#0d1320', borderRadius: '12px', padding: '1.25rem' }
   const TABS = ['overview', 'workouts', 'weight', 'metrics', 'goals'] as const
 
   return (
@@ -431,7 +431,7 @@ export function Health() {
       {/* Log Workout Modal */}
       {showWorkoutModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: '#0a0a10', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '420px', margin: '1rem' }}>
+          <div style={{ background: '#080c14', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '420px', margin: '1rem' }}>
             <h3 style={{ margin: '0 0 1.5rem' }}>💪 Log Workout</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
@@ -472,7 +472,7 @@ export function Health() {
       {/* Log Weight Modal */}
       {showWeightModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: '#0a0a10', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '360px', margin: '1rem' }}>
+          <div style={{ background: '#080c14', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '360px', margin: '1rem' }}>
             <h3 style={{ margin: '0 0 1.5rem' }}>⚖️ Log Weight</h3>
             <div>
               <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.3rem' }}>WEIGHT (KG)</label>
@@ -489,7 +489,7 @@ export function Health() {
       {/* Log Metrics Modal */}
       {showMetricModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: '#0a0a10', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '420px', margin: '1rem' }}>
+          <div style={{ background: '#080c14', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '420px', margin: '1rem' }}>
             <h3 style={{ margin: '0 0 1.5rem' }}>📏 Log Body Measurements</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               {[['CHEST (CM)', 'chest_cm'], ['WAIST (CM)', 'waist_cm'], ['HIPS (CM)', 'hips_cm'], ['ARMS (CM)', 'arms_cm'], ['LEGS (CM)', 'legs_cm'], ['BODY FAT (%)', 'body_fat_pct']].map(([label, key]) => (

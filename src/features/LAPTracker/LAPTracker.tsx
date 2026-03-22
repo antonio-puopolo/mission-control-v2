@@ -9,7 +9,7 @@ const PRIORITIES = ['urgent', 'high', 'normal', 'low'] as const
 
 const PIPELINE_SECTIONS = [
   { value: 'under_construction', label: '🏗️ Under Construction', color: '#a78bfa' },
-  { value: 'pipeline_a', label: '🔥 Pipeline A (1–3 months)', color: '#00D4AA' },
+  { value: 'pipeline_a', label: '🔥 Pipeline A (1–3 months)', color: '#F59E0B' },
   { value: 'pipeline_b', label: '📋 Pipeline B (3–6 months)', color: '#60a5fa' },
   { value: 'pipeline_c', label: '🕐 Pipeline C (6+ months)', color: '#f59e0b' },
 ]
@@ -20,7 +20,7 @@ function getSectionTag(section?: string | null) {
 const PRIORITY_COLORS: Record<string, string> = {
   urgent: '#ff4444',
   high: '#ff9500',
-  normal: '#00D4AA',
+  normal: '#F59E0B',
   low: '#666',
 }
 
@@ -103,7 +103,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
 
   const inputStyle = {
     padding: '0.5rem',
-    background: '#0a0a10',
+    background: '#080c14',
     border: '1px solid #333',
     borderRadius: '4px',
     color: '#fff',
@@ -114,7 +114,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
 
   return (
     <div style={{
-      background: '#0f0f14',
+      background: '#0d1320',
       borderRadius: '8px',
       borderLeft: `4px solid ${priorityColor}`,
       overflow: 'hidden',
@@ -172,7 +172,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
         )}
 
         {lap.next_action && (
-          <p style={{ margin: '0.5rem 0 0', fontSize: '0.8rem', color: '#00D4AA' }}>
+          <p style={{ margin: '0.5rem 0 0', fontSize: '0.8rem', color: '#F59E0B' }}>
             → {lap.next_action}
           </p>
         )}
@@ -191,7 +191,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
               </div>
 
               {lap.note_text && (
-                <div style={{ marginBottom: '1rem', padding: '0.75rem', background: '#141e1e', borderRadius: '6px', fontSize: '0.85rem', color: '#c0c0d0', lineHeight: 1.5 }}>
+                <div style={{ marginBottom: '1rem', padding: '0.75rem', background: '#0d1320', borderRadius: '6px', fontSize: '0.85rem', color: '#c0c0d0', lineHeight: 1.5 }}>
                   {lap.note_text}
                 </div>
               )}
@@ -202,14 +202,14 @@ function LapCard({ lap, onUpdate, onDelete }: {
                   value={lap.status}
                   onChange={(e) => onUpdate(lap.id, { status: e.target.value as Status })}
                   onClick={(e) => e.stopPropagation()}
-                  style={{ padding: '0.5rem', background: '#141e1e', border: '1px solid #333', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.85rem' }}
+                  style={{ padding: '0.5rem', background: '#0d1320', border: '1px solid #333', borderRadius: '4px', color: '#fff', cursor: 'pointer', fontSize: '0.85rem' }}
                 >
                   {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
 
                 <button
                   onClick={(e) => { e.stopPropagation(); setDraft({ address: lap.address||'', client_name: lap.client_name||'', follow_up_date: lap.follow_up_date||'', phone: lap.phone||'', email: lap.email||'', price_expectation: lap.price_expectation||'', priority: lap.priority||'normal', next_action: lap.next_action||'', note_text: lap.note_text||'', pipeline_section: lap.pipeline_section||'pipeline_b' }); setEditing(true) }}
-                  style={{ padding: '0.5rem 1rem', background: '#1a2a3a', color: '#00D4AA', border: '1px solid #00D4AA44', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
+                  style={{ padding: '0.5rem 1rem', background: '#1a2a3a', color: '#F59E0B', border: '1px solid #F59E0B44', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
                 >
                   ✏️ Edit
                 </button>
@@ -279,7 +279,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
               </div>
 
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button onClick={save} style={{ padding: '0.6rem 1.5rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}>
+                <button onClick={save} style={{ padding: '0.6rem 1.5rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}>
                   Save
                 </button>
                 <button onClick={() => setEditing(false)} style={{ padding: '0.6rem 1rem', background: 'transparent', color: '#a0a0b0', border: '1px solid #333', borderRadius: '4px', cursor: 'pointer' }}>
@@ -344,7 +344,7 @@ export function LAPTracker() {
 
   const inputStyle = {
     padding: '0.75rem',
-    background: '#141e1e',
+    background: '#0d1320',
     border: '1px solid #333',
     borderRadius: '4px',
     color: '#fff',
@@ -363,7 +363,7 @@ export function LAPTracker() {
         </div>
         <button
           onClick={() => setIsCreating(!isCreating)}
-          style={{ padding: '0.75rem 1.5rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '4px', fontWeight: '600', cursor: 'pointer' }}
+          style={{ padding: '0.75rem 1.5rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '4px', fontWeight: '600', cursor: 'pointer' }}
         >
           {isCreating ? '✕ Cancel' : '+ New LAP'}
         </button>
@@ -379,7 +379,7 @@ export function LAPTracker() {
 
       {/* Create Form */}
       {isCreating && (
-        <div style={{ background: '#0f0f14', padding: '1.5rem', borderRadius: '8px' }}>
+        <div style={{ background: '#0d1320', padding: '1.5rem', borderRadius: '8px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
             <input type="text" placeholder="Client Name *" value={newLap.client_name} onChange={(e) => setNewLap({ ...newLap, client_name: e.target.value })} style={inputStyle} />
             <input type="text" placeholder="Address *" value={newLap.address} onChange={(e) => setNewLap({ ...newLap, address: e.target.value })} style={inputStyle} />
@@ -391,7 +391,7 @@ export function LAPTracker() {
             <select value={newLap.pipeline_section} onChange={(e) => setNewLap({ ...newLap, pipeline_section: e.target.value })} style={inputStyle}>
               {PIPELINE_SECTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
             </select>
-            <button onClick={handleCreate} disabled={isCreatingLap} style={{ padding: '0.75rem', background: '#00D4AA', color: '#000', border: 'none', borderRadius: '4px', fontWeight: '600', cursor: 'pointer', opacity: isCreatingLap ? 0.5 : 1 }}>
+            <button onClick={handleCreate} disabled={isCreatingLap} style={{ padding: '0.75rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '4px', fontWeight: '600', cursor: 'pointer', opacity: isCreatingLap ? 0.5 : 1 }}>
               {isCreatingLap ? 'Creating...' : 'Create LAP'}
             </button>
           </div>
@@ -401,14 +401,14 @@ export function LAPTracker() {
       {/* Status Tabs */}
       <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid #333', paddingBottom: '1rem' }}>
         {STATUSES.map((status) => (
-          <button key={status} onClick={() => setActiveStatus(status)} style={{ padding: '0.5rem 1rem', background: activeStatus === status ? 'rgba(0, 212, 170, 0.2)' : 'transparent', color: activeStatus === status ? '#00D4AA' : '#a0a0b0', border: 'none', cursor: 'pointer', borderBottom: activeStatus === status ? '2px solid #00D4AA' : 'none', transition: 'all 0.2s ease' }}>
+          <button key={status} onClick={() => setActiveStatus(status)} style={{ padding: '0.5rem 1rem', background: activeStatus === status ? 'rgba(0, 212, 170, 0.2)' : 'transparent', color: activeStatus === status ? '#F59E0B' : '#a0a0b0', border: 'none', cursor: 'pointer', borderBottom: activeStatus === status ? '2px solid #F59E0B' : 'none', transition: 'all 0.2s ease' }}>
             {status} ({activeStatus === status ? filtered.length : '•'})
           </button>
         ))}
       </div>
 
       {/* Search */}
-      <input type="text" placeholder="Search by address or client name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: '0.75rem 1rem', background: '#0f0f14', border: '1px solid #333', borderRadius: '4px', color: '#fff', fontFamily: 'inherit', width: '100%' }} />
+      <input type="text" placeholder="Search by address or client name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: '0.75rem 1rem', background: '#0d1320', border: '1px solid #333', borderRadius: '4px', color: '#fff', fontFamily: 'inherit', width: '100%' }} />
 
       {/* LAPs List */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: '1rem' }}>
