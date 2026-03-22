@@ -162,7 +162,7 @@ export function Dashboard() {
       )}
 
       {/* Metric Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '1rem' }}>
         <MetricCard label="GCI This Quarter" value={`$${goals.gciCurrent.toLocaleString()}`} sub={`Target: $${goals.gciTarget.toLocaleString()}`} percent={pct(goals.gciCurrent, goals.gciTarget)} color="#00D4AA" />
         <MetricCard label="Listings" value={goals.listingsCurrent.toString()} sub={`Target: ${goals.listingsTarget}/qtr`} percent={pct(goals.listingsCurrent, goals.listingsTarget)} color="#6c63ff" />
         <MetricCard label="LAPs" value={goals.lapsCurrent.toString()} sub={`Target: ${goals.lapsTarget}/qtr · ${lapsLoading ? '...' : laps.length} in tracker`} percent={pct(goals.lapsCurrent, goals.lapsTarget)} color="#ffa502" />
@@ -172,7 +172,7 @@ export function Dashboard() {
       {/* LAP Status Breakdown */}
       <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: '1.5rem' }}>
         <h3 style={{ margin: '0 0 1rem' }}>LAP Pipeline</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '1rem' }}>
           <StatusBox label="In Progress" count={lapsByStatus.lap} color="#ffa502" />
           <StatusBox label="Listed" count={lapsByStatus.listed} color="#6c63ff" />
           <StatusBox label="Sold" count={lapsByStatus.sold} color="#00D4AA" />

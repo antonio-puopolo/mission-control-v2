@@ -184,7 +184,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
           {!editing ? (
             // View mode
             <div style={{ paddingTop: '1rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem', marginBottom: '1rem' }}>
                 {lap.phone && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>PHONE</span><div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.2rem' }}><p style={{ margin: 0, fontSize: '0.9rem' }}>{lap.phone}</p><a href={`tel:${lap.phone.replace(/\s/g, '')}`} onClick={e => e.stopPropagation()} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.2rem 0.6rem', background: '#1a3a2a', border: '1px solid #00ff9d44', borderRadius: '4px', color: '#00ff9d', fontSize: '0.75rem', textDecoration: 'none', fontWeight: 600, letterSpacing: '0.03em' }}>📞 Call</a></div></div>}
                 {lap.email && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>EMAIL</span><p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{lap.email}</p></div>}
                 {lap.price_expectation && <div><span style={{ color: '#666', fontSize: '0.75rem' }}>PRICE EXPECTATION</span><p style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{lap.price_expectation}</p></div>}
@@ -225,7 +225,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
           ) : (
             // Edit mode
             <div style={{ paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
                 <div>
                   <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.25rem' }}>CLIENT NAME</label>
                   <input style={inputStyle} value={draft.client_name} onChange={e => setDraft({...draft, client_name: e.target.value})} />
@@ -411,7 +411,7 @@ export function LAPTracker() {
       <input type="text" placeholder="Search by address or client name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: '0.75rem 1rem', background: '#0f0f14', border: '1px solid #333', borderRadius: '4px', color: '#fff', fontFamily: 'inherit', width: '100%' }} />
 
       {/* LAPs List */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: '1rem' }}>
         {isLoading ? (
           <p style={{ color: '#a0a0b0' }}>Loading...</p>
         ) : filtered.length === 0 ? (
