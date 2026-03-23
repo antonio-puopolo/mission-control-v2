@@ -118,7 +118,7 @@ export function Dashboard() {
     sold: laps.filter(l => l.status === 'Sold').length,
   }
 
-  const todayActivity = activity.filter(a => new Date(a.created_at).toDateString() === new Date().toDateString())
+  const todayActivity = (activity ?? []).filter(a => new Date(a.created_at).toDateString() === new Date().toDateString())
 
   const pct = (cur: number, tar: number) => tar > 0 ? Math.min(Math.round((cur / tar) * 100), 100) : 0
 

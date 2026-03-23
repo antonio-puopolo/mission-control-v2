@@ -56,7 +56,7 @@ export const useActivityThisWeek = () => {
         .order('created_at', { ascending: false })
 
       if (error) throw error
-      return data as ActivityRecord[]
+      return (data ?? []) as ActivityRecord[]
     },
     staleTime: 5 * 60 * 1000,
   })
