@@ -120,7 +120,7 @@ function getMonday() {
 
 export const useWeeklyKPIs = () => {
   return useQuery({
-    queryKey: activityKeys.thisWeek(),
+    queryKey: [...activityKeys.lists(), 'weeklyKpis'],
     queryFn: async () => {
       const monday = getMonday()
       const sunday = new Date(monday)
@@ -135,9 +135,10 @@ export const useWeeklyKPIs = () => {
 
       if (error) throw error
 
-      const bap = data.filter(r => r.activity_type === 'BAP').length
-      const map = data.filter(r => r.activity_type === 'MAP').length
-      const lap = data.filter(r => r.activity_type === 'LAP').length
+      const records = data ?? []
+      const bap = records.filter(r => r.activity_type === 'BAP').length
+      const map = records.filter(r => r.activity_type === 'MAP').length
+      const lap = records.filter(r => r.activity_type === 'LAP').length
       return { bap, map, lap }
     },
     staleTime: 1 * 60 * 1000,
