@@ -16,6 +16,8 @@
   "dependencies": {
     "@11labs/react": "^0.2.0",
     "@elevenlabs/client": "^0.15.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "@supabase/supabase-js": "^2.98.0",
     "@tanstack/react-query": "^5.90.21",
     "@types/three": "^0.183.1",

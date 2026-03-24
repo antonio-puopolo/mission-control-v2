@@ -1,6 +1,8 @@
 import { useConversation } from '@11labs/react';
 import { useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { GeorgeOrb } from './GeorgeOrb';
+import type { OrbStatus } from './GeorgeOrb';
 
 const AGENT_ID = 'agent_9501kk0dwrjheyy8qwbkxwznm8jr';
 
@@ -39,6 +41,13 @@ export function VoiceHamm() {
 
   const isConnected = conversation.status === 'connected';
   const isSpeaking = conversation.isSpeaking;
+
+  // Map conversation state to orb visual state
+  const orbStatus: OrbStatus = !isConnected
+    ? 'idle'
+    : isSpeaking
+    ? 'speaking'
+    : 'listening';
 
   const button = (
     <div
@@ -83,27 +92,12 @@ export function VoiceHamm() {
           </div>
         )}
 
-        {/* Main button */}
-        <button
+        {/* George Orb — replaces the pig button; orb state speaks for itself */}
+        <GeorgeOrb
+          status={orbStatus}
           onClick={isOpen ? stopConversation : startConversation}
-          title={isOpen ? 'End conversation' : 'Talk to Hamm'}
-          className={`
-            w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl
-            transition-all duration-200 active:scale-90
-            ${isOpen
-              ? 'bg-red-600 ring-2 ring-red-400/50'
-              : 'bg-gray-800 ring-2 ring-emerald-500/60 hover:ring-emerald-400'
-            }
-            ${isConnected && !isSpeaking ? 'ring-2 ring-blue-400/50 animate-pulse' : ''}
-          `}
-        >
-          {isOpen ? '✕' : '🐷'}
-        </button>
-
-        {/* Label */}
-        {!isOpen && (
-          <span className="text-xs text-gray-500 font-medium">Talk to George</span>
-        )}
+          size={80}
+        />
       </div>
   );
 

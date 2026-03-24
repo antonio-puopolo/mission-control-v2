@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 type Priority = 'high' | 'medium' | 'low'
 type Status = 'backlog' | 'in-progress' | 'done'
-type Category = 'mc-build' | 'business' | 'personal'
+type Category = 'mc-build' | 'business' | 'personal' | 'hamm'
 
 interface Project {
   id: string
@@ -43,6 +43,7 @@ const categoryLabels: Record<Category, { label: string; color: string }> = {
   'mc-build': { label: 'MC Build', color: '#6c63ff' },
   'business': { label: 'Business', color: '#F59E0B' },
   'personal': { label: 'Personal', color: '#ffa502' },
+  'hamm': { label: 'Hamm 🐷', color: '#F97316' },
 }
 
 const columns: { id: Status; label: string }[] = [
@@ -50,6 +51,12 @@ const columns: { id: Status; label: string }[] = [
   { id: 'in-progress', label: 'In Progress' },
   { id: 'done', label: 'Done' },
 ]
+
+const statusColors: Record<Status, { bg: string; text: string }> = {
+  'backlog': { bg: 'rgba(255,255,255,0.06)', text: '#a0a0b0' },
+  'in-progress': { bg: 'rgba(96, 165, 250, 0.1)', text: '#60a5fa' },
+  'done': { bg: 'rgba(74, 222, 128, 0.1)', text: '#4ade80' },
+}
 
 const emptyForm = { title: '', description: '', category: 'business' as Category, priority: 'medium' as Priority, status: 'backlog' as Status, due_date: '' }
 
@@ -115,6 +122,9 @@ export function Projects() {
     setShowForm(true)
   }
 
+  const hammProjects = projects.filter(p => p.category === 'hamm')
+  const mainProjects = projects.filter(p => p.category !== 'hamm')
+
   if (loading) return <div style={{ color: '#a0a0b0', textAlign: 'center', padding: '3rem' }}>Loading projects...</div>
 
   return (
@@ -170,17 +180,41 @@ export function Projects() {
         </div>
       )}
 
+      {hammProjects.length > 0 && (
+        <div style={{ border: '1px solid rgba(249, 115, 22, 0.3)', borderRadius: '12px', padding: '1rem 1.25rem', background: 'rgba(249, 115, 22, 0.04)', boxShadow: '0 0 20px rgba(249, 115, 22, 0.06)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.9rem' }}>
+            <h3 style={{ margin: 0, fontSize: '0.85rem', fontWeight: 600, color: '#F97316', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Hamm's Goals 🐷</h3>
+            <span style={{ background: 'rgba(249, 115, 22, 0.15)', color: '#F97316', borderRadius: '999px', padding: '0.1rem 0.5rem', fontSize: '0.72rem' }}>{hammProjects.length}</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '0.65rem' }}>
+            {hammProjects.map(p => {
+              const sc = statusColors[p.status]
+              return (
+                <div key={p.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(249, 115, 22, 0.18)', borderRadius: '8px', padding: '0.75rem', borderLeft: `3px solid ${priorityColors[p.priority]}` }}>
+                  <div style={{ fontWeight: '600', fontSize: '0.88rem', marginBottom: '0.25rem' }}>{p.title}</div>
+                  {p.description && <div style={{ color: '#a0a0b0', fontSize: '0.78rem', marginBottom: '0.5rem', lineHeight: '1.4' }}>{p.description}</div>}
+                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                    <span style={{ background: `${priorityColors[p.priority]}22`, color: priorityColors[p.priority], borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.priority}</span>
+                    <span style={{ background: sc.bg, color: sc.text, borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.status}</span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
         {columns.map(col => (
           <div key={col.id} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '1rem', minHeight: '200px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <h3 style={{ margin: 0, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#a0a0b0' }}>{col.label}</h3>
               <span style={{ background: 'rgba(255,255,255,0.08)', borderRadius: '999px', padding: '0.1rem 0.5rem', fontSize: '0.75rem', color: '#a0a0b0' }}>
-                {projects.filter(p => p.status === col.id).length}
+                {mainProjects.filter(p => p.status === col.id).length}
               </span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {projects.filter(p => p.status === col.id).map(p => {
+              {mainProjects.filter(p => p.status === col.id).map(p => {
                 const cat = categoryLabels[p.category] || { label: p.category, color: '#a0a0b0' }
                 const isOverdue = p.due_date && new Date(p.due_date) < new Date() && p.status !== 'done'
                 return (

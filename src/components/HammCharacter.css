@@ -1,251 +1,33 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background: #0d0d0f;
-  overflow: hidden;
+  background: #0a0a0c;
   font-family: 'Segoe UI', system-ui, sans-serif;
+  overflow: hidden;
 }
 
 .hamm-root {
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(ellipse at 50% 30%, #0f1829 0%, #0d0d0f 65%);
+  background: radial-gradient(ellipse at 50% 42%, #0f1117 0%, #0a0a0c 70%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.8rem;
+  gap: 2rem;
   color: #fff;
   position: relative;
-  overflow: hidden;
 }
 
-/* Subtle grid */
-.hamm-root::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
-  background-size: 50px 50px;
-  pointer-events: none;
-}
-
-/* ── Avatar ── */
-.hamm-avatar-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 180px;
-  height: 180px;
-}
-
-.hamm-avatar {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  object-fit: cover;
-  position: relative;
-  z-index: 2;
-  border: 3px solid rgba(255,255,255,0.08);
-  transition: box-shadow 0.4s ease, border-color 0.4s ease;
-}
-
-.hamm-avatar.listening {
-  border-color: rgba(0,212,255,0.4);
-  box-shadow: 0 0 30px rgba(0,212,255,0.25);
-  animation: float 3s ease-in-out infinite;
-}
-
-.hamm-avatar.speaking {
-  border-color: rgba(0,212,255,0.7);
-  box-shadow: 0 0 50px rgba(0,212,255,0.4);
-  animation: float-speaking 0.5s ease-in-out infinite;
-}
-
-.hamm-avatar.idle {
-  animation: float 5s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes float-speaking {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-4px) scale(1.02); }
-}
-
-/* Pulse rings */
-.hamm-avatar-ring {
-  position: absolute;
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(0,212,255,0);
-  transition: all 0.4s ease;
-  z-index: 1;
-}
-
-.hamm-avatar-ring-2 {
-  width: 190px;
-  height: 190px;
-}
-
-.hamm-avatar-ring.listening {
-  border-color: rgba(0,212,255,0.25);
-  animation: ring-pulse 2s ease-out infinite;
-}
-.hamm-avatar-ring-2.listening {
-  border-color: rgba(0,212,255,0.12);
-  animation: ring-pulse 2s ease-out 0.6s infinite;
-}
-
-.hamm-avatar-ring.speaking {
-  border-color: rgba(0,212,255,0.5);
-  animation: ring-pulse-fast 1s ease-out infinite;
-}
-.hamm-avatar-ring-2.speaking {
-  border-color: rgba(0,212,255,0.25);
-  animation: ring-pulse-fast 1s ease-out 0.3s infinite;
-}
-
-@keyframes ring-pulse {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-
-@keyframes ring-pulse-fast {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-
-/* ── Header ── */
-.hamm-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  z-index: 10;
-}
-
-.hamm-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: #fff;
-}
-
-.hamm-tagline {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 0.1em;
+.hamm-hint {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.18);
+  user-select: none;
 }
 
-/* ── Waveform ── */
-.hamm-waveform {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  height: 60px;
-  z-index: 10;
-}
-
-.hamm-wave-bar {
-  width: 3px;
-  border-radius: 3px;
-  transition: height 0.06s ease, opacity 0.2s ease;
-  transform-origin: center;
-}
-
-/* ── Status ── */
-.hamm-status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  z-index: 10;
-}
-
-.hamm-status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #444;
-  transition: all 0.3s ease;
-}
-
-.hamm-status-dot.listening {
-  background: #00d4ff;
-  box-shadow: 0 0 8px #00d4ff;
-  animation: dot-pulse 1.5s ease infinite;
-}
-
-.hamm-status-dot.speaking {
-  background: #00ffaa;
-  box-shadow: 0 0 8px #00ffaa;
-  animation: dot-pulse 0.6s ease infinite;
-}
-
-.hamm-status-dot.connecting {
-  background: #ff9900;
-  animation: dot-pulse 1s ease infinite;
-}
-
-@keyframes dot-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.5); }
-}
-
-/* ── Error ── */
 .hamm-error {
   font-size: 0.75rem;
-  color: #ff6b6b;
-  text-align: center;
-  z-index: 10;
-}
-
-/* ── Button ── */
-.hamm-btn {
-  padding: 0.85rem 2.8rem;
-  border-radius: 50px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  z-index: 10;
-}
-
-.hamm-btn:active { transform: scale(0.95); }
-
-.hamm-btn-start {
-  background: linear-gradient(135deg, #00d4ff, #0099cc);
-  color: #000;
-  box-shadow: 0 0 30px rgba(0,212,255,0.35);
-}
-.hamm-btn-start:hover {
-  box-shadow: 0 0 45px rgba(0,212,255,0.55);
-  transform: scale(1.04);
-}
-
-.hamm-btn-end {
-  background: linear-gradient(135deg, #ff4444, #cc2222);
-  color: #fff;
-  box-shadow: 0 0 25px rgba(255,68,68,0.3);
-}
-
-.hamm-btn-connecting {
-  background: rgba(255,153,0,0.15);
-  border: 1px solid rgba(255,153,0,0.4);
-  color: #ff9900;
-  cursor: not-allowed;
+  color: rgba(255, 100, 100, 0.7);
 }
