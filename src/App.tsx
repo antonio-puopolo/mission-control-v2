@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { LayoutDashboard, Home, FolderKanban, CalendarDays, Bot, Activity } from "lucide-react"
+import { LayoutDashboard, Home, FolderKanban, CalendarDays, Cpu, Activity } from "lucide-react"
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
-import { Agents } from '@/features/Agents/Agents'
+import { SystemDashboard } from '@/components/SystemDashboard'
 import { Health } from '@/features/Health/Health'
 import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
@@ -14,7 +14,7 @@ const tabs = [
   { id: "lap-tracker", label: "LAP Tracker", icon: Home },
   { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "calendar", label: "Calendar", icon: CalendarDays },
-  { id: "agents", label: "Agents", icon: Bot },
+  { id: "system", label: "System", icon: Cpu },
   { id: "health", label: "Health", icon: Activity },
 ]
 
@@ -103,7 +103,7 @@ function App() {
         {activeTab === 'lap-tracker' && <LAPTracker />}
         {activeTab === 'projects' && <Projects />}
         {activeTab === 'calendar' && <Calendar />}
-        {activeTab === 'agents' && <Agents />}
+        {activeTab === 'system' && <SystemDashboard />}
         {activeTab === 'health' && <Health />}
 
       </main>
