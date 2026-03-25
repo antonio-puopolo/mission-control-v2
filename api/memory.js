@@ -44,13 +44,20 @@ export default async function handler(req, res) {
   const brisbane = getBrisbaneDate();
   const today = brisbane.iso;
 
-  // Run both DB queries in parallel
-  const [lapsResult, projectsResult] = await Promise.allSettled([
+  // Run DB queries in parallel
+  const [lapsResult, urgentResult, projectsResult] = await Promise.allSettled([
     supabase
       .from('laps')
       .select('client_name, phone, address, follow_up_date, status')
       .eq('status', 'LAP')
       .order('follow_up_date', { ascending: true }),
+    supabase
+      .from('laps')
+      .select('client_name, phone, address, follow_up_date, priority, next_action, notes')
+      .lte('follow_up_date', today)
+      .order('priority', { ascending: true })
+      .order('follow_up_date', { ascending: true })
+      .limit(3),
     supabase
       .from('projects')
       .select('title, status, description')
@@ -83,6 +90,20 @@ export default async function handler(req, res) {
     };
   }
 
+  // --- urgent_laps (overdue or due today, highest priority first) ---
+  let urgent_laps = [];
+  if (urgentResult.status === 'fulfilled' && !urgentResult.value.error) {
+    urgent_laps = (urgentResult.value.data || []).map(l => ({
+      name: l.client_name,
+      phone: l.phone,
+      address: l.address,
+      priority: l.priority,
+      follow_up_date: l.follow_up_date,
+      next_action: l.next_action,
+      notes: l.notes,
+    }));
+  }
+
   // --- hamm_goals ---
   let hamm_goals = [];
   if (projectsResult.status === 'fulfilled' && !projectsResult.value.error) {
@@ -110,6 +131,7 @@ export default async function handler(req, res) {
       crm: 'REX',
     },
     lap_summary,
+    urgent_laps,
     hamm_goals,
     today: {
       date: brisbane.formatted,

@@ -130,9 +130,9 @@ function App() {
           gap: '0.4rem',
           letterSpacing: '0.03em',
         }}
-        title="Talk to Hamm"
+        title="Talk to George"
       >
-        🐷 Talk to Hamm
+        🎙️ Talk to George
       </button>
 
       <footer className="mc-footer">
