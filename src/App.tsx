@@ -13,8 +13,8 @@ import './App.css'
 const tabs = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "lap-tracker", label: "LAP Tracker", icon: Home },
-  { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "market", label: "Market", icon: TrendingUp },
+  { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "calendar", label: "Calendar", icon: CalendarDays },
   { id: "system", label: "System", icon: Cpu },
   { id: "health", label: "Health", icon: Activity },
