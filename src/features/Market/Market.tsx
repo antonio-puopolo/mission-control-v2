@@ -36,7 +36,8 @@ const H = {
 }
 
 async function fetchListings(type: string): Promise<Listing[]> {
-  const params = new URLSearchParams({ listing_type: `eq.${type}`, order: 'scraped_at.desc' })
+  const sortField = type === 'sold' ? 'sold_date.desc' : 'scraped_at.desc'
+  const params = new URLSearchParams({ listing_type: `eq.${type}`, order: sortField })
   if (type === 'sold') {
     const cutoff = new Date()
     cutoff.setDate(cutoff.getDate() - 30)
