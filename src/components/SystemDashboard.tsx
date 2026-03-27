@@ -115,7 +115,7 @@ function AgentModelsCard() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/agents-status')
+      const res = await fetch('/api/agents')
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const d = await res.json()
       setData(d)
@@ -130,7 +130,7 @@ function AgentModelsCard() {
     setOverriding(agentId)
     setDropdownOpen(null)
     try {
-      const res = await fetch('/api/agents-override', {
+      const res = await fetch('/api/agents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ agentId, model }),
@@ -155,7 +155,7 @@ function AgentModelsCard() {
   async function resetOverride(agentId: string) {
     setOverriding(agentId)
     try {
-      const res = await fetch('/api/agents-override', {
+      const res = await fetch('/api/agents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ agentId, action: 'reset' }),
