@@ -33,8 +33,9 @@ interface AgentInfo {
 
 interface AgentsStatusResponse {
   agents: AgentInfo[]
-  gateway: { running: boolean }
+  gateway: { running: boolean | null }
   defaults: { primary: string; fallbacks: string[] }
+  cloudMode?: boolean
   timestamp: string
 }
 
@@ -179,9 +180,11 @@ function AgentModelsCard() {
         <div>
           <div style={label}>Agent Models</div>
           <div style={{ color: '#94a3b8', fontSize: '0.8rem', marginTop: '0.1rem' }}>
-            {data?.gateway?.running
-              ? <span style={{ color: '#22c55e' }}>● Gateway online</span>
-              : <span style={{ color: '#ef4444' }}>● Gateway offline</span>}
+            {data?.gateway?.running === null
+              ? <span style={{ color: '#64748b' }}>● Gateway status N/A</span>
+              : data?.gateway?.running
+                ? <span style={{ color: '#22c55e' }}>● Gateway online</span>
+                : <span style={{ color: '#ef4444' }}>● Gateway offline</span>}
           </div>
         </div>
         <button

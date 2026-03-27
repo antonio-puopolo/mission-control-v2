@@ -75,12 +75,21 @@ const KNOWN_MODELS = [
 
 function readConfig() {
   const configPath = process.env.OPENCLAW_CONFIG_PATH || '/home/openclaw/.openclaw/openclaw.json';
-  const raw = readFileSync(configPath, 'utf8');
-  return { config: JSON.parse(raw), path: configPath };
+  try {
+    const raw = readFileSync(configPath, 'utf8');
+    return { config: JSON.parse(raw), path: configPath };
+  } catch {
+    // Config not accessible (e.g. running in cloud/Vercel) — return empty config
+    return { config: {}, path: configPath };
+  }
 }
 
 function writeConfig(configPath, config) {
-  writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
+  try {
+    writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
+  } catch (e) {
+    throw new Error(`Cannot write config (cloud deployment cannot modify local openclaw.json): ${e.message}`);
+  }
 }
 
 function getGatewayRunning() {
@@ -106,6 +115,7 @@ function restartGateway() {
 function handleGet(req, res) {
   try {
     const { config } = readConfig();
+    const isCloudEnv = !config || Object.keys(config).length === 0;
     const agentOverrides = config?.agents?.overrides || {};
     const defaultPrimary = config?.agents?.defaults?.model?.primary;
     const defaultFallbacks = config?.agents?.defaults?.model?.fallbacks || [];
@@ -133,8 +143,9 @@ function handleGet(req, res) {
 
     res.status(200).json({
       agents,
-      gateway: { running: getGatewayRunning() },
+      gateway: { running: isCloudEnv ? null : getGatewayRunning() },
       defaults: { primary: defaultPrimary, fallbacks: defaultFallbacks },
+      cloudMode: isCloudEnv,
       timestamp: new Date().toISOString(),
     });
   } catch (err) {
