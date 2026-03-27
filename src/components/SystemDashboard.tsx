@@ -140,7 +140,9 @@ function AgentModelsCard() {
       if (!res.ok || !result.success) throw new Error(result.error || 'Override failed')
       setOverrideMsg(prev => ({
         ...prev,
-        [agentId]: result.gatewayRestart?.ok ? '✅ Override applied + gateway restarted' : '✅ Override saved (gateway restart failed)',
+        [agentId]: agentId === 'main'
+          ? `✅ Model switched to ${shortModel(model)} — takes effect next message`
+          : `✅ Override saved for ${agentId}`,
       }))
       // Refresh agent data
       setTimeout(() => fetchAgents(), 1500)
@@ -163,7 +165,7 @@ function AgentModelsCard() {
       })
       const result = await res.json()
       if (!res.ok || !result.success) throw new Error(result.error || 'Reset failed')
-      setOverrideMsg(prev => ({ ...prev, [agentId]: '✅ Reset to defaults + gateway restarted' }))
+      setOverrideMsg(prev => ({ ...prev, [agentId]: '✅ Reset to default model — takes effect next message' }))
       setTimeout(() => fetchAgents(), 1500)
       setTimeout(() => setOverrideMsg(prev => { const n = { ...prev }; delete n[agentId]; return n }), 5000)
     } catch (e: any) {

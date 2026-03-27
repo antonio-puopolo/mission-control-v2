@@ -101,12 +101,22 @@ function getGatewayRunning() {
   }
 }
 
-function restartGateway() {
+const SENTINEL_PATH = process.env.OPENCLAW_WORKSPACE_PATH
+  ? `${process.env.OPENCLAW_WORKSPACE_PATH}/agent-model-change.json`
+  : '/home/openclaw/.openclaw/workspace/agent-model-change.json';
+
+function writeSentinel(agentId, model, previousModel) {
   try {
-    execSync('openclaw gateway restart', { timeout: 15000, stdio: 'pipe' });
-    return { ok: true };
-  } catch (e) {
-    return { ok: false, error: e.message };
+    writeFileSync(SENTINEL_PATH, JSON.stringify({
+      agentId,
+      model,
+      previousModel,
+      changedAt: new Date().toISOString(),
+      acknowledged: false,
+    }, null, 2), 'utf8');
+    return true;
+  } catch {
+    return false;
   }
 }
 
@@ -174,16 +184,37 @@ function handlePost(req, res) {
     if (!config.agents) config.agents = {};
     if (!config.agents.overrides) config.agents.overrides = {};
 
-    // action=reset — clear override
+    // action=reset — clear override and restore default model
     if (action === 'reset') {
+      const previousModel = config?.agents?.overrides?.[agentId]?.model?.primary || null;
+
+      // Find the agent's built-in default model
+      const agentDef = AGENT_DEFINITIONS.find(a => a.id === agentId);
+      const defaultModel = agentDef?.primaryModel || null;
+
       delete config.agents.overrides[agentId];
+
+      // Restore default model for main agent
+      if (agentId === 'main' && defaultModel) {
+        if (!config.agents.defaults) config.agents.defaults = {};
+        if (!config.agents.defaults.model) config.agents.defaults.model = {};
+        config.agents.defaults.model.primary = defaultModel;
+      }
+
       writeConfig(path, config);
-      const restart = restartGateway();
+
+      // Write sentinel so Hamm notices the reset
+      if (previousModel && previousModel !== defaultModel) {
+        writeSentinel(agentId, defaultModel || 'default', previousModel);
+      }
+
       return res.status(200).json({
         success: true,
         action: 'reset',
         agentId,
-        gatewayRestart: restart,
+        restoredModel: defaultModel,
+        previousModel,
+        gatewayRestart: { ok: true, skipped: true, reason: 'not required' },
         timestamp: new Date().toISOString(),
       });
     }
@@ -197,19 +228,44 @@ function handlePost(req, res) {
       console.warn(`Unknown model: ${model}. Allowing anyway.`);
     }
 
-    if (!config.agents.overrides[agentId]) config.agents.overrides[agentId] = {};
-    config.agents.overrides[agentId].model = { primary: model };
-    config.agents.overrides[agentId].lastUpdated = new Date().toISOString();
+    // Capture previous model before change
+    const previousModel = config?.agents?.defaults?.model?.primary || null;
 
-    writeConfig(path, config);
-    const restart = restartGateway();
+    // For "main" agent: update the global default via openclaw models set
+    // This writes to agents.defaults.model.primary which OpenClaw reads each turn
+    if (agentId === 'main') {
+      try {
+        execSync(`openclaw models set '${model}'`, { timeout: 10000, stdio: 'pipe' });
+      } catch (e) {
+        // Fallback: write directly to config
+        if (!config.agents) config.agents = {};
+        if (!config.agents.defaults) config.agents.defaults = {};
+        if (!config.agents.defaults.model) config.agents.defaults.model = {};
+        config.agents.defaults.model.primary = model;
+        writeConfig(path, config);
+      }
+    }
+
+    // Always record override in the overrides section for tracking
+    const { config: freshConfig, path: freshPath } = readConfig();
+    if (!freshConfig.agents) freshConfig.agents = {};
+    if (!freshConfig.agents.overrides) freshConfig.agents.overrides = {};
+    if (!freshConfig.agents.overrides[agentId]) freshConfig.agents.overrides[agentId] = {};
+    freshConfig.agents.overrides[agentId].model = { primary: model };
+    freshConfig.agents.overrides[agentId].lastUpdated = new Date().toISOString();
+    writeConfig(freshPath, freshConfig);
+
+    // Write sentinel file so Hamm detects the change on next turn
+    writeSentinel(agentId, model, previousModel);
 
     return res.status(200).json({
       success: true,
       action: 'override',
       agentId,
       model,
-      gatewayRestart: restart,
+      previousModel,
+      // No gateway restart needed — OpenClaw reads model config fresh each turn
+      gatewayRestart: { ok: true, skipped: true, reason: 'not required — model config is read fresh each turn' },
       timestamp: new Date().toISOString(),
     });
   } catch (err) {
