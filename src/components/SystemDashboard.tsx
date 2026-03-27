@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ChevronDown, RotateCcw } from 'lucide-react'
+import { RotateCcw } from 'lucide-react'
 
 interface SystemStatus {
   usage: {
@@ -87,6 +87,228 @@ const label: React.CSSProperties = {
   marginBottom: '0.25rem',
 }
 
+// ── Change Model Modal ────────────────────────────────────────────────────────
+
+interface ChangeModalProps {
+  agent: AgentInfo
+  onClose: () => void
+  onApplied: () => void
+}
+
+function ChangeModelModal({ agent, onClose, onApplied }: ChangeModalProps) {
+  const [selectedModel, setSelectedModel] = useState(agent.currentModel)
+  const [phase, setPhase] = useState<'select' | 'pending' | 'done' | 'error'>('select')
+  const [requestId, setRequestId] = useState<string | null>(null)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    return () => { if (pollRef.current) clearInterval(pollRef.current) }
+  }, [])
+
+  async function handleApply() {
+    setPhase('pending')
+
+    // Strategy 1: Try localhost:9999 directly from the browser (instant, no server hop)
+    // This works when browsing MC on the same machine as the OpenClaw server
+    try {
+      const localController = new AbortController()
+      const localTimeout = setTimeout(() => localController.abort(), 2000)
+      const localRes = await fetch('http://127.0.0.1:9999/apply-agent-model', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentId: agent.id, model: selectedModel }),
+        signal: localController.signal,
+      })
+      clearTimeout(localTimeout)
+      const localData = await localRes.json()
+      if (localData.status === 'applied') {
+        // Instant success! Also update Supabase for record-keeping
+        fetch('/api/agent-config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ agentId: agent.id, newModel: selectedModel }),
+        }).catch(() => {}) // fire-and-forget
+        setPhase('done')
+        setTimeout(() => { onApplied(); onClose() }, 1500)
+        return
+      }
+    } catch {
+      // Local server unreachable (MC on Vercel, or server not running) — fall through
+    }
+
+    // Strategy 2: Server-side via Supabase (queued, applied by 5-min cron)
+    try {
+      const res = await fetch('/api/agent-config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentId: agent.id, newModel: selectedModel }),
+      })
+      const data = await res.json()
+      if (!res.ok && !data.success) throw new Error(data.error || 'Failed to submit request')
+
+      // Instant apply (if server-side somehow reached localhost)
+      if (data.appliedInstantly) {
+        setPhase('done')
+        setTimeout(() => { onApplied(); onClose() }, 1500)
+        return
+      }
+
+      if (!data.id) {
+        setPhase('done')
+        setTimeout(() => { onApplied(); onClose() }, 1500)
+        return
+      }
+
+      setRequestId(data.id)
+
+      // Poll for status
+      pollRef.current = setInterval(async () => {
+        try {
+          const pollRes = await fetch(`/api/agent-config?id=${data.id}`)
+          const pollData = await pollRes.json()
+          if (pollData.status === 'applied') {
+            clearInterval(pollRef.current!)
+            setPhase('done')
+            setTimeout(() => { onApplied(); onClose() }, 1500)
+          } else if (pollData.status === 'error') {
+            clearInterval(pollRef.current!)
+            setErrorMsg(pollData.result || 'Application failed')
+            setPhase('error')
+          }
+        } catch {
+          // keep polling
+        }
+      }, 2000)
+
+      // Timeout after 60s
+      setTimeout(() => {
+        if (phase === 'pending') {
+          clearInterval(pollRef.current!)
+          setPhase('done')
+          setTimeout(() => { onApplied(); onClose() }, 500)
+        }
+      }, 60000)
+
+    } catch (e: any) {
+      setErrorMsg(e.message)
+      setPhase('error')
+    }
+  }
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 1000,
+      background: '#00000088', backdropFilter: 'blur(4px)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }} onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div style={{
+        background: '#0d1320', border: '1px solid #1e3a5f',
+        borderRadius: '14px', padding: '1.75rem', width: '420px', maxWidth: '95vw',
+        boxShadow: '0 24px 64px #000000bb',
+      }}>
+        <div style={{ marginBottom: '1.25rem' }}>
+          <div style={{ ...label, marginBottom: '0.25rem' }}>Change Model</div>
+          <div style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '1.05rem' }}>{agent.name}</div>
+          <div style={{ color: '#475569', fontSize: '0.78rem', marginTop: '0.2rem', fontFamily: 'monospace' }}>
+            Current: {agent.currentModel}
+          </div>
+        </div>
+
+        {phase === 'select' && (
+          <>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '1.25rem' }}>
+              {AVAILABLE_MODELS.map((m) => (
+                <button
+                  key={m.value}
+                  onClick={() => setSelectedModel(m.value)}
+                  style={{
+                    width: '100%', textAlign: 'left',
+                    padding: '0.6rem 0.8rem',
+                    background: selectedModel === m.value ? '#1e3a5f' : '#060d1a',
+                    border: selectedModel === m.value ? '1px solid #00d4aa44' : '1px solid #0d1a2e',
+                    borderRadius: '8px',
+                    color: selectedModel === m.value ? '#00d4aa' : '#94a3b8',
+                    fontSize: '0.82rem', cursor: 'pointer',
+                    transition: 'all 0.15s',
+                  }}
+                >
+                  {selectedModel === m.value && '✓ '}{m.label}
+                  {m.value === agent.currentModel && (
+                    <span style={{ marginLeft: '0.5rem', fontSize: '0.65rem', color: '#475569' }}>(current)</span>
+                  )}
+                </button>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+              <button
+                onClick={onClose}
+                style={{ padding: '0.5rem 1rem', background: 'transparent', border: '1px solid #1e3a5f', borderRadius: '8px', color: '#475569', cursor: 'pointer', fontSize: '0.82rem' }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleApply}
+                disabled={selectedModel === agent.currentModel}
+                style={{
+                  padding: '0.5rem 1.25rem',
+                  background: selectedModel === agent.currentModel ? '#0d1a2e' : '#00d4aa22',
+                  border: '1px solid #00d4aa44',
+                  borderRadius: '8px', color: '#00d4aa',
+                  cursor: selectedModel === agent.currentModel ? 'not-allowed' : 'pointer',
+                  fontSize: '0.82rem', fontWeight: 600,
+                  opacity: selectedModel === agent.currentModel ? 0.4 : 1,
+                }}
+              >
+                Apply
+              </button>
+            </div>
+          </>
+        )}
+
+        {phase === 'pending' && (
+          <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>⏳</div>
+            <div style={{ color: '#94a3b8', fontWeight: 600 }}>Applying…</div>
+            <div style={{ color: '#475569', fontSize: '0.78rem', marginTop: '0.4rem' }}>
+              {requestId ? 'Queued via Supabase · polling for cron sync' : 'Sending to local server…'}
+            </div>
+            {requestId && (
+              <div style={{ color: '#334155', fontSize: '0.68rem', marginTop: '0.5rem', fontFamily: 'monospace' }}>
+                id: {requestId.slice(0, 8)}… · syncs within 5 min
+              </div>
+            )}
+          </div>
+        )}
+
+        {phase === 'done' && (
+          <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>✅</div>
+            <div style={{ color: '#22c55e', fontWeight: 600 }}>Applied!</div>
+            <div style={{ color: '#475569', fontSize: '0.78rem', marginTop: '0.4rem' }}>
+              Model updated successfully
+            </div>
+          </div>
+        )}
+
+        {phase === 'error' && (
+          <div style={{ textAlign: 'center', padding: '1rem 0' }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>❌</div>
+            <div style={{ color: '#ef4444', fontWeight: 600 }}>Failed</div>
+            <div style={{ color: '#475569', fontSize: '0.78rem', marginTop: '0.4rem' }}>{errorMsg}</div>
+            <button
+              onClick={onClose}
+              style={{ marginTop: '1rem', padding: '0.5rem 1.25rem', background: 'transparent', border: '1px solid #ef444444', borderRadius: '8px', color: '#ef4444', cursor: 'pointer', fontSize: '0.82rem' }}
+            >
+              Close
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // ── Agent Models Card ─────────────────────────────────────────────────────────
 
 function AgentModelsCard() {
@@ -95,22 +317,10 @@ function AgentModelsCard() {
   const [error, setError] = useState<string | null>(null)
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null)
   const [overriding, setOverriding] = useState<string | null>(null)
-  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null)
   const [overrideMsg, setOverrideMsg] = useState<Record<string, string>>({})
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const [changeModalAgent, setChangeModalAgent] = useState<AgentInfo | null>(null)
 
   useEffect(() => { fetchAgents() }, [])
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(null)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [])
 
   async function fetchAgents() {
     setLoading(true)
@@ -124,34 +334,6 @@ function AgentModelsCard() {
       setError(e.message)
     } finally {
       setLoading(false)
-    }
-  }
-
-  async function applyOverride(agentId: string, model: string) {
-    setOverriding(agentId)
-    setDropdownOpen(null)
-    try {
-      const res = await fetch('/api/agents', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ agentId, model }),
-      })
-      const result = await res.json()
-      if (!res.ok || !result.success) throw new Error(result.error || 'Override failed')
-      setOverrideMsg(prev => ({
-        ...prev,
-        [agentId]: agentId === 'main'
-          ? `✅ Model switched to ${shortModel(model)} — takes effect next message`
-          : `✅ Override saved for ${agentId}`,
-      }))
-      // Refresh agent data
-      setTimeout(() => fetchAgents(), 1500)
-      setTimeout(() => setOverrideMsg(prev => { const n = { ...prev }; delete n[agentId]; return n }), 5000)
-    } catch (e: any) {
-      setOverrideMsg(prev => ({ ...prev, [agentId]: `❌ ${e.message}` }))
-      setTimeout(() => setOverrideMsg(prev => { const n = { ...prev }; delete n[agentId]; return n }), 5000)
-    } finally {
-      setOverriding(null)
     }
   }
 
@@ -178,6 +360,13 @@ function AgentModelsCard() {
 
   return (
     <div style={{ ...card, border: '1px solid #1e3a5f33', gridColumn: '1 / -1' }}>
+      {changeModalAgent && (
+        <ChangeModelModal
+          agent={changeModalAgent}
+          onClose={() => setChangeModalAgent(null)}
+          onApplied={() => { setChangeModalAgent(null); setTimeout(fetchAgents, 1000) }}
+        />
+      )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
         <div>
           <div style={label}>Agent Models</div>
@@ -201,7 +390,7 @@ function AgentModelsCard() {
       {error && <div style={{ color: '#ef4444', fontSize: '0.82rem' }}>⚠️ {error}</div>}
 
       {!loading && data && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }} ref={dropdownRef}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {data.agents.map((agent) => (
             <div
               key={agent.id}
@@ -213,7 +402,7 @@ function AgentModelsCard() {
                 transition: 'border-color 0.2s',
               }}
             >
-              {/* Row: status dot · name · model dropdown · expand toggle */}
+              {/* Row: status dot · name · model (plain text) · CHANGE button · expand toggle */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
 
                 {/* Status dot */}
@@ -244,71 +433,30 @@ function AgentModelsCard() {
                   )}
                 </div>
 
-                {/* Model dropdown */}
-                <div style={{ position: 'relative', flex: 1, minWidth: '180px' }}>
-                  <button
-                    onClick={() => setDropdownOpen(dropdownOpen === agent.id ? null : agent.id)}
-                    disabled={overriding === agent.id}
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '0.35rem 0.65rem',
-                      background: '#0d1a2e',
-                      border: '1px solid #1e3a5f',
-                      borderRadius: '6px',
-                      color: '#94a3b8',
-                      fontSize: '0.78rem',
-                      fontFamily: 'monospace',
-                      cursor: overriding === agent.id ? 'wait' : 'pointer',
-                      gap: '0.4rem',
-                    }}
-                  >
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {overriding === agent.id ? '⏳ Applying…' : shortModel(agent.currentModel)}
-                    </span>
-                    <ChevronDown size={13} style={{ flexShrink: 0, opacity: 0.6 }} />
-                  </button>
-
-                  {/* Dropdown menu */}
-                  {dropdownOpen === agent.id && (
-                    <div style={{
-                      position: 'absolute',
-                      top: 'calc(100% + 4px)',
-                      left: 0,
-                      right: 0,
-                      background: '#0d1a2e',
-                      border: '1px solid #1e3a5f',
-                      borderRadius: '8px',
-                      zIndex: 100,
-                      overflow: 'hidden',
-                      boxShadow: '0 8px 32px #00000066',
-                    }}>
-                      {AVAILABLE_MODELS.map((m) => (
-                        <button
-                          key={m.value}
-                          onClick={() => applyOverride(agent.id, m.value)}
-                          style={{
-                            width: '100%',
-                            textAlign: 'left',
-                            padding: '0.55rem 0.75rem',
-                            background: m.value === agent.currentModel ? '#1e3a5f' : 'transparent',
-                            border: 'none',
-                            color: m.value === agent.currentModel ? '#00d4aa' : '#94a3b8',
-                            fontSize: '0.78rem',
-                            cursor: 'pointer',
-                            transition: 'background 0.15s',
-                          }}
-                          onMouseEnter={e => { if (m.value !== agent.currentModel) (e.target as HTMLElement).style.background = '#0a1520' }}
-                          onMouseLeave={e => { if (m.value !== agent.currentModel) (e.target as HTMLElement).style.background = 'transparent' }}
-                        >
-                          {m.value === agent.currentModel && '✓ '}{m.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                {/* Model (plain text, not clickable) */}
+                <div style={{ flex: 1, minWidth: '180px', color: '#94a3b8', fontSize: '0.78rem', fontFamily: 'monospace' }}>
+                  {overriding === agent.id ? '⏳ Applying…' : shortModel(agent.currentModel)}
                 </div>
+
+                {/* CHANGE button → opens modal → writes to agent_config_requests */}
+                <button
+                  onClick={() => setChangeModalAgent(agent)}
+                  disabled={overriding === agent.id}
+                  style={{
+                    padding: '0.35rem 0.65rem',
+                    background: '#00d4aa18',
+                    border: '1px solid #00d4aa44',
+                    borderRadius: '6px',
+                    color: '#00d4aa',
+                    cursor: overriding === agent.id ? 'wait' : 'pointer',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                    flexShrink: 0,
+                  }}
+                >
+                  CHANGE
+                </button>
 
                 {/* Reset override button */}
                 {agent.hasOverride && (

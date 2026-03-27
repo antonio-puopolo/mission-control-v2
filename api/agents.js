@@ -7,6 +7,11 @@
 
 import { readFileSync, writeFileSync } from 'fs';
 import { execSync } from 'child_process';
+import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjQzNDA4MiwiZXhwIjoyMDg4MDEwMDgyfQ.qs_YCiL_rfyVVNl2jHyFGDi9lhafOXXSnXjYtogUmXY';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ── Static agent definitions ──────────────────────────────────────────────────
 
@@ -123,33 +128,50 @@ function writeSentinel(agentId, model, previousModel) {
 // ── GET — status ──────────────────────────────────────────────────────────────
 
 function handleGet(req, res) {
-  try {
-    const { config } = readConfig();
-    const isCloudEnv = !config || Object.keys(config).length === 0;
-    const agentOverrides = config?.agents?.overrides || {};
-    const defaultPrimary = config?.agents?.defaults?.model?.primary;
-    const defaultFallbacks = config?.agents?.defaults?.model?.fallbacks || [];
+  (async () => {
+    try {
+      const { config } = readConfig();
+      const isCloudEnv = !config || Object.keys(config).length === 0;
+      const agentOverrides = config?.agents?.overrides || {};
+      const defaultPrimary = config?.agents?.defaults?.model?.primary;
+      const defaultFallbacks = config?.agents?.defaults?.model?.fallbacks || [];
 
-    const agents = AGENT_DEFINITIONS.map((def) => {
-      const override = agentOverrides[def.id] || {};
-      const currentModel = override.model?.primary || def.primaryModel;
-      const fallbackChain = override.model?.fallbacks || def.fallbacks;
-      const isOnFallback = !!(override.model?.primary && override.model.primary !== def.primaryModel);
+      // Fetch fresh model assignments from Supabase
+      let supabaseModels = {};
+      try {
+        const { data, error } = await supabase.from('agent_models').select('*');
+        if (data && !error) {
+          for (const row of data) {
+            supabaseModels[row.id] = row;
+          }
+        }
+      } catch (e) {
+        // Supabase unavailable — fall back to local config only
+      }
 
-      return {
-        id: def.id,
-        name: def.name,
-        description: def.description,
-        currentModel,
-        primaryModel: def.primaryModel,
-        isOnFallback,
-        fallbackChain,
-        status: 'ok',
-        lastError: override.lastError || null,
-        lastUpdated: override.lastUpdated || null,
-        hasOverride: !!override.model,
-      };
-    });
+      const agents = AGENT_DEFINITIONS.map((def) => {
+        const sbModel = supabaseModels[def.id];
+        const override = agentOverrides[def.id] || {};
+        const currentModel = sbModel?.model || override.model?.primary || def.primaryModel;
+        const fallbackChain = override.model?.fallbacks || def.fallbacks;
+        const isOnFallback = !!(sbModel && sbModel.model && sbModel.model !== def.primaryModel);
+        const lastUpdated = sbModel?.updatedAt || override.lastUpdated || null;
+        const hasOverride = !!sbModel?.model || !!override.model;
+
+        return {
+          id: def.id,
+          name: sbModel?.name || def.name,
+          description: def.description,
+          currentModel,
+          primaryModel: def.primaryModel,
+          isOnFallback,
+          fallbackChain,
+          status: 'ok',
+          lastError: override.lastError || null,
+          lastUpdated,
+          hasOverride,
+        };
+      });
 
     res.status(200).json({
       agents,
@@ -161,6 +183,7 @@ function handleGet(req, res) {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+  })();
 }
 
 // ── POST — override ───────────────────────────────────────────────────────────
