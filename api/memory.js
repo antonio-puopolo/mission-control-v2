@@ -1,4 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const tenant = require('../config/tenant.json');
 
 const supabase = createClient(
   'https://zjyrillpennxowntwebo.supabase.co',
@@ -116,19 +119,19 @@ export default async function handler(req, res) {
 
   return res.status(200).json({
     user: {
-      name: 'Antonio Puopolo',
-      age: 34,
-      location: 'Brisbane, Australia',
-      timezone: 'GMT+10',
-      family: 'Wife Madelene, 3 boys: Matteo, Alessio, Francesco',
+      name: tenant.agentName,
+      age: tenant.agentAge,
+      location: tenant.agentLocation,
+      timezone: tenant.agentTimezone,
+      family: tenant.agentFamily,
     },
     work: {
       role: 'Real Estate Salesperson',
-      team: 'Hicks Team at Place Real Estate',
-      focus: 'Camp Hill, Brisbane',
-      boss: 'Shane Hicks',
-      kpis: '5 BAP / 2 MAP / 1 LAP per week, $60K/qtr GCI target',
-      crm: 'REX',
+      team: `${tenant.teamName} at ${tenant.brokerage}`,
+      focus: `${tenant.focusSuburb}, ${tenant.focusCity}`,
+      boss: tenant.boss,
+      kpis: tenant.kpis,
+      crm: tenant.crm,
     },
     lap_summary,
     urgent_laps,

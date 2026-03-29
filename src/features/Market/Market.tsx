@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ExternalLink, Bed, Bath, Car, Calendar, TrendingUp, Clock, Newspaper, RefreshCw, MapPin } from 'lucide-react'
+import { TENANT_CONFIG } from '@/config/tenant'
 
 const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjQzNDA4MiwiZXhwIjoyMDg4MDEwMDgyfQ.qs_YCiL_rfyVVNl2jHyFGDi9lhafOXXSnXjYtogUmXY'
@@ -139,7 +140,7 @@ function ListingCard({ listing }: { listing: Listing }) {
             <MapPin size={13} color="#14b8a6" />
             {listing.address}
           </div>
-          <div style={{ color: '#64748b', fontSize: '0.75rem' }}>{listing.suburb} QLD 4152</div>
+          <div style={{ color: '#64748b', fontSize: '0.75rem' }}>{listing.suburb} {TENANT_CONFIG.focusState} {TENANT_CONFIG.focusPostcode}</div>
         </div>
         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', alignItems: 'center' }}>
           {isNew && (
@@ -229,7 +230,7 @@ function SoldCard({ listing }: { listing: Listing }) {
             <MapPin size={13} color="#6366f1" />
             {listing.address}
           </div>
-          <div style={{ color: '#64748b', fontSize: '0.75rem' }}>{listing.suburb} QLD 4152</div>
+          <div style={{ color: '#64748b', fontSize: '0.75rem' }}>{listing.suburb} {TENANT_CONFIG.focusState} {TENANT_CONFIG.focusPostcode}</div>
         </div>
         {listing.sold_date && (
           <span style={{
@@ -392,10 +393,10 @@ export function Market() {
         <div>
           <h1 style={{ color: '#e2e8f0', fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
             <TrendingUp size={22} color="#14b8a6" />
-            Camp Hill Market
+            {TENANT_CONFIG.marketLabel}
           </h1>
           <p style={{ color: '#64748b', fontSize: '0.82rem', margin: '4px 0 0' }}>
-            Camp Hill QLD 4152 • Live listings & recent sales
+            {TENANT_CONFIG.marketDescription}
             {lastUpdated && ` • Updated ${lastUpdated.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' })}`}
           </p>
         </div>

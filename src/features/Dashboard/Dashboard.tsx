@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useLaps, usePipelineValue } from '@/hooks/useLaps'
 import { useActivityThisWeek, useTotalPointsThisMonth, useWeeklyKPIs, useLogActivity } from '@/hooks/useActivity'
 import { useRealtimeSync } from '@/hooks/useRealtimeSync'
+import { TENANT_CONFIG } from '@/config/tenant'
 
 const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzQwODIsImV4cCI6MjA4ODAxMDA4Mn0.POMFruggeywzN3cEA6ZfQu2CAQS2mnlc0OQEA3pEbto'
@@ -129,7 +130,7 @@ export function Dashboard() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Dashboard</h3>
-          <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem', whiteSpace: 'nowrap' }}>Hicks Team • Camp Hill{syncing ? ' • syncing…' : ''}</p>
+          <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem', whiteSpace: 'nowrap' }}>{TENANT_CONFIG.teamName} • {TENANT_CONFIG.focusSuburb}{syncing ? ' • syncing…' : ''}</p>
         </div>
         <button onClick={() => { setDraft(goals); setEditing(true) }}
           style={{ background: 'transparent', border: 'none', color: '#475569', cursor: 'pointer', fontSize: '0.78rem', padding: '0.25rem 0.5rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
