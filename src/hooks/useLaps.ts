@@ -1,11 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjQzNDA4MiwiZXhwIjoyMDg4MDEwMDgyfQ.qs_YCiL_rfyVVNl2jHyFGDi9lhafOXXSnXjYtogUmXY'
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://zjyrillpennxowntwebo.supabase.co'
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 const headers = {
-  'apikey': SUPABASE_KEY,
-  'Authorization': `Bearer ${SUPABASE_KEY}`,
+  'apikey': SUPABASE_KEY!,
+  'Authorization': `Bearer ${SUPABASE_KEY!}`,
   'Content-Type': 'application/json',
   'Prefer': 'return=representation',
 }

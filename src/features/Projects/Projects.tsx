@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import { HammBoard } from './HammBoard'
 
 type Priority = 'high' | 'medium' | 'low'
 type Status = 'backlog' | 'in-progress' | 'done'
 type Category = 'mc-build' | 'business' | 'personal' | 'hamm'
+type ViewType = 'hamm' | 'kanban'
 
 interface Project {
   id: string
@@ -61,6 +63,7 @@ const statusColors: Record<Status, { bg: string; text: string }> = {
 const emptyForm = { title: '', description: '', category: 'business' as Category, priority: 'medium' as Priority, status: 'backlog' as Status, due_date: '' }
 
 export function Projects() {
+  const [view, setView] = useState<ViewType>('hamm')
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -125,8 +128,30 @@ export function Projects() {
   const hammProjects = projects.filter(p => p.category === 'hamm')
   const mainProjects = projects.filter(p => p.category !== 'hamm')
 
-  if (loading) return <div style={{ color: '#a0a0b0', textAlign: 'center', padding: '3rem' }}>Loading projects...</div>
+  if (loading && view === 'kanban') return <div style={{ color: '#a0a0b0', textAlign: 'center', padding: '3rem' }}>Loading projects...</div>
 
+  // If Hamm board view, show it directly
+  if (view === 'hamm') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Projects</h3>
+            <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Hamm × Antonio — experiments & builds</p>
+          </div>
+          <button
+            onClick={() => setView('kanban')}
+            style={{ background: 'rgba(255,255,255,0.08)', color: '#94a3b8', border: 'none', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+          >
+            ⊞ Kanban View
+          </button>
+        </div>
+        <HammBoard />
+      </div>
+    )
+  }
+
+  // Kanban view
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -134,10 +159,18 @@ export function Projects() {
           <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Projects</h3>
           <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Hamm × Antonio — experiments & builds</p>
         </div>
-        <button onClick={() => { setShowForm(!showForm); setEditingId(null); setForm(emptyForm) }}
-          style={{ background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', padding: '0.5rem 1.1rem', cursor: 'pointer', fontWeight: '700', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
-          + New
-        </button>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <button
+            onClick={() => setView('hamm')}
+            style={{ background: '#F97316', color: '#fff', border: 'none', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+          >
+            🐷 Board View
+          </button>
+          <button onClick={() => { setShowForm(!showForm); setEditingId(null); setForm(emptyForm) }}
+            style={{ background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', padding: '0.5rem 1.1rem', cursor: 'pointer', fontWeight: '700', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+            + New
+          </button>
+        </div>
       </div>
 
       {showForm && (
