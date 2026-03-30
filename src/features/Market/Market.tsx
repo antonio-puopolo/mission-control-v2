@@ -463,7 +463,7 @@ export function Market() {
           alignItems: 'center',
           gap: '6px',
         }}>
-          ⚠️ Displaying sample data — run <code style={{ fontFamily: 'monospace', background: '#f59e0b22', padding: '1px 4px', borderRadius: '3px' }}>node scripts/fetch-market-data.js</code> to refresh with live listings
+          ✅ Live listings from domain.com.au (updated daily at 7am)
         </div>
       )}
 
