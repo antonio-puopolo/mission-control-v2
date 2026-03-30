@@ -44,18 +44,31 @@ function App() {
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
 
   const [weather, setWeather] = useState<{ temp: number; icon: string } | null>(null)
+  
+  // Extract weather fetching to avoid duplication
+  const fetchWeather = async () => {
+    try {
+      const response = await fetch(
+        'https://api.open-meteo.com/v1/forecast?latitude=-27.4698&longitude=153.0251&current=temperature_2m,weather_code&timezone=Australia/Brisbane',
+        { signal: AbortSignal.timeout(5000) } // 5 second timeout
+      )
+      if (response.ok) {
+        const data = await response.json()
+        setWeather({ 
+          temp: Math.round(data.current.temperature_2m), 
+          icon: weatherIcon(data.current.weather_code) 
+        })
+      }
+    } catch (error) {
+      // Silently fail - weather is nice-to-have, not critical
+      console.debug('Weather fetch failed:', error)
+    }
+  }
+  
   useEffect(() => {
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=-27.4698&longitude=153.0251&current=temperature_2m,weather_code&timezone=Australia/Brisbane')
-      .then(r => r.json())
-      .then(d => setWeather({ temp: Math.round(d.current.temperature_2m), icon: weatherIcon(d.current.weather_code) }))
-      .catch(() => {})
-    const wt = setInterval(() => {
-      fetch('https://api.open-meteo.com/v1/forecast?latitude=-27.4698&longitude=153.0251&current=temperature_2m,weather_code&timezone=Australia/Brisbane')
-        .then(r => r.json())
-        .then(d => setWeather({ temp: Math.round(d.current.temperature_2m), icon: weatherIcon(d.current.weather_code) }))
-        .catch(() => {})
-    }, 30 * 60 * 1000)
-    return () => clearInterval(wt)
+    fetchWeather() // Initial fetch
+    const weatherInterval = setInterval(fetchWeather, 30 * 60 * 1000) // Every 30 min
+    return () => clearInterval(weatherInterval)
   }, [])
 
   return (

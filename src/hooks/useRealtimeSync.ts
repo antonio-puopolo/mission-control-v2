@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/services/supabaseClient'
 
@@ -11,11 +11,19 @@ export const useRealtimeSync = (
   queryKeyPrefix: readonly unknown[]
 ) => {
   const queryClient = useQueryClient()
+  const subscriptionRef = useRef<ReturnType<typeof supabase.channel> | null>(null)
 
   useEffect(() => {
-    // Subscribe to all changes on the table
-    const subscription = supabase
-      .channel(`public:${table}`)
+    // Clean up any existing subscription
+    if (subscriptionRef.current) {
+      subscriptionRef.current.unsubscribe()
+    }
+
+    // Create new subscription with unique channel name to avoid conflicts
+    const channelName = `${table}_${Math.random().toString(36).substring(7)}`
+    
+    subscriptionRef.current = supabase
+      .channel(channelName)
       .on(
         'postgres_changes',
         {
@@ -24,17 +32,22 @@ export const useRealtimeSync = (
           table: table,
         },
         () => {
-          // Invalidate React Query cache for this table
-          queryClient.invalidateQueries({
-            queryKey: queryKeyPrefix,
-          })
+          // Debounce invalidation to avoid too many refreshes
+          setTimeout(() => {
+            queryClient.invalidateQueries({
+              queryKey: queryKeyPrefix,
+            })
+          }, 100)
         }
       )
       .subscribe()
 
     // Cleanup subscription on unmount
     return () => {
-      subscription.unsubscribe()
+      if (subscriptionRef.current) {
+        subscriptionRef.current.unsubscribe()
+        subscriptionRef.current = null
+      }
     }
-  }, [table, queryClient, queryKeyPrefix])
+  }, [table, queryClient]) // Remove queryKeyPrefix from deps to avoid recreating subscription
 }
