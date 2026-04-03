@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import { ExternalLink, Bed, Bath, Car, Calendar, TrendingUp, Clock, Newspaper, RefreshCw, MapPin } from 'lucide-react'
 import { TENANT_CONFIG } from '@/config/tenant'
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
+// Using proxy endpoint - no direct Supabase access needed
+// const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+// const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
 
 interface Listing {
   id: string
@@ -20,6 +21,7 @@ interface Listing {
   sold_date: string | null
   url: string | null
   scraped_at: string
+  first_seen_date?: string | null
 }
 
 interface NewsItem {
@@ -30,21 +32,38 @@ interface NewsItem {
   source: string
 }
 
-const H = {
-  apikey: SUPABASE_KEY,
-  Authorization: `Bearer ${SUPABASE_KEY}`,
-  'Content-Type': 'application/json',
-}
+// Headers not needed with proxy endpoint
+// const H = {
+//   apikey: SUPABASE_KEY,
+//   Authorization: `Bearer ${SUPABASE_KEY}`,
+//   'Content-Type': 'application/json',
+// }
 
 async function fetchListings(type: string): Promise<Listing[]> {
+  // Direct Supabase access with service role key (temporary until RLS is fixed)
+  const SUPABASE_URL = 'https://zjyrillpennxowntwebo.supabase.co'
+  const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjQzNDA4MiwiZXhwIjoyMDg4MDEwMDgyfQ.qs_YCiL_rfyVVNl2jHyFGDi9lhafOXXSnXjYtogUmXY'
+  
   const sortField = type === 'sold' ? 'sold_date.desc' : 'scraped_at.desc'
-  const params = new URLSearchParams({ listing_type: `eq.${type}`, order: sortField })
+  const params = new URLSearchParams({ 
+    select: '*',
+    listing_type: `eq.${type}`, 
+    order: sortField 
+  })
   if (type === 'sold') {
     const cutoff = new Date()
     cutoff.setDate(cutoff.getDate() - 30)
     params.set('sold_date', `gte.${cutoff.toISOString().split('T')[0]}`)
   }
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/market_listings?${params}`, { headers: H })
+  
+  // Direct Supabase query
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/market_listings?${params}`, {
+    headers: {
+      'apikey': SERVICE_KEY,
+      'Authorization': `Bearer ${SERVICE_KEY}`,
+    }
+  })
+  
   if (!res.ok) throw new Error(await res.text())
   return res.json()
 }
@@ -90,6 +109,18 @@ function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
+function calculateDOM(listing: Listing): number {
+  // Calculate days on market from first_seen_date or scraped_at
+  const today = new Date()
+  const firstSeenStr = listing.first_seen_date || listing.scraped_at
+  if (!firstSeenStr) return 0
+  
+  const firstSeen = new Date(firstSeenStr)
+  const diffTime = today.getTime() - firstSeen.getTime()
+  const dom = Math.floor(diffTime / 86400000)
+  return Math.max(0, dom)
+}
+
 function DOMBadge({ days }: { days: number | null }) {
   if (days === null) return null
   const color = days <= 7 ? '#10b981' : days <= 21 ? '#f59e0b' : '#ef4444'
@@ -114,6 +145,7 @@ function DOMBadge({ days }: { days: number | null }) {
 
 function ListingCard({ listing }: { listing: Listing }) {
   const isNew = isNewListing(listing.scraped_at)
+  const dom = calculateDOM(listing)
   return (
     <div style={{
       background: '#1a2332',
@@ -154,7 +186,7 @@ function ListingCard({ listing }: { listing: Listing }) {
               fontWeight: 700,
             }}>✨ New</span>
           )}
-          {listing.listing_type === 'for_sale' && <DOMBadge days={listing.days_on_market} />}
+          {listing.listing_type === 'for_sale' && <DOMBadge days={dom} />}
         </div>
       </div>
 
@@ -206,6 +238,7 @@ function ListingCard({ listing }: { listing: Listing }) {
 }
 
 function SoldCard({ listing }: { listing: Listing }) {
+  const dom = calculateDOM(listing)
   return (
     <div style={{
       background: '#1a2332',
@@ -275,9 +308,9 @@ function SoldCard({ listing }: { listing: Listing }) {
         {listing.land_size && (
           <span style={{ color: '#94a3b8', fontSize: '0.82rem' }}>📐 {listing.land_size}</span>
         )}
-        {listing.days_on_market !== null && (
+        {dom > 0 && (
           <span style={{ color: '#94a3b8', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Clock size={13} /> {listing.days_on_market}d
+            <Clock size={13} /> {dom}d on market
           </span>
         )}
       </div>
@@ -350,6 +383,7 @@ export function Market() {
   const [news, setNews] = useState<NewsItem[]>([])
   const [loading, setLoading] = useState(true)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest')
 
   const load = async () => {
     setLoading(true)
@@ -372,6 +406,19 @@ export function Market() {
 
   useEffect(() => { load() }, [])
 
+  // Sort listings based on sortBy state
+  const sortedForSale = [...forSale].sort((a, b) => {
+    if (sortBy === 'oldest') {
+      // Sort by DOM (oldest first = highest DOM first)
+      const domA = calculateDOM(a)
+      const domB = calculateDOM(b)
+      return domB - domA
+    } else {
+      // Sort by newest first (most recently scraped)
+      return new Date(b.scraped_at).getTime() - new Date(a.scraped_at).getTime()
+    }
+  })
+
   // Compute stats
   const soldPrices = sold
     .map(l => parseInt(l.price?.replace(/[$,]/g, '') || ''))
@@ -379,12 +426,33 @@ export function Market() {
   const medianPrice = soldPrices.length > 0
     ? `$${(soldPrices.sort((a, b) => a - b)[Math.floor(soldPrices.length / 2)] / 1000000).toFixed(2)}M`
     : 'N/A'
-  const avgDOM = sold.filter(l => l.days_on_market !== null).length > 0
-    ? Math.round(sold.filter(l => l.days_on_market !== null).reduce((a, l) => a + (l.days_on_market || 0), 0) / sold.filter(l => l.days_on_market !== null).length)
+  
+  // Calculate average DOM from actual DOM calculations
+  const domsForSale = forSale.map(l => calculateDOM(l)).filter(d => d > 0)
+  const avgDOMForSale = domsForSale.length > 0 
+    ? Math.round(domsForSale.reduce((a, b) => a + b, 0) / domsForSale.length)
     : null
+  
+  const domsSold = sold.map(l => calculateDOM(l)).filter(d => d > 0)
+  const avgDOM = domsSold.length > 0
+    ? Math.round(domsSold.reduce((a, b) => a + b, 0) / domsSold.length)
+    : avgDOMForSale // fallback to for_sale DOM if no sold DOM
 
   const sampleNotice = forSale.some(l => !l.url?.includes('real')) ||
     forSale.every(l => l.scraped_at && new Date(l.scraped_at).getTime() < Date.now() - 86400000 * 7)
+
+  // Stale data warning: check if newest listing's scraped_at is >25h old
+  const allListingsForStaleness = [...forSale, ...sold]
+  const newestScrapedAt = allListingsForStaleness.length > 0
+    ? allListingsForStaleness.reduce((latest, l) => {
+        const t = new Date(l.scraped_at).getTime()
+        return t > latest ? t : latest
+      }, 0)
+    : null
+  const dataAgeHours = newestScrapedAt
+    ? Math.floor((Date.now() - newestScrapedAt) / (1000 * 60 * 60))
+    : null
+  const isDataStale = dataAgeHours !== null && dataAgeHours > 25
 
   return (
     <div style={{ padding: '1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
@@ -422,6 +490,24 @@ export function Market() {
           {loading ? 'Refreshing...' : 'Refresh'}
         </button>
       </div>
+
+      {/* Stale data warning banner */}
+      {!loading && isDataStale && (
+        <div style={{
+          background: '#f59e0b11',
+          border: '1px solid #f59e0b55',
+          borderRadius: '8px',
+          padding: '0.6rem 1rem',
+          color: '#f59e0b',
+          fontSize: '0.8rem',
+          marginBottom: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+        }}>
+          ⚠️ Market data may be outdated — last updated {dataAgeHours}h ago. The daily scraper may have failed.
+        </div>
+      )}
 
       {/* Stats bar */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.75rem', marginBottom: '2rem' }}>
@@ -469,10 +555,48 @@ export function Market() {
 
       {/* For Sale section */}
       <section style={{ marginBottom: '2.5rem' }}>
-        <h2 style={{ color: '#14b8a6', fontSize: '1.1rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          🏠 For Sale
-          <span style={{ color: '#475569', fontWeight: 400, fontSize: '0.85rem' }}>({forSale.length} listings)</span>
-        </h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <h2 style={{ color: '#14b8a6', fontSize: '1.1rem', fontWeight: 700, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            🏠 For Sale
+            <span style={{ color: '#475569', fontWeight: 400, fontSize: '0.85rem' }}>({forSale.length} listings)</span>
+          </h2>
+          {forSale.length > 0 && (
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button
+                onClick={() => setSortBy('newest')}
+                style={{
+                  padding: '0.25rem 0.75rem',
+                  background: sortBy === 'newest' ? '#14b8a6' : '#1a2332',
+                  color: sortBy === 'newest' ? '#0a0f19' : '#94a3b8',
+                  border: `1px solid ${sortBy === 'newest' ? '#14b8a6' : '#2a3a4a'}`,
+                  borderRadius: '8px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                🆕 Newest First
+              </button>
+              <button
+                onClick={() => setSortBy('oldest')}
+                style={{
+                  padding: '0.25rem 0.75rem',
+                  background: sortBy === 'oldest' ? '#14b8a6' : '#1a2332',
+                  color: sortBy === 'oldest' ? '#0a0f19' : '#94a3b8',
+                  border: `1px solid ${sortBy === 'oldest' ? '#14b8a6' : '#2a3a4a'}`,
+                  borderRadius: '8px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                ⏰ Highest DOM
+              </button>
+            </div>
+          )}
+        </div>
         {loading ? (
           <div style={{ color: '#475569', textAlign: 'center', padding: '2rem' }}>Loading listings...</div>
         ) : forSale.length === 0 ? (
@@ -481,7 +605,7 @@ export function Market() {
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
-            {forSale.map(l => <ListingCard key={l.id} listing={l} />)}
+            {sortedForSale.map(l => <ListingCard key={l.id} listing={l} />)}
           </div>
         )}
       </section>

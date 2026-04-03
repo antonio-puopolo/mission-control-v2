@@ -307,6 +307,7 @@ export function LAPTracker() {
   const { mutateAsync: createAsync, isPending: isCreatingLap } = useCreateLap()
   const updateMutation = useUpdateLap()
   const deleteMutation = useDeleteLap()
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
 
   const filtered = lapsByStatus.filter(
     (lap) =>
@@ -353,7 +354,23 @@ export function LAPTracker() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative' }}>
+      {/* Toast notification */}
+      {toast && (
+        <div
+          style={{
+            position: 'fixed', bottom: '1.5rem', right: '1.5rem', zIndex: 9999,
+            padding: '0.75rem 1.25rem', borderRadius: '8px', fontSize: '0.9rem',
+            background: toast.type === 'success' ? '#065f46' : '#7f1d1d',
+            color: toast.type === 'success' ? '#a7f3d0' : '#fca5a5',
+            border: `1px solid ${toast.type === 'success' ? '#059669' : '#dc2626'}`,
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)', cursor: 'pointer',
+          }}
+          onClick={() => setToast(null)}
+        >
+          {toast.type === 'success' ? '✅ ' : '❌ '}{toast.message}
+        </div>
+      )}
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
@@ -432,7 +449,10 @@ export function LAPTracker() {
               key={lap.id}
               lap={lap as any}
               onUpdate={(id, data) => updateMutation.mutate({ id, ...data } as any)}
-              onDelete={(id) => deleteMutation.mutate(id)}
+              onDelete={(id) => deleteMutation.mutate(id, {
+                onSuccess: () => setToast({ message: 'LAP deleted', type: 'success' }),
+                onError: (err) => setToast({ message: `Delete failed: ${err.message}`, type: 'error' }),
+              })}
             />
           ))
         )}

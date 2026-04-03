@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import { logger } from './utils/logger.js'
 import { agentRouter } from './routes/agents.js'
 import { healthRouter } from './routes/health.js'
+import { lapsRouter } from './routes/laps.js'
+import usageRouter from './routes/usage.js'
 import { errorHandler } from './middleware/errorHandler.js'
 
 // Load environment variables
@@ -23,7 +25,9 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/health', healthRouter)
+app.use('/api/laps', lapsRouter)
 app.use('/api/agents', agentRouter)
+app.use('/api/usage', usageRouter)
 
 // 404 handler
 app.use((req, res) => {

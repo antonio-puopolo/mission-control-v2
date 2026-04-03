@@ -1,21 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { RotateCcw } from 'lucide-react'
+import { UsageCard } from './UsageCard'
+import { GeorgeLLMConfig } from './GeorgeLLMConfig'
 
-interface SystemStatus {
-  usage: {
-    daily_usd: number
-    weekly_usd: number
-    monthly_usd: number
-    daily_aud: number
-    weekly_aud: number
-    monthly_aud: number
-  }
-  budget: {
-    monthly_limit_aud: number
-    daily_alert_threshold_aud: number
-    percent_used: number
-  }
-}
 
 interface AgentInfo {
   id: string
@@ -58,11 +45,10 @@ const SERVICES = [
   { name: 'Morning Briefing', desc: 'Daily digest' },
 ]
 
-function spendColor(daily_aud: number): string {
-  if (daily_aud < 8) return '#22c55e'
-  if (daily_aud < 15) return '#f59e0b'
-  return '#ef4444'
-}
+
+
+
+
 
 function shortModel(model: string): string {
   // Strip provider prefix for display
@@ -539,27 +525,15 @@ function AgentModelsCard() {
 // ── Main SystemDashboard ──────────────────────────────────────────────────────
 
 export function SystemDashboard() {
-  const [status, setStatus] = useState<SystemStatus | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [loading] = useState(false) // Initially false, cards manage their own loading
+  const [error] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetchStatus()
-  }, [])
-
-  async function fetchStatus() {
-    setLoading(true)
-    setError(null)
-    try {
-      const res = await fetch('/api/system-status')
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const data = await res.json()
-      setStatus(data)
-    } catch (e: any) {
-      setError(e.message)
-    } finally {
-      setLoading(false)
-    }
+  // Combined refresh function for all cards
+  const refreshAll = () => {
+    // This is a placeholder. A better implementation might use a shared context
+    // or event bus to trigger re-fetches in child components.
+    // For now, we rely on the individual card refresh buttons.
+    console.log('Triggering refresh for all system cards...')
   }
 
   return (
@@ -571,7 +545,7 @@ export function SystemDashboard() {
           <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Spend · Services · Budget · Agents</p>
         </div>
         <button
-          onClick={fetchStatus}
+          onClick={refreshAll}
           style={{ padding: '0.5rem 1rem', background: '#0d1320', color: '#00d4aa', border: '1px solid #00d4aa44', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600 }}
         >
           ↻ Refresh
@@ -588,61 +562,14 @@ export function SystemDashboard() {
         </div>
       )}
 
-      {!loading && status && (
+      {!loading && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
 
-          {/* ── Spend Card ── */}
-          <div style={{ ...card, gridColumn: '1 / -1', border: '1px solid #00d4aa22' }}>
-            <div style={label}>AI Spend</div>
+          {/* ── Token Usage Card (New) ── */}
+          <UsageCard />
 
-            {/* Today — big number */}
-            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem', marginBottom: '1.5rem' }}>
-              <span style={{ fontSize: '3rem', fontWeight: 800, lineHeight: 1, color: spendColor(status.usage.daily_aud) }}>
-                ${status.usage.daily_aud.toFixed(2)}
-              </span>
-              <span style={{ color: '#475569', marginBottom: '0.4rem', fontSize: '0.85rem' }}>AUD today</span>
-            </div>
-
-            {/* Row: week & month */}
-            <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-              <div>
-                <div style={label}>This week</div>
-                <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#e2e8f0' }}>
-                  ${status.usage.weekly_aud.toFixed(2)} <span style={{ fontSize: '0.8rem', color: '#475569', fontWeight: 400 }}>AUD</span>
-                </div>
-              </div>
-              <div>
-                <div style={label}>This month</div>
-                <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#e2e8f0' }}>
-                  ${status.usage.monthly_aud.toFixed(2)} <span style={{ fontSize: '0.8rem', color: '#475569', fontWeight: 400 }}>AUD</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Budget progress bar */}
-            <div style={{ marginBottom: '0.75rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                <span style={{ ...label, marginBottom: 0 }}>Monthly budget</span>
-                <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
-                  ${status.usage.monthly_aud.toFixed(2)} of ${status.budget.monthly_limit_aud} AUD used
-                  &nbsp;·&nbsp;{status.budget.percent_used}%
-                </span>
-              </div>
-              <div style={{ height: '8px', background: '#1e293b', borderRadius: '999px', overflow: 'hidden' }}>
-                <div style={{
-                  height: '100%',
-                  borderRadius: '999px',
-                  background: status.budget.percent_used > 80 ? '#ef4444' : status.budget.percent_used > 50 ? '#f59e0b' : '#00d4aa',
-                  width: `${Math.min(100, status.budget.percent_used)}%`,
-                  transition: 'width 0.6s ease',
-                }} />
-              </div>
-            </div>
-
-            <div style={{ color: '#475569', fontSize: '0.75rem', marginTop: '0.5rem' }}>
-              Heartbeats on Haiku · Chat on Sonnet
-            </div>
-          </div>
+          {/* ── George LLM Config ── */}
+          <GeorgeLLMConfig />
 
           {/* ── Agent Models Card ── */}
           <AgentModelsCard />
@@ -674,26 +601,7 @@ export function SystemDashboard() {
             </div>
           </div>
 
-          {/* ── Budget Rules Card ── */}
-          <div style={{ ...card }}>
-            <div style={{ ...label, marginBottom: '1rem' }}>Budget Rules</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Monthly budget</span>
-                <span style={{ fontWeight: 700, color: '#00d4aa' }}>${status.budget.monthly_limit_aud} AUD</span>
-              </div>
-              <div style={{ borderBottom: '1px solid #1e293b' }} />
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Alert threshold</span>
-                <span style={{ fontWeight: 700, color: '#f59e0b' }}>${status.budget.daily_alert_threshold_aud} AUD/day</span>
-              </div>
-              <div style={{ borderBottom: '1px solid #1e293b' }} />
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Auto top-up</span>
-                <span style={{ color: '#475569', fontSize: '0.82rem', fontStyle: 'italic' }}>Coming soon</span>
-              </div>
-            </div>
-          </div>
+
 
         </div>
       )}

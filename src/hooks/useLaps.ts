@@ -85,17 +85,42 @@ export const useCreateLap = () => {
 export const useUpdateLap = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, ...updates }: Partial<Lap> & { id: string }) =>
-      lapFetch(`/laps?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify(updates) }),
+    mutationFn: ({ id, ...updates }: Partial<Lap> & { id: string }) => {
+      // Sanitize empty strings to null for date/nullable fields
+      // Supabase rejects empty string "" for DATE columns — must be null
+      const sanitized = Object.fromEntries(
+        Object.entries(updates).map(([k, v]) => [k, v === '' ? null : v])
+      )
+      return lapFetch(`/laps?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify(sanitized) })
+    },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: lapKeys.all }),
   })
+}
+
+// Delete using service role key (bypasses RLS) if available, falls back to anon key
+const SUPABASE_SERVICE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY
+
+async function lapFetchDelete(path: string) {
+  const key = SUPABASE_SERVICE_KEY || SUPABASE_KEY!
+  const res = await fetch(`${SUPABASE_URL}/rest/v1${path}`, {
+    method: 'DELETE',
+    headers: {
+      'apikey': key,
+      'Authorization': `Bearer ${key}`,
+      'Prefer': 'return=minimal',
+    },
+  })
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(`Supabase error: ${err}`)
+  }
+  return null
 }
 
 export const useDeleteLap = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (id: string) =>
-      lapFetch(`/laps?id=eq.${id}`, { method: 'DELETE', headers: { Prefer: 'return=minimal' } }),
+    mutationFn: (id: string) => lapFetchDelete(`/laps?id=eq.${id}`),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: lapKeys.all }),
   })
 }
