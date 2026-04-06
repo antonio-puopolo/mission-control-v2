@@ -4,7 +4,26 @@ import { HammBoard } from './HammBoard'
 type Priority = 'high' | 'medium' | 'low'
 type Status = 'backlog' | 'in-progress' | 'done'
 type Category = 'mc-build' | 'business' | 'personal' | 'hamm'
+type Owner = 'antonio' | 'hamm' | null
 type ViewType = 'hamm' | 'kanban'
+
+interface ChecklistItem {
+  id: string
+  project_id: string
+  task: string
+  completed: boolean
+  task_order: number
+  created_at: string
+  updated_at: string
+}
+
+interface ProjectPlan {
+  id: string
+  project_id: string
+  plan_steps: string[]
+  created_at: string
+  updated_at: string
+}
 
 interface Project {
   id: string
@@ -13,9 +32,12 @@ interface Project {
   category: Category
   priority: Priority
   status: Status
+  owner: Owner
   due_date?: string | null
   created_at: string
   updated_at: string
+  plan?: ProjectPlan | null
+  checklist?: ChecklistItem[]
 }
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
@@ -60,7 +82,95 @@ const statusColors: Record<Status, { bg: string; text: string }> = {
   'done': { bg: 'rgba(74, 222, 128, 0.1)', text: '#4ade80' },
 }
 
-const emptyForm = { title: '', description: '', category: 'business' as Category, priority: 'medium' as Priority, status: 'backlog' as Status, due_date: '' }
+const emptyForm = {
+  title: '',
+  description: '',
+  category: 'business' as Category,
+  priority: 'medium' as Priority,
+  status: 'backlog' as Status,
+  owner: null as Owner,
+  due_date: '',
+  planStepsText: '', // newline-separated steps
+  checklistText: '', // newline-separated tasks
+}
+
+function OwnerBadge({ owner }: { owner: Owner }) {
+  if (!owner) return null
+  const isAntonio = owner === 'antonio'
+  return (
+    <span style={{
+      background: isAntonio ? 'rgba(96, 165, 250, 0.15)' : 'rgba(249, 115, 22, 0.15)',
+      color: isAntonio ? '#60a5fa' : '#F97316',
+      borderRadius: '4px',
+      padding: '0.1rem 0.4rem',
+      fontSize: '0.7rem',
+      fontWeight: '600',
+    }}>
+      {isAntonio ? '👤 Antonio' : '🐷 Hamm'}
+    </span>
+  )
+}
+
+function PlanSection({ steps }: { steps: string[] }) {
+  const [expanded, setExpanded] = useState(false)
+  if (!steps || steps.length === 0) return null
+  return (
+    <div style={{ marginTop: '0.5rem' }}>
+      <button
+        onClick={() => setExpanded(e => !e)}
+        style={{
+          background: 'none',
+          border: 'none',
+          color: '#94a3b8',
+          cursor: 'pointer',
+          fontSize: '0.75rem',
+          padding: '0',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.3rem',
+          fontFamily: 'inherit',
+        }}
+      >
+        <span style={{ transform: expanded ? 'rotate(90deg)' : 'none', display: 'inline-block', transition: 'transform 0.15s' }}>▶</span>
+        Plan ({steps.length} steps)
+      </button>
+      {expanded && (
+        <ol style={{ margin: '0.4rem 0 0 1rem', padding: 0, color: '#94a3b8', fontSize: '0.78rem', lineHeight: '1.6' }}>
+          {steps.map((step, i) => (
+            <li key={i}>{step}</li>
+          ))}
+        </ol>
+      )}
+    </div>
+  )
+}
+
+function ChecklistSection({ items, onToggle }: { items: ChecklistItem[]; onToggle: (id: string, completed: boolean) => void }) {
+  if (!items || items.length === 0) return null
+  const done = items.filter(i => i.completed).length
+  return (
+    <div style={{ marginTop: '0.5rem' }}>
+      <div style={{ fontSize: '0.7rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+        Checklist {done}/{items.length}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+        {[...items].sort((a, b) => a.task_order - b.task_order).map(item => (
+          <label key={item.id} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.8rem' }}>
+            <input
+              type="checkbox"
+              checked={item.completed}
+              onChange={() => onToggle(item.id, !item.completed)}
+              style={{ cursor: 'pointer', accentColor: '#4ade80' }}
+            />
+            <span style={{ color: item.completed ? '#4ade80' : '#cbd5e1', textDecoration: item.completed ? 'line-through' : 'none', opacity: item.completed ? 0.7 : 1 }}>
+              {item.task}
+            </span>
+          </label>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export function Projects() {
   const [view, setView] = useState<ViewType>('hamm')
@@ -72,8 +182,18 @@ export function Projects() {
 
   const load = async () => {
     try {
-      const data = await dbFetch('/projects?order=created_at.desc')
-      setProjects(data || [])
+      const [data, plans, checklist] = await Promise.all([
+        dbFetch('/projects?order=created_at.desc'),
+        dbFetch('/projects_plans?select=*'),
+        dbFetch('/projects_checklist?select=*&order=task_order.asc'),
+      ])
+
+      const enriched = (data || []).map((p: Project) => ({
+        ...p,
+        plan: (plans || []).find((pl: ProjectPlan) => pl.project_id === p.id) || null,
+        checklist: (checklist || []).filter((c: ChecklistItem) => c.project_id === p.id),
+      }))
+      setProjects(enriched)
     } catch (e) {
       console.error('Failed to load projects', e)
     } finally {
@@ -91,15 +211,67 @@ export function Projects() {
       category: form.category,
       priority: form.priority,
       status: form.status,
+      owner: form.owner || null,
       due_date: form.due_date || null,
       updated_at: new Date().toISOString(),
     }
     try {
+      let projectId = editingId
       if (editingId) {
         await dbFetch(`/projects?id=eq.${editingId}`, { method: 'PATCH', body: JSON.stringify(payload) })
       } else {
-        await dbFetch('/projects', { method: 'POST', body: JSON.stringify(payload) })
+        const created = await dbFetch('/projects', { method: 'POST', body: JSON.stringify(payload) })
+        projectId = created?.[0]?.id
       }
+
+      if (projectId) {
+        // Save plan steps
+        const steps = form.planStepsText
+          .split('\n')
+          .map(s => s.trim())
+          .filter(Boolean)
+
+        // Check if plan exists
+        const existingPlans = await dbFetch(`/projects_plans?project_id=eq.${projectId}`)
+        if (existingPlans?.length > 0) {
+          await dbFetch(`/projects_plans?project_id=eq.${projectId}`, {
+            method: 'PATCH',
+            body: JSON.stringify({ plan_steps: steps, updated_at: new Date().toISOString() }),
+          })
+        } else if (steps.length > 0) {
+          await dbFetch('/projects_plans', {
+            method: 'POST',
+            body: JSON.stringify({ project_id: projectId, plan_steps: steps }),
+          })
+        }
+
+        // Save checklist items (replace all)
+        const tasks = form.checklistText
+          .split('\n')
+          .map(t => t.trim())
+          .filter(Boolean)
+
+        // Delete existing checklist items for this project
+        await dbFetch(`/projects_checklist?project_id=eq.${projectId}`, {
+          method: 'DELETE',
+          headers: { Prefer: 'return=minimal' },
+        })
+
+        // Insert new checklist items
+        if (tasks.length > 0) {
+          const checklistPayload = tasks.map((task, i) => ({
+            project_id: projectId,
+            task,
+            completed: false,
+            task_order: i,
+          }))
+          await dbFetch('/projects_checklist', {
+            method: 'POST',
+            body: JSON.stringify(checklistPayload),
+          })
+        }
+      }
+
       await load()
     } catch (e) {
       console.error('Failed to save project', e)
@@ -119,8 +291,38 @@ export function Projects() {
     setProjects(prev => prev.map(p => p.id === id ? { ...p, status } : p))
   }
 
+  const toggleChecklist = async (itemId: string, completed: boolean) => {
+    try {
+      await dbFetch(`/projects_checklist?id=eq.${itemId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ completed, updated_at: new Date().toISOString() }),
+      })
+      setProjects(prev => prev.map(p => ({
+        ...p,
+        checklist: (p.checklist || []).map(c =>
+          c.id === itemId ? { ...c, completed } : c
+        ),
+      })))
+    } catch (e) {
+      console.error('Failed to toggle checklist item', e)
+    }
+  }
+
   const startEdit = (p: Project) => {
-    setForm({ title: p.title, description: p.description, category: p.category, priority: p.priority, status: p.status, due_date: p.due_date || '' })
+    setForm({
+      title: p.title,
+      description: p.description,
+      category: p.category,
+      priority: p.priority,
+      status: p.status,
+      owner: p.owner || null,
+      due_date: p.due_date || '',
+      planStepsText: (p.plan?.plan_steps || []).join('\n'),
+      checklistText: (p.checklist || [])
+        .sort((a, b) => a.task_order - b.task_order)
+        .map(c => c.task)
+        .join('\n'),
+    })
     setEditingId(p.id)
     setShowForm(true)
   }
@@ -198,8 +400,38 @@ export function Projects() {
               <option value="in-progress">In Progress</option>
               <option value="done">Done</option>
             </select>
+            <select value={form.owner || ''} onChange={e => setForm({ ...form, owner: (e.target.value || null) as Owner })}
+              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
+              <option value="">No owner</option>
+              <option value="antonio">👤 Antonio</option>
+              <option value="hamm">🐷 Hamm</option>
+            </select>
             <input type="date" value={form.due_date} onChange={e => setForm({ ...form, due_date: e.target.value })}
               style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }} />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              Plan Steps (one per line)
+            </label>
+            <textarea
+              value={form.planStepsText}
+              onChange={e => setForm({ ...form, planStepsText: e.target.value })}
+              placeholder="Step 1: Do this&#10;Step 2: Then this&#10;Step 3: Finally this"
+              rows={4}
+              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box', resize: 'vertical', fontSize: '0.85rem' }}
+            />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              Checklist (one task per line)
+            </label>
+            <textarea
+              value={form.checklistText}
+              onChange={e => setForm({ ...form, checklistText: e.target.value })}
+              placeholder="Write the brief&#10;Get sign-off&#10;Send to client"
+              rows={4}
+              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box', resize: 'vertical', fontSize: '0.85rem' }}
+            />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button onClick={saveProject} style={{ background: '#F59E0B', color: '#080c14', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>
@@ -229,7 +461,10 @@ export function Projects() {
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                     <span style={{ background: `${priorityColors[p.priority]}22`, color: priorityColors[p.priority], borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.priority}</span>
                     <span style={{ background: sc.bg, color: sc.text, borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.status}</span>
+                    <OwnerBadge owner={p.owner} />
                   </div>
+                  <PlanSection steps={p.plan?.plan_steps || []} />
+                  <ChecklistSection items={p.checklist || []} onToggle={toggleChecklist} />
                 </div>
               )
             })}
@@ -250,6 +485,7 @@ export function Projects() {
               {mainProjects.filter(p => p.status === col.id).map(p => {
                 const cat = categoryLabels[p.category] || { label: p.category, color: '#a0a0b0' }
                 const isOverdue = p.due_date && new Date(p.due_date) < new Date() && p.status !== 'done'
+                const lastUpdated = new Date(p.updated_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
                 return (
                   <div key={p.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '0.75rem', borderLeft: `3px solid ${priorityColors[p.priority]}` }}>
                     <div style={{ fontWeight: '600', fontSize: '0.9rem', marginBottom: '0.25rem' }}>{p.title}</div>
@@ -257,12 +493,15 @@ export function Projects() {
                     <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
                       <span style={{ background: `${cat.color}22`, color: cat.color, borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>{cat.label}</span>
                       <span style={{ background: `${priorityColors[p.priority]}22`, color: priorityColors[p.priority], borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.priority}</span>
+                      <OwnerBadge owner={p.owner} />
                       {p.due_date && (
                         <span style={{ background: isOverdue ? '#ff6b6b22' : 'rgba(255,255,255,0.06)', color: isOverdue ? '#ff6b6b' : '#a0a0b0', borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>
                           {isOverdue ? '⚠️ ' : '📅 '}{new Date(p.due_date).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}
                         </span>
                       )}
                     </div>
+                    <PlanSection steps={p.plan?.plan_steps || []} />
+                    <ChecklistSection items={p.checklist || []} onToggle={toggleChecklist} />
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
                       <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
                         {columns.filter(c => c.id !== col.id).map(c => (
@@ -272,7 +511,8 @@ export function Projects() {
                           </button>
                         ))}
                       </div>
-                      <div style={{ display: 'flex', gap: '0.25rem' }}>
+                      <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.65rem', color: '#475569' }}>↻ {lastUpdated}</span>
                         <button onClick={() => startEdit(p)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✏️</button>
                         <button onClick={() => deleteProject(p.id)} style={{ background: 'none', border: 'none', color: '#ff6b6b', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✕</button>
                       </div>
