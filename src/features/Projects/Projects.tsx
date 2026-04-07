@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { HammBoard } from './HammBoard'
 
 type Priority = 'high' | 'medium' | 'low'
-type Status = 'backlog' | 'in-progress' | 'done'
+type Status = 'backlog' | 'in-progress' | 'done' | 'archive'
 type Category = 'mc-build' | 'business' | 'personal' | 'hamm'
 type Owner = 'antonio' | 'hamm' | null
 type ViewType = 'hamm' | 'kanban'
@@ -74,13 +74,9 @@ const columns: { id: Status; label: string }[] = [
   { id: 'backlog', label: 'Backlog' },
   { id: 'in-progress', label: 'In Progress' },
   { id: 'done', label: 'Done' },
+  { id: 'archive', label: 'Archive' },
 ]
 
-const statusColors: Record<Status, { bg: string; text: string }> = {
-  'backlog': { bg: 'rgba(255,255,255,0.06)', text: '#a0a0b0' },
-  'in-progress': { bg: 'rgba(96, 165, 250, 0.1)', text: '#60a5fa' },
-  'done': { bg: 'rgba(74, 222, 128, 0.1)', text: '#4ade80' },
-}
 
 const emptyForm = {
   title: '',
@@ -90,8 +86,8 @@ const emptyForm = {
   status: 'backlog' as Status,
   owner: null as Owner,
   due_date: '',
-  planStepsText: '', // newline-separated steps
-  checklistText: '', // newline-separated tasks
+  planStepsText: '',
+  checklistText: '',
 }
 
 function OwnerBadge({ owner }: { owner: Owner }) {
@@ -173,12 +169,15 @@ function ChecklistSection({ items, onToggle }: { items: ChecklistItem[]; onToggl
 }
 
 export function Projects() {
-  const [view, setView] = useState<ViewType>('hamm')
+  const [view, setView] = useState<ViewType>('kanban')
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState(emptyForm)
+  const [archiveCollapsed, setArchiveCollapsed] = useState(true)
+  const [dragOverCol, setDragOverCol] = useState<Status | null>(null)
+  const dragProjectId = useRef<string | null>(null)
 
   const load = async () => {
     try {
@@ -225,13 +224,11 @@ export function Projects() {
       }
 
       if (projectId) {
-        // Save plan steps
         const steps = form.planStepsText
           .split('\n')
           .map(s => s.trim())
           .filter(Boolean)
 
-        // Check if plan exists
         const existingPlans = await dbFetch(`/projects_plans?project_id=eq.${projectId}`)
         if (existingPlans?.length > 0) {
           await dbFetch(`/projects_plans?project_id=eq.${projectId}`, {
@@ -245,19 +242,16 @@ export function Projects() {
           })
         }
 
-        // Save checklist items (replace all)
         const tasks = form.checklistText
           .split('\n')
           .map(t => t.trim())
           .filter(Boolean)
 
-        // Delete existing checklist items for this project
         await dbFetch(`/projects_checklist?project_id=eq.${projectId}`, {
           method: 'DELETE',
           headers: { Prefer: 'return=minimal' },
         })
 
-        // Insert new checklist items
         if (tasks.length > 0) {
           const checklistPayload = tasks.map((task, i) => ({
             project_id: projectId,
@@ -327,12 +321,37 @@ export function Projects() {
     setShowForm(true)
   }
 
-  const hammProjects = projects.filter(p => p.category === 'hamm')
-  const mainProjects = projects.filter(p => p.category !== 'hamm')
+  // Drag handlers
+  const onDragStart = (projectId: string) => {
+    dragProjectId.current = projectId
+  }
 
-  if (loading && view === 'kanban') return <div style={{ color: '#a0a0b0', textAlign: 'center', padding: '3rem' }}>Loading projects...</div>
+  const onDragOver = (e: React.DragEvent, colId: Status) => {
+    e.preventDefault()
+    setDragOverCol(colId)
+  }
 
-  // If Hamm board view, show it directly
+  const onDrop = async (colId: Status) => {
+    if (dragProjectId.current && dragProjectId.current !== colId) {
+      const proj = projects.find(p => p.id === dragProjectId.current)
+      if (proj && proj.status !== colId) {
+        await moveProject(dragProjectId.current, colId)
+        // Auto-expand archive if dropping into it
+        if (colId === 'archive') setArchiveCollapsed(false)
+      }
+    }
+    dragProjectId.current = null
+    setDragOverCol(null)
+  }
+
+  const onDragEnd = () => {
+    dragProjectId.current = null
+    setDragOverCol(null)
+  }
+
+  if (loading) return <div style={{ color: '#a0a0b0', textAlign: 'center', padding: '3rem' }}>Loading projects...</div>
+
+  // Hamm Board view
   if (view === 'hamm') {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -356,6 +375,7 @@ export function Projects() {
   // Kanban view
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Projects</h3>
@@ -364,9 +384,9 @@ export function Projects() {
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <button
             onClick={() => setView('hamm')}
-            style={{ background: '#F97316', color: '#fff', border: 'none', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+            style={{ background: 'rgba(255,255,255,0.08)', color: '#94a3b8', border: 'none', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
           >
-            🐷 Board View
+            🐷 Board
           </button>
           <button onClick={() => { setShowForm(!showForm); setEditingId(null); setForm(emptyForm) }}
             style={{ background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', padding: '0.5rem 1.1rem', cursor: 'pointer', fontWeight: '700', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
@@ -375,6 +395,7 @@ export function Projects() {
         </div>
       </div>
 
+      {/* New/Edit Form */}
       {showForm && (
         <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="Project title"
@@ -387,6 +408,7 @@ export function Projects() {
               <option value="mc-build">MC Build</option>
               <option value="business">Business</option>
               <option value="personal">Personal</option>
+              <option value="hamm">Hamm 🐷</option>
             </select>
             <select value={form.priority} onChange={e => setForm({ ...form, priority: e.target.value as Priority })}
               style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
@@ -399,6 +421,7 @@ export function Projects() {
               <option value="backlog">Backlog</option>
               <option value="in-progress">In Progress</option>
               <option value="done">Done</option>
+              <option value="archive">Archive</option>
             </select>
             <select value={form.owner || ''} onChange={e => setForm({ ...form, owner: (e.target.value || null) as Owner })}
               style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
@@ -445,84 +468,159 @@ export function Projects() {
         </div>
       )}
 
-      {hammProjects.length > 0 && (
-        <div style={{ border: '1px solid rgba(249, 115, 22, 0.3)', borderRadius: '12px', padding: '1rem 1.25rem', background: 'rgba(249, 115, 22, 0.04)', boxShadow: '0 0 20px rgba(249, 115, 22, 0.06)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.9rem' }}>
-            <h3 style={{ margin: 0, fontSize: '0.85rem', fontWeight: 600, color: '#F97316', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Hamm's Goals 🐷</h3>
-            <span style={{ background: 'rgba(249, 115, 22, 0.15)', color: '#F97316', borderRadius: '999px', padding: '0.1rem 0.5rem', fontSize: '0.72rem' }}>{hammProjects.length}</span>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '0.65rem' }}>
-            {hammProjects.map(p => {
-              const sc = statusColors[p.status]
-              return (
-                <div key={p.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(249, 115, 22, 0.18)', borderRadius: '8px', padding: '0.75rem', borderLeft: `3px solid ${priorityColors[p.priority]}` }}>
-                  <div style={{ fontWeight: '600', fontSize: '0.88rem', marginBottom: '0.25rem' }}>{p.title}</div>
-                  {p.description && <div style={{ color: '#a0a0b0', fontSize: '0.78rem', marginBottom: '0.5rem', lineHeight: '1.4' }}>{p.description}</div>}
-                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    <span style={{ background: `${priorityColors[p.priority]}22`, color: priorityColors[p.priority], borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.priority}</span>
-                    <span style={{ background: sc.bg, color: sc.text, borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.status}</span>
-                    <OwnerBadge owner={p.owner} />
-                  </div>
-                  <PlanSection steps={p.plan?.plan_steps || []} />
-                  <ChecklistSection items={p.checklist || []} onToggle={toggleChecklist} />
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      {/* Kanban Board */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', alignItems: 'start' }}>
+        {columns.map(col => {
+          const colProjects = projects.filter(p => p.status === col.id)
+          const isArchive = col.id === 'archive'
+          const isDragOver = dragOverCol === col.id
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-        {columns.map(col => (
-          <div key={col.id} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '1rem', minHeight: '200px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <h3 style={{ margin: 0, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#a0a0b0' }}>{col.label}</h3>
-              <span style={{ background: 'rgba(255,255,255,0.08)', borderRadius: '999px', padding: '0.1rem 0.5rem', fontSize: '0.75rem', color: '#a0a0b0' }}>
-                {mainProjects.filter(p => p.status === col.id).length}
-              </span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {mainProjects.filter(p => p.status === col.id).map(p => {
-                const cat = categoryLabels[p.category] || { label: p.category, color: '#a0a0b0' }
-                const isOverdue = p.due_date && new Date(p.due_date) < new Date() && p.status !== 'done'
-                const lastUpdated = new Date(p.updated_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
-                return (
-                  <div key={p.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '0.75rem', borderLeft: `3px solid ${priorityColors[p.priority]}` }}>
-                    <div style={{ fontWeight: '600', fontSize: '0.9rem', marginBottom: '0.25rem' }}>{p.title}</div>
-                    {p.description && <div style={{ color: '#a0a0b0', fontSize: '0.8rem', marginBottom: '0.5rem', lineHeight: '1.4' }}>{p.description}</div>}
-                    <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
-                      <span style={{ background: `${cat.color}22`, color: cat.color, borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>{cat.label}</span>
-                      <span style={{ background: `${priorityColors[p.priority]}22`, color: priorityColors[p.priority], borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.priority}</span>
-                      <OwnerBadge owner={p.owner} />
-                      {p.due_date && (
-                        <span style={{ background: isOverdue ? '#ff6b6b22' : 'rgba(255,255,255,0.06)', color: isOverdue ? '#ff6b6b' : '#a0a0b0', borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>
-                          {isOverdue ? '⚠️ ' : '📅 '}{new Date(p.due_date).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}
-                        </span>
-                      )}
-                    </div>
-                    <PlanSection steps={p.plan?.plan_steps || []} />
-                    <ChecklistSection items={p.checklist || []} onToggle={toggleChecklist} />
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
-                      <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
-                        {columns.filter(c => c.id !== col.id).map(c => (
-                          <button key={c.id} onClick={() => moveProject(p.id, c.id)} title={`Move to ${c.label}`}
-                            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.25rem 0.6rem', color: '#94a3b8', cursor: 'pointer', fontSize: '0.72rem', fontFamily: 'inherit', transition: 'all 0.15s' }}>
-                            {c.id === 'in-progress' ? '▶ In Progress' : c.id === 'done' ? '✓ Done' : '← Backlog'}
-                          </button>
-                        ))}
+          return (
+            <div
+              key={col.id}
+              onDragOver={e => onDragOver(e, col.id)}
+              onDrop={() => onDrop(col.id)}
+              style={{
+                background: isDragOver
+                  ? (isArchive ? 'rgba(100, 116, 139, 0.12)' : 'rgba(255,255,255,0.05)')
+                  : 'rgba(255,255,255,0.02)',
+                border: isDragOver
+                  ? `1px solid ${isArchive ? '#64748b' : 'rgba(255,255,255,0.2)'}`
+                  : '1px solid rgba(255,255,255,0.06)',
+                borderRadius: '10px',
+                padding: '1rem',
+                minHeight: '200px',
+                transition: 'background 0.15s, border-color 0.15s',
+              }}
+            >
+              {/* Column Header */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: isArchive && archiveCollapsed ? 0 : '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {isArchive && (
+                    <button
+                      onClick={() => setArchiveCollapsed(c => !c)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: '#64748b',
+                        cursor: 'pointer',
+                        padding: '0',
+                        fontSize: '0.75rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <span style={{ display: 'inline-block', transform: archiveCollapsed ? 'none' : 'rotate(90deg)', transition: 'transform 0.15s' }}>▶</span>
+                    </button>
+                  )}
+                  <h3 style={{
+                    margin: 0,
+                    fontSize: '0.9rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    color: isArchive ? '#64748b' : '#a0a0b0',
+                  }}>
+                    {isArchive ? '🗄 ' : ''}{col.label}
+                  </h3>
+                </div>
+                <span style={{
+                  background: 'rgba(255,255,255,0.08)',
+                  borderRadius: '999px',
+                  padding: '0.1rem 0.5rem',
+                  fontSize: '0.75rem',
+                  color: isArchive ? '#64748b' : '#a0a0b0',
+                }}>
+                  {colProjects.length}
+                </span>
+              </div>
+
+              {/* Cards */}
+              {(!isArchive || !archiveCollapsed) && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {colProjects.map(p => {
+                    const cat = categoryLabels[p.category] || { label: p.category, color: '#a0a0b0' }
+                    const isOverdue = p.due_date && new Date(p.due_date) < new Date() && p.status !== 'done' && p.status !== 'archive'
+                    const lastUpdated = new Date(p.updated_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
+                    return (
+                      <div
+                        key={p.id}
+                        draggable
+                        onDragStart={() => onDragStart(p.id)}
+                        onDragEnd={onDragEnd}
+                        style={{
+                          background: isArchive ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.04)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          borderRadius: '8px',
+                          padding: '0.75rem',
+                          borderLeft: `3px solid ${isArchive ? '#475569' : priorityColors[p.priority]}`,
+                          cursor: 'grab',
+                          opacity: isArchive ? 0.75 : 1,
+                          transition: 'opacity 0.15s',
+                        }}
+                      >
+                        <div style={{ fontWeight: '600', fontSize: '0.9rem', marginBottom: '0.25rem', color: isArchive ? '#64748b' : '#fff' }}>{p.title}</div>
+                        {p.description && (
+                          <div style={{ color: isArchive ? '#475569' : '#a0a0b0', fontSize: '0.8rem', marginBottom: '0.5rem', lineHeight: '1.4' }}>{p.description}</div>
+                        )}
+                        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
+                          <span style={{ background: `${cat.color}22`, color: isArchive ? '#475569' : cat.color, borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>{cat.label}</span>
+                          {!isArchive && (
+                            <span style={{ background: `${priorityColors[p.priority]}22`, color: priorityColors[p.priority], borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem', textTransform: 'uppercase' }}>{p.priority}</span>
+                          )}
+                          <OwnerBadge owner={p.owner} />
+                          {p.due_date && (
+                            <span style={{ background: isOverdue ? '#ff6b6b22' : 'rgba(255,255,255,0.06)', color: isOverdue ? '#ff6b6b' : '#a0a0b0', borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>
+                              {isOverdue ? '⚠️ ' : '📅 '}{new Date(p.due_date).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}
+                            </span>
+                          )}
+                        </div>
+                        <PlanSection steps={p.plan?.plan_steps || []} />
+                        <ChecklistSection items={p.checklist || []} onToggle={toggleChecklist} />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
+                          <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+                            {columns.filter(c => c.id !== col.id).map(c => (
+                              <button key={c.id} onClick={() => moveProject(p.id, c.id)} title={`Move to ${c.label}`}
+                                style={{
+                                  background: 'rgba(255,255,255,0.05)',
+                                  border: '1px solid rgba(255,255,255,0.1)',
+                                  borderRadius: '6px',
+                                  padding: '0.25rem 0.6rem',
+                                  color: c.id === 'archive' ? '#64748b' : '#94a3b8',
+                                  cursor: 'pointer',
+                                  fontSize: '0.72rem',
+                                  fontFamily: 'inherit',
+                                  transition: 'all 0.15s',
+                                }}>
+                                {c.id === 'backlog' ? '← Backlog' : c.id === 'in-progress' ? '▶ In Progress' : c.id === 'done' ? '✓ Done' : '🗄 Archive'}
+                              </button>
+                            ))}
+                          </div>
+                          <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+                            <span style={{ fontSize: '0.65rem', color: '#475569' }}>↻ {lastUpdated}</span>
+                            <button onClick={() => startEdit(p)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✏️</button>
+                            <button onClick={() => deleteProject(p.id)} style={{ background: 'none', border: 'none', color: '#ff6b6b', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✕</button>
+                          </div>
+                        </div>
                       </div>
-                      <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-                        <span style={{ fontSize: '0.65rem', color: '#475569' }}>↻ {lastUpdated}</span>
-                        <button onClick={() => startEdit(p)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✏️</button>
-                        <button onClick={() => deleteProject(p.id)} style={{ background: 'none', border: 'none', color: '#ff6b6b', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✕</button>
-                      </div>
+                    )
+                  })}
+                  {colProjects.length === 0 && (
+                    <div style={{
+                      textAlign: 'center',
+                      color: isArchive ? '#2d3748' : '#2d3748',
+                      fontSize: '0.8rem',
+                      padding: '1.5rem 0.5rem',
+                      border: `1px dashed ${isArchive ? '#1e2533' : 'rgba(255,255,255,0.04)'}`,
+                      borderRadius: '6px',
+                    }}>
+                      {isArchive ? 'Drag completed projects here' : 'Drop here'}
                     </div>
-                  </div>
-                )
-              })}
+                  )}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
