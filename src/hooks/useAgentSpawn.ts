@@ -9,7 +9,6 @@ async function sbFetch(path: string, options: RequestInit = {}) {
     ...options,
     headers: {
       'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
       'Content-Type': 'application/json',
       ...(options.headers || {}),
     },

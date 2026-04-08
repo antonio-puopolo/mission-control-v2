@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { LayoutDashboard, Home, FolderKanban, CalendarDays, Cpu, Activity, TrendingUp } from "lucide-react"
+import { LayoutDashboard, Home, FolderKanban, CalendarDays, Cpu, Activity, TrendingUp, BarChart2 } from "lucide-react"
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
@@ -8,12 +8,15 @@ import { Health } from '@/features/Health/Health'
 import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
 import { Market } from '@/features/Market/Market'
+import { MarketPulse } from '@/features/MarketPulse/MarketPulse'
+import { GeorgeMCPopup } from '@/components/George/GeorgeMCPopup'
 import './App.css'
 
 const tabs = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "lap-tracker", label: "LAP Tracker", icon: Home },
-  { id: "market", label: "Market", icon: TrendingUp },
+  { id: "market-pulse", label: "Market Pulse", icon: BarChart2 },
+  { id: "market", label: "Listings", icon: TrendingUp },
   { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "calendar", label: "Calendar", icon: CalendarDays },
   { id: "system", label: "System", icon: Cpu },
@@ -116,6 +119,7 @@ function App() {
       <main className="mc-main">
         {activeTab === 'dashboard' && <Dashboard />}
         {activeTab === 'lap-tracker' && <LAPTracker />}
+        {activeTab === 'market-pulse' && <MarketPulse />}
         {activeTab === 'projects' && <Projects />}
         {activeTab === 'market' && <Market />}
         {activeTab === 'calendar' && <Calendar />}
@@ -124,32 +128,8 @@ function App() {
 
       </main>
 
-      {/* Talk to Hamm floating button */}
-      <button
-        onClick={() => window.open('/hamm', '_blank', 'width=480,height=820,toolbar=no,menubar=no,resizable=yes')}
-        style={{
-          position: 'fixed',
-          bottom: '5rem',
-          right: '1rem',
-          background: "linear-gradient(135deg, #F59E0B, #D97706)",
-          color: "#000",
-          border: 'none',
-          borderRadius: '50px',
-          padding: '0.6rem 1rem',
-          fontWeight: 700,
-          fontSize: '0.8rem',
-          cursor: 'pointer',
-          boxShadow: "0 0 20px rgba(245,158,11,0.35)",
-          zIndex: 1000,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.4rem',
-          letterSpacing: '0.03em',
-        }}
-        title="Talk to George"
-      >
-        🎙️ Talk to George
-      </button>
+      {/* George MC Popup — floating AI assistant */}
+      <GeorgeMCPopup currentTab={activeTab} />
 
       <footer className="mc-footer">
         Mission Control v3 • Antonio Puopolo × Hamm 🐷

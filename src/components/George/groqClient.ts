@@ -61,11 +61,13 @@ export async function callGroq(
   messages: ChatMessage[],
   tools?: object[],
   signal?: AbortSignal,
-  onRetry?: (attempt: number, waitMs: number) => void
+  onRetry?: (attempt: number, waitMs: number) => void,
+  toolChoice?: 'auto' | 'none' | 'required'
 ): Promise<GroqResponse> {
   const body: Record<string, unknown> = {
     messages,
     tools,
+    tool_choice: toolChoice ?? (tools && tools.length > 0 ? 'auto' : undefined),
   }
 
   const MAX_RETRIES = 3

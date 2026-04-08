@@ -9,7 +9,6 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
 
 const headers = {
   'apikey': SUPABASE_KEY!,
-  'Authorization': `Bearer ${SUPABASE_KEY!}`,
   'Content-Type': 'application/json',
   'Prefer': 'return=representation',
 }

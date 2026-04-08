@@ -32,7 +32,7 @@ async function fetchGoals(): Promise<Goals> {
   const timeout = setTimeout(() => controller.abort(), 5000) // 5s timeout
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/goals?id=eq.main`, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
+      headers: { 'apikey': SUPABASE_KEY },
       signal: controller.signal,
     })
     clearTimeout(timeout)
@@ -66,7 +66,6 @@ async function persistGoals(g: Goals): Promise<void> {
     method: 'PATCH',
     headers: {
       'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
       'Content-Type': 'application/json',
       'Prefer': 'return=minimal',
     },
