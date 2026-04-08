@@ -7,7 +7,6 @@ import { SystemDashboard } from '@/components/SystemDashboard'
 import { Health } from '@/features/Health/Health'
 import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
-import { Market } from '@/features/Market/Market'
 import { MarketPulse } from '@/features/MarketPulse/MarketPulse'
 import { GeorgeMCPopup } from '@/components/George/GeorgeMCPopup'
 import './App.css'
@@ -16,7 +15,6 @@ const tabs = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "lap-tracker", label: "LAP Tracker", icon: Home },
   { id: "market-pulse", label: "Market Pulse", icon: BarChart2 },
-  { id: "market", label: "Listings", icon: TrendingUp },
   { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "calendar", label: "Calendar", icon: CalendarDays },
   { id: "system", label: "System", icon: Cpu },
@@ -121,7 +119,6 @@ function App() {
         {activeTab === 'lap-tracker' && <LAPTracker />}
         {activeTab === 'market-pulse' && <MarketPulse />}
         {activeTab === 'projects' && <Projects />}
-        {activeTab === 'market' && <Market />}
         {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'system' && <SystemDashboard />}
         {activeTab === 'health' && <Health />}
