@@ -379,25 +379,12 @@ export function LAPTracker() {
           <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>LAP Tracker</h3>
           <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Listings • Conversions • Follow-ups</p>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          {/* View toggle */}
-          <div style={{ display: 'flex', background: '#0d1320', border: '1px solid #333', borderRadius: '6px', overflow: 'hidden' }}>
-            <button
-              onClick={() => setViewMode('list')}
-              style={{ padding: '0.4rem 0.85rem', background: viewMode === 'list' ? '#F59E0B' : 'transparent', color: viewMode === 'list' ? '#000' : '#a0a0b0', border: 'none', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, fontFamily: 'inherit' }}
-            >List</button>
-            <button
-              onClick={() => setViewMode('map')}
-              style={{ padding: '0.4rem 0.85rem', background: viewMode === 'map' ? '#F59E0B' : 'transparent', color: viewMode === 'map' ? '#000' : '#a0a0b0', border: 'none', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, fontFamily: 'inherit' }}
-            >Map</button>
-          </div>
-          <button
-            onClick={() => setIsCreating(!isCreating)}
-            style={{ padding: '0.5rem 1.1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
-          >
-            {isCreating ? '✕ Cancel' : '+ New LAP'}
-          </button>
-        </div>
+        <button
+          onClick={() => setIsCreating(!isCreating)}
+          style={{ padding: '0.5rem 1.1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+        >
+          {isCreating ? '✕ Cancel' : '+ New LAP'}
+        </button>
       </div>
 
       {/* Attention banner */}
@@ -429,8 +416,8 @@ export function LAPTracker() {
         </div>
       )}
 
-      {/* Status Tabs */}
-      <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid #333', paddingBottom: '1rem' }}>
+      {/* Status Tabs + View Toggle */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderBottom: '1px solid #333', paddingBottom: '1rem', flexWrap: 'wrap' }}>
         {STATUSES.map((status) => (
           <button key={status} onClick={() => setActiveStatus(status)} style={{
             padding: "0.5rem 1rem",
@@ -447,6 +434,17 @@ export function LAPTracker() {
             {status} <span style={{ opacity: 0.7, fontSize: "0.78rem" }}>({statusCounts[status] ?? "…"})</span>
           </button>
         ))}
+        {/* View toggle — sits at end of tab row */}
+        <div style={{ marginLeft: 'auto', display: 'flex', background: '#0d1320', border: '1px solid #333', borderRadius: '6px', overflow: 'hidden', flexShrink: 0 }}>
+          <button
+            onClick={() => setViewMode('list')}
+            style={{ padding: '0.4rem 0.9rem', background: viewMode === 'list' ? '#F59E0B' : 'transparent', color: viewMode === 'list' ? '#000' : '#a0a0b0', border: 'none', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 700, fontFamily: 'inherit' }}
+          >☰ List</button>
+          <button
+            onClick={() => setViewMode('map')}
+            style={{ padding: '0.4rem 0.9rem', background: viewMode === 'map' ? '#F59E0B' : 'transparent', color: viewMode === 'map' ? '#000' : '#a0a0b0', border: 'none', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 700, fontFamily: 'inherit' }}
+          >⊙ Map</button>
+        </div>
       </div>
 
       {/* Search */}
