@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import { LayoutDashboard, Home, FolderKanban, CalendarDays, Cpu, Activity, BarChart2 } from "lucide-react"
+import { LayoutDashboard, Home, FolderKanban, CalendarDays, Activity, BarChart2 } from "lucide-react"
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
-import { SystemDashboard } from '@/components/SystemDashboard'
 import { Health } from '@/features/Health/Health'
 import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
@@ -17,7 +16,6 @@ const tabs = [
   { id: "market-pulse", label: "Market Pulse", icon: BarChart2 },
   { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "calendar", label: "Calendar", icon: CalendarDays },
-  { id: "system", label: "System", icon: Cpu },
   { id: "health", label: "Health", icon: Activity },
 ]
 
@@ -120,7 +118,6 @@ function App() {
         {activeTab === 'market-pulse' && <MarketPulse />}
         {activeTab === 'projects' && <Projects />}
         {activeTab === 'calendar' && <Calendar />}
-        {activeTab === 'system' && <SystemDashboard />}
         {activeTab === 'health' && <Health />}
 
       </main>
