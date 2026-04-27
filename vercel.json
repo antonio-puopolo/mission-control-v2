@@ -1,4 +1,14 @@
 {
+  "installCommand": "npm install --legacy-peer-deps",
+  "buildCommand": "npm run build",
+  "env": {
+    "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+  },
+  "build": {
+    "env": {
+      "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+    }
+  },
   "rewrites": [
     { "source": "/hamm", "destination": "/hamm.html" },
     { "source": "/((?!hamm$|assets/).*)", "destination": "/index.html" }

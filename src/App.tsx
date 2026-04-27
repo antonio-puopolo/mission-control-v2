@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { LayoutDashboard, Home, FolderKanban, CalendarDays, Cpu, Activity, TrendingUp, BarChart2 } from "lucide-react"
+import { LayoutDashboard, Home, FolderKanban, CalendarDays, Cpu, Activity, BarChart2 } from "lucide-react"
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'

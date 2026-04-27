@@ -30,19 +30,18 @@ export default async function handler(req, res) {
     }
 
     const body = {
-      model: 'meta-llama/llama-3.3-70b-instruct',
+      model: 'anthropic/claude-haiku-4.5',
       messages,
       temperature: 0.7,
       max_tokens: 1024,
     }
 
-    if (tools && Array.isArray(tools) && tools.length > 0) {
+    if (tool_choice === 'none') {
+      // Final response round after tool execution — omit tools entirely so the model
+      // responds naturally instead of outputting tool call JSON as text
+    } else if (tools && Array.isArray(tools) && tools.length > 0) {
       body.tools = tools
-      // Respect caller's tool_choice; default 'auto' for first call, caller sends 'none' after tool results
       body.tool_choice = tool_choice || 'auto'
-    } else if (tool_choice === 'none') {
-      // No tools but caller wants no tool calling (e.g. final response round)
-      body.tool_choice = 'none'
     }
 
     const response = await fetch(`${OPENROUTER_BASE_URL}/chat/completions`, {

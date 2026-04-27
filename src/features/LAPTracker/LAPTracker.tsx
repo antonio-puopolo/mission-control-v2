@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLapsByStatus, useCreateLap, useUpdateLap, useDeleteLap, useLapStatusCounts } from '@/hooks/useLaps'
 import { useRealtimeSync } from '@/hooks/useRealtimeSync'
+import { LAPMap } from './LAPMap'
 
 const STATUSES = ['LAP', 'Listed', 'Sold', 'Withdrawn'] as const
 type Status = typeof STATUSES[number]
@@ -296,6 +297,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
 
 export function LAPTracker() {
   const [activeStatus, setActiveStatus] = useState<Status>('LAP')
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('list')
   const [searchTerm, setSearchTerm] = useState('')
   const [isCreating, setIsCreating] = useState(false)
   const [newLap, setNewLap] = useState({ address: '', client_name: '', follow_up_date: '', phone: '', priority: 'normal', pipeline_section: 'pipeline_b' })
@@ -377,12 +379,25 @@ export function LAPTracker() {
           <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>LAP Tracker</h3>
           <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Listings • Conversions • Follow-ups</p>
         </div>
-        <button
-          onClick={() => setIsCreating(!isCreating)}
-          style={{ padding: '0.5rem 1.1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
-        >
-          {isCreating ? '✕ Cancel' : '+ New LAP'}
-        </button>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          {/* View toggle */}
+          <div style={{ display: 'flex', background: '#0d1320', border: '1px solid #333', borderRadius: '6px', overflow: 'hidden' }}>
+            <button
+              onClick={() => setViewMode('list')}
+              style={{ padding: '0.4rem 0.85rem', background: viewMode === 'list' ? '#F59E0B' : 'transparent', color: viewMode === 'list' ? '#000' : '#a0a0b0', border: 'none', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, fontFamily: 'inherit' }}
+            >List</button>
+            <button
+              onClick={() => setViewMode('map')}
+              style={{ padding: '0.4rem 0.85rem', background: viewMode === 'map' ? '#F59E0B' : 'transparent', color: viewMode === 'map' ? '#000' : '#a0a0b0', border: 'none', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, fontFamily: 'inherit' }}
+            >Map</button>
+          </div>
+          <button
+            onClick={() => setIsCreating(!isCreating)}
+            style={{ padding: '0.5rem 1.1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+          >
+            {isCreating ? '✕ Cancel' : '+ New LAP'}
+          </button>
+        </div>
       </div>
 
       {/* Attention banner */}
@@ -437,26 +452,37 @@ export function LAPTracker() {
       {/* Search */}
       <input type="text" placeholder="Search by address or client name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: '0.75rem 1rem', background: '#0d1320', border: '1px solid #333', borderRadius: '4px', color: '#fff', fontFamily: 'inherit', width: '100%' }} />
 
-      {/* LAPs List */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: '1rem' }}>
-        {isLoading ? (
-          <p style={{ color: '#a0a0b0' }}>Loading...</p>
-        ) : filtered.length === 0 ? (
-          <p style={{ color: '#a0a0b0' }}>No LAPs in {activeStatus} status</p>
-        ) : (
-          filtered.map((lap) => (
-            <LapCard
-              key={lap.id}
-              lap={lap as any}
-              onUpdate={(id, data) => updateMutation.mutate({ id, ...data } as any)}
-              onDelete={(id) => deleteMutation.mutate(id, {
-                onSuccess: () => setToast({ message: 'LAP deleted', type: 'success' }),
-                onError: (err) => setToast({ message: `Delete failed: ${err.message}`, type: 'error' }),
-              })}
-            />
-          ))
-        )}
-      </div>
+      {/* Map or List view */}
+      {viewMode === 'map' ? (
+        <LAPMap
+          activeStatus={activeStatus}
+          onUpdate={(id, data) => updateMutation.mutate({ id, ...data } as any)}
+          onDelete={(id) => deleteMutation.mutate(id, {
+            onSuccess: () => setToast({ message: 'LAP deleted', type: 'success' }),
+            onError: (err) => setToast({ message: `Delete failed: ${err.message}`, type: 'error' }),
+          })}
+        />
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: '1rem' }}>
+          {isLoading ? (
+            <p style={{ color: '#a0a0b0' }}>Loading...</p>
+          ) : filtered.length === 0 ? (
+            <p style={{ color: '#a0a0b0' }}>No LAPs in {activeStatus} status</p>
+          ) : (
+            filtered.map((lap) => (
+              <LapCard
+                key={lap.id}
+                lap={lap as any}
+                onUpdate={(id, data) => updateMutation.mutate({ id, ...data } as any)}
+                onDelete={(id) => deleteMutation.mutate(id, {
+                  onSuccess: () => setToast({ message: 'LAP deleted', type: 'success' }),
+                  onError: (err) => setToast({ message: `Delete failed: ${err.message}`, type: 'error' }),
+                })}
+              />
+            ))
+          )}
+        </div>
+      )}
     </div>
   )
 }

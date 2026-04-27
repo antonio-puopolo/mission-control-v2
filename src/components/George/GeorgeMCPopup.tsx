@@ -11,6 +11,7 @@ import {
   setMuted as setTTSMuted,
   setVolume as setTTSVolume,
   isSpeaking as checkIsSpeaking,
+  unlockAudio,
 } from '@/services/elevenLabsVoice'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -48,7 +49,9 @@ Antonio is a real estate agent at Place Real Estate (Hicks Team) in Brisbane, Au
 - Quarterly GCI target: $60K
 - Monthly LAP target: 4 LAPs
 
-Today's date: ${new Date().toLocaleDateString('en-AU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`
+Today's date: ${new Date().toLocaleDateString('en-AU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+
+**Your model:** Claude Haiku 4.5 (via OpenRouter)`
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
@@ -438,7 +441,7 @@ export function GeorgeMCPopup({
       {/* Floating FAB */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => { unlockAudio(); setIsOpen(true) }}
           style={{
             position: 'fixed',
             bottom: '1.5rem',
@@ -696,7 +699,7 @@ export function GeorgeMCPopup({
                     />
                     <button
                       className="george-send-btn"
-                      onClick={() => sendMessage(input)}
+                      onClick={() => { unlockAudio(); sendMessage(input) }}
                       disabled={isLoading || !input.trim()}
                       style={{
                         background: '#F59E0B',

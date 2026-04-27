@@ -11,8 +11,9 @@
 import { useState, useEffect, useCallback } from 'react'
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://zjyrillpennxowntwebo.supabase.co'
+// Use service role key for read access (tables have no RLS)
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzQwODIsImV4cCI6MjA4ODAxMDA4Mn0.POMFruggeywzX3cEA6ZfQu2CAQS2mnlc0OQEA3pEbto'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqeXJpbGxwZW5ueG93bnR3ZWJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjQzNDA4MiwiZXhwIjoyMDg4MDEwMDgyfQ.qs_YCiL_rfyVVNl2jHyFGDi9lhafOXXSnXjYtogUmXY'
 
 const HEADERS = {
   'apikey': SUPABASE_KEY,
@@ -103,11 +104,7 @@ export interface CompResult {
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────
 
-function monthLabel (month: number, year: number): string {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  return `${months[month - 1]} ${year}`
-}
+
 
 function medianOf (values: number[]): number | null {
   if (!values.length) return null
@@ -125,6 +122,7 @@ export function useMarketPulseData (): MarketPulseData {
   const [error, setError] = useState<string | null>(null)
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   const [recentProperties, setRecentProperties] = useState<Property[]>([])
+  const [occupancySnapshot, setOccupancySnapshot] = useState<any>(null)
 
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -154,6 +152,17 @@ export function useMarketPulseData (): MarketPulseData {
       )
 
       setRecentProperties(recentProps || [])
+
+      // Fetch latest occupancy snapshot (for owner/rented percentages)
+      const occupancySnap: any[] = await sbFetch(
+        '/camp_hill_occupancy_snapshot?order=snapshot_date.desc&limit=1&select=*'
+      )
+      
+      // Store occupancy snapshot in state for KPI calculation
+      if (occupancySnap && occupancySnap.length > 0) {
+        // Store it as a ref or pass it down
+        setOccupancySnapshot(occupancySnap[0])
+      }
     } catch (err: any) {
       console.error('Market Pulse data fetch failed:', err)
       setError(`Data unavailable: ${err.message}`)
@@ -193,27 +202,61 @@ export function useMarketPulseData (): MarketPulseData {
     }
   }
 
-  // Latest snapshot for KPIs
+  // Latest snapshot (for historical context)
   const latest = snapshots[snapshots.length - 1]
 
-  // 30-day rolling DOM
-  const recentDOMs = recentProperties
-    .filter(p => p.days_on_market !== null)
-    .map(p => p.days_on_market as number)
-  const avgDOM30d = recentDOMs.length > 0
-    ? Math.round(recentDOMs.reduce((a, b) => a + b, 0) / recentDOMs.length)
+  // ─── CALCULATE TRUE 30-DAY ROLLING WINDOW ────────────────────────────────
+  // Don't use pre-calculated snapshots — calculate live from recent properties
+
+  const houses30d = recentProperties.filter(p => p.property_type === 'house')
+  const units30d = recentProperties.filter(p => p.property_type === 'unit')
+
+  // Median prices in last 30 days
+  const housePrices30d = houses30d
+    .map(p => p.price)
+    .filter((p): p is number => p !== null && p > 0)
+  const unitPrices30d = units30d
+    .map(p => p.price)
+    .filter((p): p is number => p !== null && p > 0)
+
+  const medianHouse30d = housePrices30d.length > 0 ? medianOf(housePrices30d) : null
+  const medianUnit30d = unitPrices30d.length > 0 ? medianOf(unitPrices30d) : null
+
+  // Average DOM in last 30 days
+  const domHouses30d = houses30d
+    .map(p => p.days_on_market)
+    .filter((d): d is number => d !== null && d > 0)
+  const domUnits30d = units30d
+    .map(p => p.days_on_market)
+    .filter((d): d is number => d !== null && d > 0)
+
+  const avgDOMHouses30d = domHouses30d.length > 0
+    ? Math.round(domHouses30d.reduce((a, b) => a + b) / domHouses30d.length)
+    : null
+  const avgDOMUnits30d = domUnits30d.length > 0
+    ? Math.round(domUnits30d.reduce((a, b) => a + b) / domUnits30d.length)
     : null
 
+  const avgDOM30d = recentProperties
+    .filter(p => p.days_on_market !== null && p.days_on_market > 0)
+    .map(p => p.days_on_market as number)
+    .reduce((a, b, _, arr) => a + b / arr.length, 0) || null
+
+  // Occupancy from market snapshot (RPData — all properties)
+  // This is MORE accurate than calculating from just recent sales
+  const ownerPct30d = occupancySnapshot?.owner_occupied_pct ?? null
+  const rentedPct30d = occupancySnapshot?.rented_pct ?? null
+
   const kpis: MarketPulseKPIs = {
-    medianHousePrice: latest.median_house_price,
-    medianUnitPrice: latest.median_unit_price,
-    avgDOMHouses: latest.avg_days_on_market_houses,
-    avgDOMUnits: latest.avg_days_on_market_units,
-    avgDOM30d,
-    ownerOccupiedPct: latest.owner_occupied_pct,
-    rentedPct: latest.rented_pct,
-    totalProperties: latest.total_properties,
-    lastUpdated: latest.created_at,
+    medianHousePrice: medianHouse30d,
+    medianUnitPrice: medianUnit30d,
+    avgDOMHouses: avgDOMHouses30d,
+    avgDOMUnits: avgDOMUnits30d,
+    avgDOM30d: Math.round(avgDOM30d || 0) || null,
+    ownerOccupiedPct: ownerPct30d,
+    rentedPct: rentedPct30d,
+    totalProperties: recentProperties.length, // Count of recent properties, not snapshot count
+    lastUpdated: new Date().toISOString(), // "Last updated NOW" (live calculation)
     month: latest.month,
     year: latest.year,
   }
