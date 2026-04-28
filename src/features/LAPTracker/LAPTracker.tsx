@@ -8,6 +8,13 @@ type Status = typeof STATUSES[number]
 
 const PRIORITIES = ['urgent', 'high', 'normal', 'low'] as const
 
+const STATUS_COLORS: Record<Status, string> = {
+  LAP: '#F59E0B',
+  Listed: '#22c55e',
+  Sold: '#60a5fa',
+  Withdrawn: '#64748b',
+}
+
 const PIPELINE_SECTIONS = [
   { value: 'under_construction', label: '🏗️ Under Construction', color: '#a78bfa' },
   { value: 'pipeline_a', label: '🔥 Pipeline A (1–3 months)', color: '#F59E0B' },
@@ -115,15 +122,15 @@ function LapCard({ lap, onUpdate, onDelete }: {
 
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.05)',
+      background: 'rgba(255,255,255,0.07)',
       borderRadius: '14px',
       borderLeft: `3px solid ${priorityColor}`,
-      borderTop: '1px solid rgba(255,255,255,0.13)',
-      borderRight: '1px solid rgba(255,255,255,0.06)',
-      borderBottom: '1px solid rgba(255,255,255,0.06)',
-      backdropFilter: 'blur(24px) saturate(1.5)',
-      WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.07), 0 4px 20px rgba(0,0,0,0.35)',
+      borderTop: '1px solid rgba(255,255,255,0.18)',
+      borderRight: '1px solid rgba(255,255,255,0.07)',
+      borderBottom: '1px solid rgba(255,255,255,0.07)',
+      backdropFilter: 'blur(32px) saturate(1.8)',
+      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
       overflow: 'hidden',
       transition: 'background 0.2s ease',
     }}>
@@ -392,8 +399,8 @@ export function LAPTracker() {
         {STATUSES.map(status => (
           <button key={status} onClick={() => setActiveStatus(status)} style={{
             padding: '0.4rem 0.85rem',
-            background: activeStatus === status ? 'rgba(245,158,11,0.12)' : 'transparent',
-            color: activeStatus === status ? '#F59E0B' : '#64748b',
+            background: activeStatus === status ? `${STATUS_COLORS[status]}18` : 'transparent',
+            color: activeStatus === status ? STATUS_COLORS[status] : '#64748b',
             border: 'none', borderRadius: '8px', cursor: 'pointer',
             fontFamily: 'inherit', fontSize: '0.8rem',
             fontWeight: activeStatus === status ? 600 : 400,

@@ -80,14 +80,14 @@ async function persistGoals(g: Goals): Promise<void> {
 }
 
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.055)',
-  border: '1px solid rgba(255,255,255,0.08)',
-  borderTop: '1px solid rgba(255,255,255,0.16)',
+  background: 'rgba(255,255,255,0.07)',
+  border: '1px solid rgba(255,255,255,0.09)',
+  borderTop: '1px solid rgba(255,255,255,0.20)',
   borderRadius: '16px',
   padding: '1.5rem',
-  backdropFilter: 'blur(28px) saturate(1.6)',
-  WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
-  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.09), 0 8px 32px rgba(0,0,0,0.45)',
+  backdropFilter: 'blur(32px) saturate(1.8)',
+  WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 8px 32px rgba(0,0,0,0.5)',
 }
 
 const sectionLabel: React.CSSProperties = {
@@ -189,9 +189,9 @@ export function Dashboard() {
       {/* Metric Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(155px, 1fr))', gap: '1rem' }}>
         <MetricCard label="GCI This Quarter" value={`$${goals.gciCurrent.toLocaleString()}`} sub={`of $${goals.gciTarget.toLocaleString()}`} percent={pct(goals.gciCurrent, goals.gciTarget)} color="#F59E0B" />
-        <MetricCard label="Listings" value={goals.listingsCurrent.toString()} sub={`target ${goals.listingsTarget}/qtr`} percent={pct(goals.listingsCurrent, goals.listingsTarget)} color="#818cf8" />
-        <MetricCard label="LAPs" value={goals.lapsCurrent.toString()} sub={`target ${goals.lapsTarget}/qtr · ${lapsLoading ? '…' : laps.length} tracked`} percent={pct(goals.lapsCurrent, goals.lapsTarget)} color="#fb923c" />
-        <MetricCard label="Points (Month)" value={pointsThisMonth.toString()} sub="target 250 pts" percent={pct(pointsThisMonth, 250)} color="#f87171" />
+        <MetricCard label="Listings" value={goals.listingsCurrent.toString()} sub={`target ${goals.listingsTarget}/qtr`} percent={pct(goals.listingsCurrent, goals.listingsTarget)} color="#22c55e" />
+        <MetricCard label="LAPs" value={goals.lapsCurrent.toString()} sub={`target ${goals.lapsTarget}/qtr · ${lapsLoading ? '…' : laps.length} tracked`} percent={pct(goals.lapsCurrent, goals.lapsTarget)} color="#60a5fa" />
+        <MetricCard label="Points (Month)" value={pointsThisMonth.toString()} sub="target 250 pts" percent={pct(pointsThisMonth, 250)} color="#a78bfa" />
       </div>
 
       {/* Weekly KPIs */}
@@ -221,9 +221,9 @@ export function Dashboard() {
       <div style={card}>
         <div style={sectionLabel}>LAP Pipeline</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-          <StatusBox label="In Progress" count={lapsByStatus.lap} color="#fb923c" />
-          <StatusBox label="Listed" count={lapsByStatus.listed} color="#818cf8" />
-          <StatusBox label="Sold" count={lapsByStatus.sold} color="#F59E0B" />
+          <StatusBox label="In Progress" count={lapsByStatus.lap} color="#F59E0B" />
+          <StatusBox label="Listed" count={lapsByStatus.listed} color="#22c55e" />
+          <StatusBox label="Sold" count={lapsByStatus.sold} color="#60a5fa" />
         </div>
         {pipelineValue && pipelineValue.total > 0 && (
           <div style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
@@ -327,14 +327,14 @@ export function Dashboard() {
 function MetricCard({ label, value, sub, percent, color }: { label: string; value: string; sub: string; percent: number; color: string }) {
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.055)',
-      border: '1px solid rgba(255,255,255,0.08)',
-      borderTop: '1px solid rgba(255,255,255,0.16)',
+      background: 'rgba(255,255,255,0.07)',
+      border: '1px solid rgba(255,255,255,0.09)',
+      borderTop: '1px solid rgba(255,255,255,0.20)',
       borderRadius: '16px',
       padding: '1.25rem 1.5rem 1rem',
-      backdropFilter: 'blur(28px) saturate(1.6)',
-      WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.4)',
+      backdropFilter: 'blur(32px) saturate(1.8)',
+      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 8px 32px rgba(0,0,0,0.5)',
       position: 'relative',
       overflow: 'hidden',
       display: 'flex',
@@ -356,15 +356,15 @@ function MetricCard({ label, value, sub, percent, color }: { label: string; valu
 function StatusBox({ label, count, color }: { label: string; count: number; color: string }) {
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.05)',
-      border: '1px solid rgba(255,255,255,0.08)',
-      borderTop: '1px solid rgba(255,255,255,0.15)',
+      background: 'rgba(255,255,255,0.07)',
+      border: '1px solid rgba(255,255,255,0.09)',
+      borderTop: '1px solid rgba(255,255,255,0.20)',
       borderRadius: '14px',
       padding: '1.1rem',
       textAlign: 'center',
-      backdropFilter: 'blur(24px) saturate(1.5)',
-      WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 20px rgba(0,0,0,0.35)',
+      backdropFilter: 'blur(32px) saturate(1.8)',
+      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 20px rgba(0,0,0,0.4)',
     }}>
       <div style={{ fontSize: '2.6rem', fontWeight: 700, letterSpacing: '-0.04em', color, lineHeight: 1 }}>{count}</div>
       <div style={{ fontSize: '0.67rem', color: '#475569', marginTop: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{label}</div>

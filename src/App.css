@@ -5,15 +5,23 @@
 :root {
   --accent:           #F59E0B;
   --accent-rich:      #D97706;
-  --accent-dim:       rgba(245,158,11,0.10);
-  --accent-glow:      rgba(245,158,11,0.18);
-  --bg:               #06080c;
-  --bg2:              #0a0d13;
+  --accent-dim:       rgba(245,158,11,0.12);
+  --accent-glow:      rgba(245,158,11,0.22);
+  --green:            #22c55e;
+  --green-dim:        rgba(34,197,94,0.12);
+  --blue:             #60a5fa;
+  --blue-dim:         rgba(96,165,250,0.12);
+  --red:              #f87171;
+  --red-dim:          rgba(248,113,113,0.12);
+  --violet:           #a78bfa;
+  --violet-dim:       rgba(167,139,250,0.12);
+  --bg:               #060a14;
+  --bg2:              #0a1020;
   --bg3:              rgba(255,255,255,0.025);
-  --card:             rgba(255,255,255,0.055);
-  --card-hover:       rgba(255,255,255,0.08);
-  --border:           rgba(255,255,255,0.08);
-  --border-bright:    rgba(255,255,255,0.16);
+  --card:             rgba(255,255,255,0.07);
+  --card-hover:       rgba(255,255,255,0.10);
+  --border:           rgba(255,255,255,0.09);
+  --border-bright:    rgba(255,255,255,0.20);
   --text:             #f1f5f9;
   --text-soft:        #cbd5e1;
   --muted:            #64748b;
@@ -39,22 +47,22 @@ body {
 .mc-app::before {
   content: '';
   position: fixed;
-  top: -20%;
-  right: -15%;
-  width: 55%;
-  height: 65%;
-  background: radial-gradient(ellipse, rgba(245,158,11,0.055) 0%, transparent 65%);
+  top: -15%;
+  right: -10%;
+  width: 60%;
+  height: 70%;
+  background: radial-gradient(ellipse, rgba(245,158,11,0.09) 0%, rgba(245,158,11,0.03) 45%, transparent 70%);
   pointer-events: none;
   z-index: -1;
 }
 .mc-app::after {
   content: '';
   position: fixed;
-  bottom: -15%;
-  left: -10%;
-  width: 50%;
-  height: 55%;
-  background: radial-gradient(ellipse, rgba(99,102,241,0.045) 0%, transparent 65%);
+  bottom: -20%;
+  left: -15%;
+  width: 65%;
+  height: 65%;
+  background: radial-gradient(ellipse, rgba(96,165,250,0.08) 0%, rgba(99,102,241,0.05) 40%, transparent 70%);
   pointer-events: none;
   z-index: -1;
 }
@@ -174,21 +182,21 @@ body {
   border-top: 1px solid var(--border-bright);
   border-radius: 16px;
   padding: 1.5rem;
-  backdrop-filter: blur(28px) saturate(1.6);
-  -webkit-backdrop-filter: blur(28px) saturate(1.6);
+  backdrop-filter: blur(32px) saturate(1.8);
+  -webkit-backdrop-filter: blur(32px) saturate(1.8);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.09),
-    0 8px 32px rgba(0,0,0,0.45),
-    0 2px 8px rgba(0,0,0,0.25);
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    0 8px 32px rgba(0,0,0,0.5),
+    0 2px 8px rgba(0,0,0,0.3);
   transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .glass-card:hover {
   background: var(--card-hover);
-  border-color: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.14);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    0 12px 40px rgba(0,0,0,0.5),
-    0 2px 8px rgba(0,0,0,0.3);
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    0 16px 48px rgba(0,0,0,0.55),
+    0 2px 8px rgba(0,0,0,0.35);
 }
 
 /* ── Scrollbar ── */
