@@ -80,12 +80,14 @@ async function persistGoals(g: Goals): Promise<void> {
 }
 
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.07)',
-  borderRadius: '14px',
+  background: 'rgba(255,255,255,0.055)',
+  border: '1px solid rgba(255,255,255,0.08)',
+  borderTop: '1px solid rgba(255,255,255,0.16)',
+  borderRadius: '16px',
   padding: '1.5rem',
-  backdropFilter: 'blur(12px)',
-  WebkitBackdropFilter: 'blur(12px)',
+  backdropFilter: 'blur(28px) saturate(1.6)',
+  WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.09), 0 8px 32px rgba(0,0,0,0.45)',
 }
 
 const sectionLabel: React.CSSProperties = {
@@ -325,12 +327,14 @@ export function Dashboard() {
 function MetricCard({ label, value, sub, percent, color }: { label: string; value: string; sub: string; percent: number; color: string }) {
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.04)',
-      border: '1px solid rgba(255,255,255,0.07)',
-      borderRadius: '14px',
+      background: 'rgba(255,255,255,0.055)',
+      border: '1px solid rgba(255,255,255,0.08)',
+      borderTop: '1px solid rgba(255,255,255,0.16)',
+      borderRadius: '16px',
       padding: '1.25rem 1.5rem 1rem',
-      backdropFilter: 'blur(12px)',
-      WebkitBackdropFilter: 'blur(12px)',
+      backdropFilter: 'blur(28px) saturate(1.6)',
+      WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.4)',
       position: 'relative',
       overflow: 'hidden',
       display: 'flex',
@@ -352,11 +356,15 @@ function MetricCard({ label, value, sub, percent, color }: { label: string; valu
 function StatusBox({ label, count, color }: { label: string; count: number; color: string }) {
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.03)',
-      border: '1px solid rgba(255,255,255,0.06)',
-      borderRadius: '11px',
+      background: 'rgba(255,255,255,0.05)',
+      border: '1px solid rgba(255,255,255,0.08)',
+      borderTop: '1px solid rgba(255,255,255,0.15)',
+      borderRadius: '14px',
       padding: '1.1rem',
       textAlign: 'center',
+      backdropFilter: 'blur(24px) saturate(1.5)',
+      WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 20px rgba(0,0,0,0.35)',
     }}>
       <div style={{ fontSize: '2.6rem', fontWeight: 700, letterSpacing: '-0.04em', color, lineHeight: 1 }}>{count}</div>
       <div style={{ fontSize: '0.67rem', color: '#475569', marginTop: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{label}</div>
