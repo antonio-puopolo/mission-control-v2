@@ -196,7 +196,7 @@ export function Health() {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Health & Fitness</h3>
+          <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#f0f0f0', letterSpacing: '-0.02em' }}>Health & Fitness</h1>
           <p style={{ color: '#555', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Body • Habits • Process</p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
