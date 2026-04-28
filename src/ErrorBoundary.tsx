@@ -33,7 +33,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             {this.state.error?.message || 'Unknown error'}
           </pre>
           <p style={{ color: '#a0a0b0', marginTop: '1rem' }}>Check the browser console (F12) for more details.</p>
-          <button onClick={() => window.location.reload()} style={{ padding: '0.75rem 1.5rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: '600', marginTop: '1rem' }}>
+          <button onClick={() => window.location.reload()} style={{ padding: '0.75rem 1.5rem', background: '#EAEAE0', color: '#000', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: '600', marginTop: '1rem' }}>
             Reload Page
           </button>
         </div>

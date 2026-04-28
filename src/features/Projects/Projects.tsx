@@ -59,12 +59,12 @@ async function dbFetch(path: string, options?: RequestInit) {
 const priorityColors: Record<Priority, string> = {
   high: '#f87171',
   medium: '#fb923c',
-  low: '#F59E0B',
+  low: '#EAEAE0',
 }
 
 const categoryLabels: Record<Category, { label: string; color: string }> = {
   'mc-build': { label: 'MC Build', color: '#60a5fa' },
-  'business': { label: 'Business', color: '#F59E0B' },
+  'business': { label: 'Business', color: '#EAEAE0' },
   'personal': { label: 'Personal', color: '#ffa502' },
   'hamm': { label: 'Hamm 🐷', color: '#F97316' },
 }
@@ -356,8 +356,8 @@ export function Projects() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Projects</h3>
-            <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Hamm × Antonio — experiments & builds</p>
+            <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#f0f0f0', letterSpacing: '-0.02em' }}>Projects</h1>
+            <p style={{ color: '#64748b', margin: '0.2rem 0 0', fontSize: '0.72rem' }}>Hamm × Antonio — experiments & builds</p>
           </div>
           <button
             onClick={() => setView('kanban')}
@@ -378,7 +378,7 @@ export function Projects() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Projects</h3>
-          <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Hamm × Antonio — experiments & builds</p>
+          <p style={{ color: '#555', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>Hamm × Antonio — experiments & builds</p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <button
@@ -388,7 +388,7 @@ export function Projects() {
             🐷 Board
           </button>
           <button onClick={() => { setShowForm(!showForm); setEditingId(null); setForm(emptyForm) }}
-            style={{ background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', padding: '0.5rem 1.1rem', cursor: 'pointer', fontWeight: '700', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+            style={{ background: '#EAEAE0', color: '#000', border: 'none', borderRadius: '8px', padding: '0.5rem 1.1rem', cursor: 'pointer', fontWeight: '700', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
             + New
           </button>
         </div>
@@ -396,7 +396,7 @@ export function Projects() {
 
       {/* New/Edit Form */}
       {showForm && (
-        <div style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(32px) saturate(1.8)', WebkitBackdropFilter: 'blur(32px) saturate(1.8)', border: '1px solid rgba(255,255,255,0.09)', borderTop: '1px solid rgba(255,255,255,0.18)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)', borderRadius: '10px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="Project title"
             style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#f1f5f9', width: '100%', boxSizing: 'border-box' }} />
           <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Description / next steps..." rows={3}
@@ -456,7 +456,7 @@ export function Projects() {
             />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button onClick={saveProject} style={{ background: '#F59E0B', color: '#080c14', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>
+            <button onClick={saveProject} style={{ background: '#EAEAE0', color: '#080c14', border: 'none', borderRadius: '6px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600' }}>
               {editingId ? 'Update' : 'Add'}
             </button>
             <button onClick={() => { setShowForm(false); setEditingId(null) }}
@@ -485,7 +485,7 @@ export function Projects() {
                   : 'rgba(255,255,255,0.04)',
                 border: isDragOver
                   ? `1px solid ${isArchive ? '#64748b' : 'rgba(255,255,255,0.2)'}`
-                  : '1px solid rgba(255,255,255,0.09)',
+                  : '1px solid rgba(255,255,255,0.08)',
                 borderRadius: '10px',
                 padding: '1rem',
                 minHeight: '200px',
@@ -501,7 +501,7 @@ export function Projects() {
                       style={{
                         background: 'none',
                         border: 'none',
-                        color: '#64748b',
+                        color: '#555',
                         cursor: 'pointer',
                         padding: '0',
                         fontSize: '0.75rem',
@@ -547,7 +547,7 @@ export function Projects() {
                         onDragStart={() => onDragStart(p.id)}
                         onDragEnd={onDragEnd}
                         style={{
-                          background: isArchive ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.07)',
+                          background: isArchive ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.04)',
                           border: '1px solid rgba(255,255,255,0.1)',
                           borderRadius: '8px',
                           padding: '0.75rem',
@@ -595,7 +595,7 @@ export function Projects() {
                             ))}
                           </div>
                           <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-                            <span style={{ fontSize: '0.65rem', color: '#475569' }}>↻ {lastUpdated}</span>
+                            <span style={{ fontSize: '0.65rem', color: '#555' }}>↻ {lastUpdated}</span>
                             <button onClick={() => startEdit(p)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✏️</button>
                             <button onClick={() => deleteProject(p.id)} style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✕</button>
                           </div>

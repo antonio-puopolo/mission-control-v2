@@ -122,7 +122,6 @@ export function useMarketPulseData (): MarketPulseData {
   const [error, setError] = useState<string | null>(null)
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   const [recentProperties, setRecentProperties] = useState<Property[]>([])
-  const [occupancySnapshot, setOccupancySnapshot] = useState<any>(null)
 
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -152,17 +151,6 @@ export function useMarketPulseData (): MarketPulseData {
       )
 
       setRecentProperties(recentProps || [])
-
-      // Fetch latest occupancy snapshot (for owner/rented percentages)
-      const occupancySnap: any[] = await sbFetch(
-        '/camp_hill_occupancy_snapshot?order=snapshot_date.desc&limit=1&select=*'
-      )
-      
-      // Store occupancy snapshot in state for KPI calculation
-      if (occupancySnap && occupancySnap.length > 0) {
-        // Store it as a ref or pass it down
-        setOccupancySnapshot(occupancySnap[0])
-      }
     } catch (err: any) {
       console.error('Market Pulse data fetch failed:', err)
       setError(`Data unavailable: ${err.message}`)
@@ -242,10 +230,9 @@ export function useMarketPulseData (): MarketPulseData {
     .map(p => p.days_on_market as number)
     .reduce((a, b, _, arr) => a + b / arr.length, 0) || null
 
-  // Occupancy from market snapshot (RPData — all properties)
-  // This is MORE accurate than calculating from just recent sales
-  const ownerPct30d = occupancySnapshot?.owner_occupied_pct ?? null
-  const rentedPct30d = occupancySnapshot?.rented_pct ?? null
+  // Occupancy from latest sales snapshot (owner/rented pct stored on each snapshot)
+  const ownerPct30d = latest.owner_occupied_pct ?? null
+  const rentedPct30d = latest.rented_pct ?? null
 
   const kpis: MarketPulseKPIs = {
     medianHousePrice: medianHouse30d,

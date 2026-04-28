@@ -51,7 +51,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           width: '28px',
           height: '28px',
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+          background: 'linear-gradient(135deg, #EAEAE0, #EAEAE0)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -69,7 +69,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         padding: '0.6rem 0.85rem',
         borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
         background: isUser
-          ? 'linear-gradient(135deg, #F59E0B, #D97706)'
+          ? 'linear-gradient(135deg, #EAEAE0, #EAEAE0)'
           : 'rgba(255,255,255,0.08)',
         color: isUser ? '#000' : '#E5E7EB',
         fontSize: '0.82rem',
@@ -122,7 +122,7 @@ function TypingIndicator() {
             width: '6px',
             height: '6px',
             borderRadius: '50%',
-            background: '#F59E0B',
+            background: '#EAEAE0',
             animation: `george-bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
           }}
         />

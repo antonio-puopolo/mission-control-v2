@@ -413,7 +413,7 @@ function AgentModelsCard() {
                     </span>
                   )}
                   {agent.isOnFallback && (
-                    <span style={{ marginLeft: '0.5rem', fontSize: '0.65rem', background: '#f59e0b22', color: '#f59e0b', border: '1px solid #f59e0b44', borderRadius: '4px', padding: '1px 5px', fontWeight: 600 }}>
+                    <span style={{ marginLeft: '0.5rem', fontSize: '0.65rem', background: '#EAEAE022', color: '#EAEAE0', border: '1px solid #EAEAE044', borderRadius: '4px', padding: '1px 5px', fontWeight: 600 }}>
                       FALLBACK
                     </span>
                   )}

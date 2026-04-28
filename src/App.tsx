@@ -8,6 +8,7 @@ import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
 import { MarketPulse } from '@/features/MarketPulse/MarketPulse'
 import { GeorgeMCPopup } from '@/components/George/GeorgeMCPopup'
+import { BackgroundMap } from '@/components/BackgroundMap'
 import './App.css'
 
 const tabs = [
@@ -72,6 +73,7 @@ function App() {
 
   return (
     <div className="mc-app">
+      <BackgroundMap />
       {/* Header */}
       <header className="mc-header">
         <div className="mc-header-inner">

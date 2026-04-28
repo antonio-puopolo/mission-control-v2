@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
-  LineChart, Line, BarChart, Bar, AreaChart, Area,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  LineChart, Line, BarChart, Bar,
+  XAxis, YAxis, Tooltip, Legend, ResponsiveContainer
 } from 'recharts'
 import { TrendingUp, Home, Clock, Users, Calculator, DollarSign, Calendar, MapPin, AlertCircle, RefreshCw } from 'lucide-react'
 import { useMarketPulseData, findComps } from '../../hooks/useMarketPulseData'
@@ -62,59 +62,48 @@ const CustomTooltip = ({
 
 // ─── KPI CARD ────────────────────────────────────────────────────────────────
 
-function KPICard ({ icon, label, value, sub, color }: {
+function KPICard ({ icon, label, value, sub }: {
   icon: React.ReactNode
   label: string
   value: string
   sub: string
-  color: string
+  color?: string
 }) {
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.07)',
-      border: `1px solid ${color}33`,
-      borderTop: '1px solid rgba(255,255,255,0.18)',
-      backdropFilter: 'blur(32px) saturate(1.8)',
-      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
+      background: 'rgba(255,255,255,0.04)',
+      border: '1px solid rgba(255,255,255,0.08)',
       borderRadius: '12px',
-      padding: '1.2rem',
+      padding: '1.25rem',
       display: 'flex',
       flexDirection: 'column',
-      gap: '0.5rem',
-      position: 'relative',
-      overflow: 'hidden',
+      gap: '0.4rem',
     }}>
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: color }} />
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#555' }}>
         {icon}
-        <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</span>
+        <span style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</span>
       </div>
-      <div style={{ color: '#f1f5f9', fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.02em' }}>{value}</div>
-      <div style={{ color: '#475569', fontSize: '0.72rem' }}>{sub}</div>
+      <div style={{ color: '#EAEAE0', fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}>{value}</div>
+      <div style={{ color: '#555', fontSize: '0.72rem' }}>{sub}</div>
     </div>
   )
 }
 
 // ─── CHART CARD ──────────────────────────────────────────────────────────────
 
-function ChartCard ({ title, children }: { title: string; children: React.ReactNode }) {
+function ChartCard ({ title, children }: { title: string; accent?: string; children: React.ReactNode }) {
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.07)',
-      border: '1px solid rgba(255,255,255,0.09)',
-      borderTop: '1px solid rgba(255,255,255,0.18)',
-      backdropFilter: 'blur(32px) saturate(1.8)',
-      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
+      background: 'rgba(255,255,255,0.04)',
+      border: '1px solid rgba(255,255,255,0.08)',
       borderRadius: '12px',
-      padding: '1.25rem',
+      padding: '1.5rem',
       display: 'flex',
       flexDirection: 'column',
       gap: '1rem',
     }}>
-      <div style={{ color: '#94a3b8', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{title}</div>
-      <div style={{ height: '220px' }}>
+      <div style={{ color: '#555', fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em' }}>{title}</div>
+      <div style={{ height: '180px' }}>
         {children}
       </div>
     </div>
@@ -250,12 +239,8 @@ function AppraisalCalculator () {
 
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.07)',
-      border: '1px solid rgba(255,255,255,0.09)',
-      borderTop: '1px solid rgba(255,255,255,0.18)',
-      backdropFilter: 'blur(32px) saturate(1.8)',
-      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
+      background: 'rgba(255,255,255,0.04)',
+      border: '1px solid rgba(255,255,255,0.08)',
       borderRadius: '12px',
       padding: '1.5rem',
       display: 'flex',
@@ -264,7 +249,7 @@ function AppraisalCalculator () {
     }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Calculator size={18} color="#14b8a6" />
+        <Calculator size={18} color="#EAEAE0" />
         <div>
           <div style={{ color: '#f1f5f9', fontSize: '1rem', fontWeight: 700 }}>Appraisal Calculator</div>
           <div style={{ color: '#475569', fontSize: '0.75rem' }}>Live Camp Hill comps from real sales data</div>
@@ -288,7 +273,7 @@ function AppraisalCalculator () {
             placeholder="e.g. 12 Smith St, Camp Hill"
             value={address}
             onChange={e => setAddress(e.target.value)}
-            onFocus={e => (e.currentTarget.style.borderColor = '#14b8a6')}
+            onFocus={e => (e.currentTarget.style.borderColor = '#EAEAE0')}
             onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
           />
         </div>
@@ -304,9 +289,9 @@ function AppraisalCalculator () {
                 style={{
                   flex: 1,
                   padding: '0.55rem',
-                  background: propertyType === t ? '#14b8a6' : 'rgba(255,255,255,0.05)',
+                  background: propertyType === t ? '#EAEAE0' : 'rgba(255,255,255,0.05)',
                   color: propertyType === t ? '#0a0f19' : '#94a3b8',
-                  border: `1px solid ${propertyType === t ? '#14b8a6' : 'rgba(255,255,255,0.1)'}`,
+                  border: `1px solid ${propertyType === t ? '#EAEAE0' : 'rgba(255,255,255,0.1)'}`,
                   borderRadius: '8px',
                   fontSize: '0.82rem',
                   fontWeight: 700,
@@ -331,7 +316,7 @@ function AppraisalCalculator () {
             style={{ ...inputStyle, cursor: 'pointer' }}
             value={purchaseYear}
             onChange={e => setPurchaseYear(e.target.value)}
-            onFocus={e => (e.currentTarget.style.borderColor = '#14b8a6')}
+            onFocus={e => (e.currentTarget.style.borderColor = '#EAEAE0')}
             onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
           >
             {years.map(y => <option key={y} value={y}>{y}</option>)}
@@ -349,7 +334,7 @@ function AppraisalCalculator () {
             placeholder="e.g. 1250000"
             value={purchasePrice}
             onChange={e => setPurchasePrice(e.target.value)}
-            onFocus={e => (e.currentTarget.style.borderColor = '#14b8a6')}
+            onFocus={e => (e.currentTarget.style.borderColor = '#EAEAE0')}
             onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
           />
         </div>
@@ -360,7 +345,7 @@ function AppraisalCalculator () {
         onClick={handleCalculate}
         disabled={calculating}
         style={{
-          background: calculating ? 'rgba(255,255,255,0.05)' : 'linear-gradient(90deg, #14b8a6, #0ea5e9)',
+          background: calculating ? 'rgba(255,255,255,0.05)' : '#EAEAE0',
           color: calculating ? '#475569' : '#000',
           border: calculating ? '1px solid rgba(255,255,255,0.1)' : 'none',
           borderRadius: '8px',
@@ -407,12 +392,12 @@ function AppraisalCalculator () {
         <>
           {/* Confidence banner */}
           <div style={{
-            background: result.confidence === 'high' ? '#22c55e11' : result.confidence === 'medium' ? '#f59e0b11' : '#ef444411',
-            border: `1px solid ${result.confidence === 'high' ? '#22c55e33' : result.confidence === 'medium' ? '#f59e0b33' : '#ef444433'}`,
+            background: result.confidence === 'high' ? '#22c55e11' : result.confidence === 'medium' ? '#EAEAE011' : '#ef444411',
+            border: `1px solid ${result.confidence === 'high' ? '#22c55e33' : result.confidence === 'medium' ? 'rgba(234,234,224,0.20)' : '#ef444433'}`,
             borderRadius: '8px',
             padding: '0.5rem 0.75rem',
             fontSize: '0.75rem',
-            color: result.confidence === 'high' ? '#22c55e' : result.confidence === 'medium' ? '#f59e0b' : '#ef4444',
+            color: result.confidence === 'high' ? '#22c55e' : result.confidence === 'medium' ? '#EAEAE0' : '#ef4444',
           }}>
             {result.confidence === 'high' ? '✅' : result.confidence === 'medium' ? '⚠️' : '📊'} Based on{' '}
             <strong>{result.compsUsed}</strong> comparable {result.compsUsed === 1 ? 'sale' : 'sales'} —{' '}
@@ -430,15 +415,15 @@ function AppraisalCalculator () {
             {/* Comp Value */}
             <div style={{
               background: 'rgba(255,255,255,0.05)',
-              border: '1px solid #14b8a633',
+              border: '1px solid rgba(234,234,224,0.20)',
               borderRadius: '10px',
               padding: '1rem',
               position: 'relative',
               overflow: 'hidden',
             }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#14b8a6' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#EAEAE0' }} />
               <div style={{ color: '#64748b', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>Market Comp Value</div>
-              <div style={{ color: '#14b8a6', fontSize: '1.6rem', fontWeight: 800 }}>{formatM(result.compValue)}</div>
+              <div style={{ color: '#EAEAE0', fontSize: '1.6rem', fontWeight: 800 }}>{formatM(result.compValue)}</div>
               <div style={{ color: '#475569', fontSize: '0.72rem', marginTop: '4px' }}>Based on Camp Hill {propertyType} comps</div>
             </div>
 
@@ -483,15 +468,15 @@ function AppraisalCalculator () {
             {/* Days to Sell */}
             <div style={{
               background: 'rgba(255,255,255,0.05)',
-              border: '1px solid #f59e0b33',
+              border: '1px solid rgba(234,234,224,0.20)',
               borderRadius: '10px',
               padding: '1rem',
               position: 'relative',
               overflow: 'hidden',
             }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#f59e0b' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#EAEAE0' }} />
               <div style={{ color: '#64748b', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>Avg Days to Sell</div>
-              <div style={{ color: '#f59e0b', fontSize: '1.6rem', fontWeight: 800 }}>{result.daysToSell} days</div>
+              <div style={{ color: '#EAEAE0', fontSize: '1.6rem', fontWeight: 800 }}>{result.daysToSell} days</div>
               <div style={{ color: '#475569', fontSize: '0.72rem', marginTop: '4px' }}>Camp Hill {propertyType} avg</div>
             </div>
           </div>
@@ -542,7 +527,7 @@ export function MarketPulse () {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
           <div>
             <h1 style={{ color: '#f1f5f9', fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <TrendingUp size={22} color="#14b8a6" />
+              <TrendingUp size={22} color="#EAEAE0" />
               Market Pulse
             </h1>
             <p style={{ color: '#64748b', fontSize: '0.82rem', margin: '4px 0 0' }}>
@@ -572,11 +557,11 @@ export function MarketPulse () {
         {error && (
           <div style={{
             marginTop: '0.75rem',
-            background: '#f59e0b11',
-            border: '1px solid #f59e0b44',
+            background: '#EAEAE011',
+            border: '1px solid #EAEAE044',
             borderRadius: '8px',
             padding: '0.6rem 1rem',
-            color: '#f59e0b',
+            color: '#EAEAE0',
             fontSize: '0.82rem',
             display: 'flex',
             alignItems: 'center',
@@ -604,34 +589,10 @@ export function MarketPulse () {
           </>
         ) : (
           <>
-            <KPICard
-              icon={<Home size={14} />}
-              label="Median House Price"
-              value={medianHouseStr}
-              sub={`Camp Hill · ${periodLabel}`}
-              color="#14b8a6"
-            />
-            <KPICard
-              icon={<TrendingUp size={14} />}
-              label="Median Unit Price"
-              value={medianUnitStr}
-              sub={`Camp Hill · ${periodLabel}`}
-              color="#6366f1"
-            />
-            <KPICard
-              icon={<Clock size={14} />}
-              label="Avg Days on Market"
-              value={domStr}
-              sub={kpis.avgDOM30d ? '30-day rolling avg' : `Houses ${kpis.avgDOMHouses ?? '—'}d · Units ${kpis.avgDOMUnits ?? '—'}d`}
-              color="#f59e0b"
-            />
-            <KPICard
-              icon={<Users size={14} />}
-              label="Owner-Occupied"
-              value={occupancyStr}
-              sub="Owner vs. Rented split"
-              color="#0ea5e9"
-            />
+            <KPICard icon={<Home size={13} />} label="Median House Price" value={medianHouseStr} sub={`Camp Hill · ${periodLabel}`} />
+            <KPICard icon={<TrendingUp size={13} />} label="Median Unit Price" value={medianUnitStr} sub={`Camp Hill · ${periodLabel}`} />
+            <KPICard icon={<Clock size={13} />} label="Avg Days on Market" value={domStr} sub={kpis.avgDOM30d ? '30-day rolling avg' : `Houses ${kpis.avgDOMHouses ?? '—'}d · Units ${kpis.avgDOMUnits ?? '—'}d`} />
+            <KPICard icon={<Users size={13} />} label="Owner-Occupied" value={occupancyStr} sub="Owner vs. Rented split" />
           </>
         )}
       </div>
@@ -644,115 +605,75 @@ export function MarketPulse () {
         marginBottom: '1.5rem',
       }}>
         {/* House Price Trend */}
-        <ChartCard title="🏠 House Price Trend (Annual Median)">
+        <ChartCard title="House Price Trend — Annual Median">
           {loading ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569', fontSize: '0.82rem' }}>Loading...</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', fontSize: '0.8rem' }}>Loading...</div>
           ) : housePriceTrend.length === 0 ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569', fontSize: '0.82rem' }}>No data</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', fontSize: '0.8rem' }}>No data</div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={housePriceTrend} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="year" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tickFormatter={formatM} tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} width={60} />
+                <XAxis dataKey="year" tick={{ fill: '#444', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tickFormatter={formatM} tick={{ fill: '#444', fontSize: 10 }} axisLine={false} tickLine={false} width={58} />
                 <Tooltip content={<CustomTooltip formatter={formatCurrency} />} />
-                <Line
-                  type="monotone"
-                  dataKey="median"
-                  name="Median"
-                  stroke="#14b8a6"
-                  strokeWidth={2.5}
-                  dot={{ fill: '#14b8a6', r: 4 }}
-                  activeDot={{ r: 6, fill: '#14b8a6' }}
-                />
+                <Line type="monotone" dataKey="median" name="Median" stroke="#EAEAE0" strokeWidth={1.5} dot={false} activeDot={{ r: 4, fill: '#EAEAE0', strokeWidth: 0 }} />
               </LineChart>
             </ResponsiveContainer>
           )}
         </ChartCard>
 
         {/* Unit Price Trend */}
-        <ChartCard title="🏢 Unit Price Trend (Annual Median)">
+        <ChartCard title="Unit Price Trend — Annual Median">
           {loading ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569', fontSize: '0.82rem' }}>Loading...</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', fontSize: '0.8rem' }}>Loading...</div>
           ) : unitPriceTrend.length === 0 ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569', fontSize: '0.82rem' }}>No data</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', fontSize: '0.8rem' }}>No data</div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={unitPriceTrend} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="year" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tickFormatter={formatM} tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} width={60} />
+                <XAxis dataKey="year" tick={{ fill: '#444', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tickFormatter={formatM} tick={{ fill: '#444', fontSize: 10 }} axisLine={false} tickLine={false} width={58} />
                 <Tooltip content={<CustomTooltip formatter={formatCurrency} />} />
-                <Line
-                  type="monotone"
-                  dataKey="median"
-                  name="Median"
-                  stroke="#6366f1"
-                  strokeWidth={2.5}
-                  dot={{ fill: '#6366f1', r: 4 }}
-                  activeDot={{ r: 6, fill: '#6366f1' }}
-                />
+                <Line type="monotone" dataKey="median" name="Median" stroke="#EAEAE0" strokeWidth={1.5} dot={false} activeDot={{ r: 4, fill: '#EAEAE0', strokeWidth: 0 }} />
               </LineChart>
             </ResponsiveContainer>
           )}
         </ChartCard>
 
         {/* Avg Days on Market */}
-        <ChartCard title="⏱️ Avg Days on Market (Latest Month)">
+        <ChartCard title="Avg Days on Market — Latest Month">
           {loading ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569', fontSize: '0.82rem' }}>Loading...</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', fontSize: '0.8rem' }}>Loading...</div>
           ) : daysOnMarketData.length === 0 ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569', fontSize: '0.82rem' }}>No data</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', fontSize: '0.8rem' }}>No data</div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={daysOnMarketData} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="category" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} domain={[0, 80]} />
+                <XAxis dataKey="category" tick={{ fill: '#444', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: '#444', fontSize: 10 }} axisLine={false} tickLine={false} domain={[0, 80]} />
                 <Tooltip content={<CustomTooltip formatter={(v) => `${v} days`} />} />
-                <Bar dataKey="days" name="Days" radius={[4, 4, 0, 0]} fill="#f59e0b" />
+                <Bar dataKey="days" name="Days" radius={[4, 4, 0, 0]} fill="#EAEAE0" fillOpacity={0.7} />
               </BarChart>
             </ResponsiveContainer>
           )}
         </ChartCard>
 
         {/* Purchasing Trends */}
-        <ChartCard title="👥 Purchasing Trends (Owner vs Rented %)">
+        <ChartCard title="Purchasing Trends — Owner vs Rented">
           {loading ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569', fontSize: '0.82rem' }}>Loading...</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', fontSize: '0.8rem' }}>Loading...</div>
           ) : purchasingTrends.length === 0 ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#475569', fontSize: '0.82rem' }}>No data</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', fontSize: '0.8rem' }}>No data</div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={purchasingTrends} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="year" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} domain={[0, 100]} tickFormatter={v => `${v}%`} />
+              <LineChart data={purchasingTrends} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
+                <XAxis dataKey="year" tick={{ fill: '#444', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: '#444', fontSize: 10 }} axisLine={false} tickLine={false} domain={[0, 100]} tickFormatter={v => `${v}%`} />
                 <Tooltip content={<CustomTooltip formatter={(v) => `${v}%`} />} />
-                <Legend
-                  iconType="circle"
-                  iconSize={8}
-                  wrapperStyle={{ fontSize: '0.72rem', color: '#64748b' }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="ownerOccupied"
-                  name="Owner-Occupied"
-                  stackId="1"
-                  stroke="#0ea5e9"
-                  fill="#0ea5e933"
-                  strokeWidth={2}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="rented"
-                  name="Rented"
-                  stackId="1"
-                  stroke="#6366f1"
-                  fill="#6366f133"
-                  strokeWidth={2}
-                />
-              </AreaChart>
+                <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: '0.68rem', color: '#555' }} />
+                <Line type="monotone" dataKey="ownerOccupied" name="Owner-Occupied" stroke="#EAEAE0" strokeWidth={1.5} dot={false} />
+                <Line type="monotone" dataKey="rented" name="Rented" stroke="#555" strokeWidth={1.5} dot={false} strokeDasharray="4 2" />
+              </LineChart>
             </ResponsiveContainer>
           )}
         </ChartCard>

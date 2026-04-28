@@ -65,11 +65,11 @@ export function VoiceControls({
           title="Stop speaking"
           style={{
             ...btnBase,
-            color: '#F59E0B',
+            color: '#EAEAE0',
             background: 'rgba(245,158,11,0.12)',
           }}
         >
-          <Square size={14} fill="#F59E0B" />
+          <Square size={14} fill="#EAEAE0" />
         </button>
       )}
 
@@ -98,7 +98,7 @@ export function VoiceControls({
           style={{
             width: '50px',
             height: '3px',
-            accentColor: '#F59E0B',
+            accentColor: '#EAEAE0',
             cursor: 'pointer',
           }}
         />

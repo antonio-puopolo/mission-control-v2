@@ -80,22 +80,18 @@ async function persistGoals(g: Goals): Promise<void> {
 }
 
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.07)',
-  border: '1px solid rgba(255,255,255,0.09)',
-  borderTop: '1px solid rgba(255,255,255,0.20)',
-  borderRadius: '16px',
-  padding: '1.5rem',
-  backdropFilter: 'blur(32px) saturate(1.8)',
-  WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
-  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 8px 32px rgba(0,0,0,0.5)',
+  background: 'rgba(255,255,255,0.04)',
+  border: '1px solid rgba(255,255,255,0.08)',
+  borderRadius: '14px',
+  padding: '2rem 2rem',
 }
 
 const sectionLabel: React.CSSProperties = {
-  fontSize: '0.68rem',
-  fontWeight: 600,
-  color: '#475569',
+  fontSize: '0.65rem',
+  fontWeight: 700,
+  color: '#555',
   textTransform: 'uppercase',
-  letterSpacing: '0.09em',
+  letterSpacing: '0.1em',
 }
 
 export function Dashboard() {
@@ -138,13 +134,13 @@ export function Dashboard() {
   const pct = (cur: number, tar: number) => tar > 0 ? Math.min(Math.round((cur / tar) * 100), 100) : 0
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <div style={sectionLabel}>Dashboard</div>
-          <p style={{ color: '#334155', margin: '0.2rem 0 0', fontSize: '0.72rem' }}>
+          <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#f0f0f0', letterSpacing: '-0.02em' }}>Dashboard</h1>
+          <p style={{ color: '#64748b', margin: '0.2rem 0 0', fontSize: '0.72rem' }}>
             {TENANT_CONFIG.teamName} · {TENANT_CONFIG.focusSuburb}{syncing ? ' · syncing…' : ''}
           </p>
         </div>
@@ -180,18 +176,24 @@ export function Dashboard() {
             </div>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
               <button onClick={() => setEditing(false)} style={{ flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.75rem', color: '#f1f5f9', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
-              <button onClick={saveGoals} style={{ flex: 1, background: '#F59E0B', border: 'none', borderRadius: '8px', padding: '0.75rem', color: '#06080c', cursor: 'pointer', fontWeight: 700, fontFamily: 'inherit' }}>Save</button>
+              <button onClick={saveGoals} style={{ flex: 1, background: '#EAEAE0', border: 'none', borderRadius: '8px', padding: '0.75rem', color: '#06080c', cursor: 'pointer', fontWeight: 700, fontFamily: 'inherit' }}>Save</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Metric Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(155px, 1fr))', gap: '1rem' }}>
-        <MetricCard label="GCI This Quarter" value={`$${goals.gciCurrent.toLocaleString()}`} sub={`of $${goals.gciTarget.toLocaleString()}`} percent={pct(goals.gciCurrent, goals.gciTarget)} color="#F59E0B" />
-        <MetricCard label="Listings" value={goals.listingsCurrent.toString()} sub={`target ${goals.listingsTarget}/qtr`} percent={pct(goals.listingsCurrent, goals.listingsTarget)} color="#22c55e" />
-        <MetricCard label="LAPs" value={goals.lapsCurrent.toString()} sub={`target ${goals.lapsTarget}/qtr · ${lapsLoading ? '…' : laps.length} tracked`} percent={pct(goals.lapsCurrent, goals.lapsTarget)} color="#60a5fa" />
-        <MetricCard label="Points (Month)" value={pointsThisMonth.toString()} sub="target 250 pts" percent={pct(pointsThisMonth, 250)} color="#a78bfa" />
+      {/* Hero — GCI */}
+      <GCIHero
+        current={goals.gciCurrent}
+        target={goals.gciTarget}
+        percent={pct(goals.gciCurrent, goals.gciTarget)}
+      />
+
+      {/* Supporting metrics */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+        <StatPill label="Listings" value={goals.listingsCurrent.toString()} sub={`of ${goals.listingsTarget}`} percent={pct(goals.listingsCurrent, goals.listingsTarget)} />
+        <StatPill label="LAPs" value={goals.lapsCurrent.toString()} sub={`of ${goals.lapsTarget} · ${lapsLoading ? '…' : laps.length} tracked`} percent={pct(goals.lapsCurrent, goals.lapsTarget)} />
+        <StatPill label="Points" value={pointsThisMonth.toString()} sub="of 250 this month" percent={pct(pointsThisMonth, 250)} />
       </div>
 
       {/* Weekly KPIs */}
@@ -203,13 +205,13 @@ export function Dashboard() {
           </div>
           <button
             onClick={() => setShowKpiLog(true)}
-            style={{ padding: '0.4rem 1rem', background: '#F59E0B', color: '#06080c', border: 'none', borderRadius: '7px', fontWeight: 700, cursor: 'pointer', fontSize: '0.8rem', fontFamily: 'inherit' }}
+            style={{ padding: '0.4rem 1rem', background: '#EAEAE0', color: '#06080c', border: 'none', borderRadius: '7px', fontWeight: 700, cursor: 'pointer', fontSize: '0.8rem', fontFamily: 'inherit' }}
           >+ Log</button>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.25rem' }}>
           {kpisLoading ? <p style={{ color: '#475569' }}>Loading…</p> : (
             <>
-              <KpiBar label="BAP" sublabel="Buyer Appts" current={weeklyKpis.bap} target={5} color="#F59E0B" />
+              <KpiBar label="BAP" sublabel="Buyer Appts" current={weeklyKpis.bap} target={5} color="#EAEAE0" />
               <KpiBar label="MAP" sublabel="Mkt Appraisals" current={weeklyKpis.map} target={2} color="#818cf8" />
               <KpiBar label="LAP" sublabel="Listing Appts" current={weeklyKpis.lap} target={1} color="#f87171" />
             </>
@@ -221,7 +223,7 @@ export function Dashboard() {
       <div style={card}>
         <div style={sectionLabel}>LAP Pipeline</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-          <StatusBox label="In Progress" count={lapsByStatus.lap} color="#F59E0B" />
+          <StatusBox label="In Progress" count={lapsByStatus.lap} color="#EAEAE0" />
           <StatusBox label="Listed" count={lapsByStatus.listed} color="#22c55e" />
           <StatusBox label="Sold" count={lapsByStatus.sold} color="#60a5fa" />
         </div>
@@ -229,14 +231,14 @@ export function Dashboard() {
           <div style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.75rem' }}>
               <span style={sectionLabel}>Pipeline Value</span>
-              <span style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.03em', color: '#F59E0B' }}>
+              <span style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.03em', color: '#EAEAE0' }}>
                 ${(pipelineValue.total / 1_000_000).toFixed(1)}M
               </span>
             </div>
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
               {[
                 { key: 'under_construction', label: '🏗️ Build', color: '#a78bfa' },
-                { key: 'pipeline_a', label: '🔥 A', color: '#F59E0B' },
+                { key: 'pipeline_a', label: '🔥 A', color: '#EAEAE0' },
                 { key: 'pipeline_b', label: '📋 B', color: '#60a5fa' },
                 { key: 'pipeline_c', label: '🕐 C', color: '#94a3b8' },
               ].filter(s => pipelineValue.bySection[s.key] > 0).map(s => (
@@ -267,14 +269,14 @@ export function Dashboard() {
             {todayActivity.slice(0, 5).map(act => (
               <div key={act.id} style={{
                 background: 'rgba(255,255,255,0.03)', padding: '0.75rem 1rem',
-                borderRadius: '9px', borderLeft: '2px solid #F59E0B',
+                borderRadius: '9px', borderLeft: '2px solid #EAEAE0',
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
               }}>
                 <div>
                   <div style={{ fontSize: '0.88rem', fontWeight: 500 }}>{act.activity_type}</div>
                   {act.description && <div style={{ color: '#475569', fontSize: '0.78rem', marginTop: '0.15rem' }}>{act.description}</div>}
                 </div>
-                <span style={{ color: '#F59E0B', fontWeight: 600, fontSize: '0.82rem', flexShrink: 0, marginLeft: '1rem' }}>+{act.points_awarded} pts</span>
+                <span style={{ color: '#EAEAE0', fontWeight: 600, fontSize: '0.82rem', flexShrink: 0, marginLeft: '1rem' }}>+{act.points_awarded} pts</span>
               </div>
             ))}
           </div>
@@ -289,7 +291,7 @@ export function Dashboard() {
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem' }}>
               {(['BAP','MAP','LAP'] as const).map(t => (
                 <button key={t} onClick={() => setKpiType(t)}
-                  style={{ flex: 1, padding: '0.65rem', background: kpiType === t ? '#F59E0B' : 'rgba(255,255,255,0.04)', color: kpiType === t ? '#06080c' : '#94a3b8', border: '1px solid ' + (kpiType === t ? '#F59E0B' : 'rgba(255,255,255,0.08)'), borderRadius: '8px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.88rem' }}>
+                  style={{ flex: 1, padding: '0.65rem', background: kpiType === t ? '#EAEAE0' : 'rgba(255,255,255,0.04)', color: kpiType === t ? '#06080c' : '#94a3b8', border: '1px solid ' + (kpiType === t ? '#EAEAE0' : 'rgba(255,255,255,0.08)'), borderRadius: '8px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.88rem' }}>
                   {t}
                 </button>
               ))}
@@ -312,7 +314,7 @@ export function Dashboard() {
                   setShowKpiLog(false)
                   setKpiNote('')
                 }}
-                style={{ flex: 2, background: '#F59E0B', border: 'none', borderRadius: '8px', padding: '0.75rem', color: '#06080c', cursor: 'pointer', fontWeight: 700, fontFamily: 'inherit', opacity: isLogging ? 0.5 : 1 }}
+                style={{ flex: 2, background: '#EAEAE0', border: 'none', borderRadius: '8px', padding: '0.75rem', color: '#06080c', cursor: 'pointer', fontWeight: 700, fontFamily: 'inherit', opacity: isLogging ? 0.5 : 1 }}
               >
                 {isLogging ? 'Logging…' : `Log ${kpiType}`}
               </button>
@@ -324,31 +326,43 @@ export function Dashboard() {
   )
 }
 
-function MetricCard({ label, value, sub, percent, color }: { label: string; value: string; sub: string; percent: number; color: string }) {
+function GCIHero({ current, target, percent }: { current: number; target: number; percent: number }) {
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.07)',
-      border: '1px solid rgba(255,255,255,0.09)',
-      borderTop: '1px solid rgba(255,255,255,0.20)',
-      borderRadius: '16px',
-      padding: '1.25rem 1.5rem 1rem',
-      backdropFilter: 'blur(32px) saturate(1.8)',
-      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 8px 32px rgba(0,0,0,0.5)',
-      position: 'relative',
-      overflow: 'hidden',
-      display: 'flex',
-      flexDirection: 'column',
+      background: 'rgba(255,255,255,0.04)',
+      border: '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '14px',
+      padding: '2.75rem 2.5rem',
     }}>
-      {/* Bottom accent strip */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: color, opacity: 0.65 }} />
-      <div style={{ fontSize: '0.67rem', fontWeight: 600, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.09em' }}>{label}</div>
-      <div style={{ fontSize: '2.4rem', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, color: '#f1f5f9', margin: '0.4rem 0 0.15rem' }}>{value}</div>
-      <div style={{ fontSize: '0.73rem', color: '#475569', marginBottom: '0.85rem' }}>{sub}</div>
-      <div style={{ background: 'rgba(255,255,255,0.07)', height: '3px', borderRadius: '2px', overflow: 'hidden' }}>
-        <div style={{ background: color, height: '100%', width: `${percent}%`, transition: 'width 0.6s ease', borderRadius: '2px' }} />
+      <div style={{ fontSize: '0.65rem', fontWeight: 700, color: '#444', textTransform: 'uppercase', letterSpacing: '0.14em', marginBottom: '1.25rem' }}>GCI This Quarter</div>
+      <div style={{ fontSize: '4.5rem', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1, color: '#EAEAE0' }}>
+        ${current.toLocaleString()}
       </div>
-      <div style={{ fontSize: '0.68rem', color, fontWeight: 600, marginTop: '0.3rem' }}>{percent}%</div>
+      <div style={{ fontSize: '0.82rem', color: '#444', marginTop: '0.75rem', marginBottom: '2rem' }}>
+        of ${target.toLocaleString()} target
+      </div>
+      <div style={{ background: 'rgba(255,255,255,0.06)', height: '1px', borderRadius: '1px', overflow: 'hidden' }}>
+        <div style={{ background: '#EAEAE0', height: '100%', width: `${percent}%`, transition: 'width 0.8s ease', borderRadius: '1px' }} />
+      </div>
+      <div style={{ fontSize: '0.72rem', color: '#555', fontWeight: 600, marginTop: '0.65rem' }}>{percent}% of target</div>
+    </div>
+  )
+}
+
+function StatPill({ label, value, sub, percent }: { label: string; value: string; sub: string; percent: number }) {
+  return (
+    <div style={{
+      background: 'rgba(255,255,255,0.04)',
+      border: '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '14px',
+      padding: '1.75rem 1.5rem',
+    }}>
+      <div style={{ fontSize: '0.62rem', fontWeight: 700, color: '#444', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '0.75rem' }}>{label}</div>
+      <div style={{ fontSize: '2.25rem', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1, color: '#f0f0f0' }}>{value}</div>
+      <div style={{ fontSize: '0.7rem', color: '#444', marginTop: '0.5rem', marginBottom: '1rem' }}>{sub}</div>
+      <div style={{ background: 'rgba(255,255,255,0.06)', height: '1px', borderRadius: '1px', overflow: 'hidden' }}>
+        <div style={{ background: '#EAEAE0', height: '100%', width: `${percent}%`, transition: 'width 0.6s ease', borderRadius: '1px' }} />
+      </div>
     </div>
   )
 }
@@ -356,18 +370,15 @@ function MetricCard({ label, value, sub, percent, color }: { label: string; valu
 function StatusBox({ label, count, color }: { label: string; count: number; color: string }) {
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.07)',
-      border: '1px solid rgba(255,255,255,0.09)',
-      borderTop: '1px solid rgba(255,255,255,0.20)',
-      borderRadius: '14px',
-      padding: '1.1rem',
+      background: 'rgba(255,255,255,0.04)',
+      border: '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '10px',
+      padding: '1rem',
       textAlign: 'center',
-      backdropFilter: 'blur(32px) saturate(1.8)',
-      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 20px rgba(0,0,0,0.4)',
     }}>
-      <div style={{ fontSize: '2.6rem', fontWeight: 700, letterSpacing: '-0.04em', color, lineHeight: 1 }}>{count}</div>
-      <div style={{ fontSize: '0.67rem', color: '#475569', marginTop: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{label}</div>
+      <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: color, margin: '0 auto 0.5rem' }} />
+      <div style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.04em', color: '#f0f0f0', lineHeight: 1 }}>{count}</div>
+      <div style={{ fontSize: '0.62rem', color: '#555', marginTop: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.09em', fontWeight: 700 }}>{label}</div>
     </div>
   )
 }

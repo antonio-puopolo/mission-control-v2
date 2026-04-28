@@ -123,7 +123,7 @@ function calculateDOM(listing: Listing): number {
 
 function DOMBadge({ days }: { days: number | null }) {
   if (days === null) return null
-  const color = days <= 7 ? '#10b981' : days <= 21 ? '#f59e0b' : '#ef4444'
+  const color = days <= 7 ? '#10b981' : days <= 21 ? '#EAEAE0' : '#ef4444'
   return (
     <span style={{
       background: color + '22',
@@ -494,11 +494,11 @@ export function Market() {
       {/* Stale data warning banner */}
       {!loading && isDataStale && (
         <div style={{
-          background: '#f59e0b11',
-          border: '1px solid #f59e0b55',
+          background: '#EAEAE011',
+          border: '1px solid #EAEAE055',
           borderRadius: '8px',
           padding: '0.6rem 1rem',
-          color: '#f59e0b',
+          color: '#EAEAE0',
           fontSize: '0.8rem',
           marginBottom: '1rem',
           display: 'flex',
@@ -514,7 +514,7 @@ export function Market() {
         {[
           { label: 'For Sale', value: loading ? '—' : String(forSale.length), icon: '🏠', color: '#14b8a6' },
           { label: 'Sold (30d)', value: loading ? '—' : String(sold.length), icon: '✅', color: '#6366f1' },
-          { label: 'Median Sold', value: loading ? '—' : medianPrice, icon: '💰', color: '#f59e0b' },
+          { label: 'Median Sold', value: loading ? '—' : medianPrice, icon: '💰', color: '#EAEAE0' },
           { label: 'Avg DOM', value: loading ? '—' : (avgDOM !== null ? `${avgDOM} days` : 'N/A'), icon: '📅', color: '#0ea5e9' },
         ].map(stat => (
           <div key={stat.label} style={{
@@ -538,11 +538,11 @@ export function Market() {
       {/* Sample data notice */}
       {sampleNotice && (
         <div style={{
-          background: '#f59e0b11',
-          border: '1px solid #f59e0b44',
+          background: '#EAEAE011',
+          border: '1px solid #EAEAE044',
           borderRadius: '8px',
           padding: '0.6rem 1rem',
-          color: '#f59e0b',
+          color: '#EAEAE0',
           fontSize: '0.8rem',
           marginBottom: '1.5rem',
           display: 'flex',

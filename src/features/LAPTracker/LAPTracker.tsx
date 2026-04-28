@@ -9,7 +9,7 @@ type Status = typeof STATUSES[number]
 const PRIORITIES = ['urgent', 'high', 'normal', 'low'] as const
 
 const STATUS_COLORS: Record<Status, string> = {
-  LAP: '#F59E0B',
+  LAP: '#EAEAE0',
   Listed: '#22c55e',
   Sold: '#60a5fa',
   Withdrawn: '#64748b',
@@ -17,7 +17,7 @@ const STATUS_COLORS: Record<Status, string> = {
 
 const PIPELINE_SECTIONS = [
   { value: 'under_construction', label: '🏗️ Under Construction', color: '#a78bfa' },
-  { value: 'pipeline_a', label: '🔥 Pipeline A (1–3 months)', color: '#F59E0B' },
+  { value: 'pipeline_a', label: '🔥 Pipeline A (1–3 months)', color: '#EAEAE0' },
   { value: 'pipeline_b', label: '📋 Pipeline B (3–6 months)', color: '#60a5fa' },
   { value: 'pipeline_c', label: '🕐 Pipeline C (6+ months)', color: '#94a3b8' },
 ]
@@ -29,7 +29,7 @@ function getSectionTag(section?: string | null) {
 const PRIORITY_COLORS: Record<string, string> = {
   urgent: '#f87171',
   high: '#fb923c',
-  normal: '#F59E0B',
+  normal: '#EAEAE0',
   low: '#64748b',
 }
 
@@ -74,7 +74,7 @@ interface EditState {
 // Shared style tokens
 const inputStyle: React.CSSProperties = {
   padding: '0.55rem 0.75rem',
-  background: 'rgba(255,255,255,0.05)',
+  background: 'rgba(255,255,255,0.04)',
   border: '1px solid rgba(255,255,255,0.1)',
   borderRadius: '8px',
   color: '#f1f5f9',
@@ -86,7 +86,7 @@ const inputStyle: React.CSSProperties = {
 const fieldLabel: React.CSSProperties = {
   fontSize: '0.67rem',
   fontWeight: 600,
-  color: '#475569',
+  color: '#555',
   textTransform: 'uppercase',
   letterSpacing: '0.08em',
   display: 'block',
@@ -122,15 +122,11 @@ function LapCard({ lap, onUpdate, onDelete }: {
 
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.07)',
-      borderRadius: '14px',
+      background: 'rgba(255,255,255,0.04)',
+      borderRadius: '12px',
       borderLeft: `3px solid ${priorityColor}`,
-      borderTop: '1px solid rgba(255,255,255,0.18)',
-      borderRight: '1px solid rgba(255,255,255,0.07)',
-      borderBottom: '1px solid rgba(255,255,255,0.07)',
-      backdropFilter: 'blur(32px) saturate(1.8)',
-      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
+      borderRight: '1px solid rgba(255,255,255,0.08)',
+      borderBottom: '1px solid rgba(255,255,255,0.08)',
       overflow: 'hidden',
       transition: 'background 0.2s ease',
     }}>
@@ -148,7 +144,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
                 }}>{lap.priority}</span>
               )}
             </div>
-            <p style={{ margin: 0, color: '#64748b', fontSize: '0.8rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{lap.address}</p>
+            <p style={{ margin: 0, color: '#555', fontSize: '0.8rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{lap.address}</p>
             {sectionTag && (
               <span style={{
                 display: 'inline-block', marginTop: '0.4rem',
@@ -165,7 +161,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
             marginTop: '0.65rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
             padding: '0.2rem 0.55rem', borderRadius: '6px', fontSize: '0.75rem',
             background: overdue ? 'rgba(248,113,113,0.12)' : dueSoon ? 'rgba(251,146,60,0.12)' : 'rgba(255,255,255,0.06)',
-            color: overdue ? '#f87171' : dueSoon ? '#fb923c' : '#64748b',
+            color: overdue ? '#f87171' : dueSoon ? '#fb923c' : '#555',
             fontWeight: overdue || dueSoon ? 600 : 400,
           }}>
             {overdue ? '🔴 Overdue' : dueSoon ? '🟡 Due soon' : '📅'} {formatDate(lap.follow_up_date)}
@@ -173,7 +169,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
         )}
 
         {lap.next_action && (
-          <p style={{ margin: '0.45rem 0 0', fontSize: '0.78rem', color: '#F59E0B' }}>→ {lap.next_action}</p>
+          <p style={{ margin: '0.45rem 0 0', fontSize: '0.78rem', color: '#EAEAE0' }}>→ {lap.next_action}</p>
         )}
       </div>
 
@@ -212,7 +208,7 @@ function LapCard({ lap, onUpdate, onDelete }: {
                 </select>
                 <button
                   onClick={(e) => { e.stopPropagation(); setDraft({ address: lap.address||'', client_name: lap.client_name||'', follow_up_date: lap.follow_up_date||'', phone: lap.phone||'', email: lap.email||'', price_expectation: lap.price_expectation||'', priority: lap.priority||'normal', next_action: lap.next_action||'', note_text: lap.note_text||'', pipeline_section: lap.pipeline_section||'pipeline_b' }); setEditing(true) }}
-                  style={{ padding: '0.4rem 0.9rem', background: 'rgba(245,158,11,0.1)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.25)', borderRadius: '7px', cursor: 'pointer', fontSize: '0.82rem', fontFamily: 'inherit' }}>
+                  style={{ padding: '0.4rem 0.9rem', background: 'rgba(245,158,11,0.1)', color: '#EAEAE0', border: '1px solid rgba(245,158,11,0.25)', borderRadius: '7px', cursor: 'pointer', fontSize: '0.82rem', fontFamily: 'inherit' }}>
                   ✏️ Edit
                 </button>
                 <button onClick={(e) => { e.stopPropagation(); if (confirm('Delete this LAP?')) onDelete(lap.id) }}
@@ -262,8 +258,8 @@ function LapCard({ lap, onUpdate, onDelete }: {
                   placeholder="Notes about this client, conversation, objections…" />
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button onClick={save} style={{ padding: '0.55rem 1.5rem', background: '#F59E0B', color: '#06080c', border: 'none', borderRadius: '7px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Save</button>
-                <button onClick={() => setEditing(false)} style={{ padding: '0.55rem 1rem', background: 'transparent', color: '#64748b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '7px', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+                <button onClick={save} style={{ padding: '0.55rem 1.5rem', background: '#EAEAE0', color: '#06080c', border: 'none', borderRadius: '7px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Save</button>
+                <button onClick={() => setEditing(false)} style={{ padding: '0.55rem 1rem', background: 'transparent', color: '#555', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '7px', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
               </div>
             </div>
           )}
@@ -340,11 +336,11 @@ export function LAPTracker() {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <div style={{ fontSize: '0.68rem', fontWeight: 600, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.09em' }}>LAP Tracker</div>
-          <p style={{ color: '#334155', margin: '0.2rem 0 0', fontSize: '0.72rem' }}>Listings · Conversions · Follow-ups</p>
+          <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#f0f0f0', letterSpacing: '-0.02em' }}>LAP Tracker</h1>
+          <p style={{ color: '#64748b', margin: '0.2rem 0 0', fontSize: '0.72rem' }}>Listings · Conversions · Follow-ups</p>
         </div>
         <button onClick={() => setIsCreating(!isCreating)} style={{
-          padding: '0.45rem 1rem', background: '#F59E0B', color: '#06080c',
+          padding: '0.45rem 1rem', background: '#EAEAE0', color: '#06080c',
           border: 'none', borderRadius: '8px', fontWeight: 700, cursor: 'pointer',
           fontSize: '0.82rem', whiteSpace: 'nowrap', fontFamily: 'inherit',
         }}>
@@ -367,10 +363,9 @@ export function LAPTracker() {
       {/* Create Form */}
       {isCreating && (
         <div style={{
-          background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)',
-          borderTop: '1px solid rgba(255,255,255,0.14)', borderRadius: '14px', padding: '1.25rem',
-          backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
-          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.07), 0 4px 20px rgba(0,0,0,0.3)',
+          background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '12px', padding: '1.25rem',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
         }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.85rem' }}>
             <input type="text" placeholder="Client Name *" value={newLap.client_name} onChange={e => setNewLap({ ...newLap, client_name: e.target.value })} style={createInputStyle} />
@@ -384,7 +379,7 @@ export function LAPTracker() {
               {PIPELINE_SECTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
             </select>
             <button onClick={handleCreate} disabled={isCreatingLap} style={{
-              padding: '0.65rem', background: '#F59E0B', color: '#06080c', border: 'none',
+              padding: '0.65rem', background: '#EAEAE0', color: '#06080c', border: 'none',
               borderRadius: '8px', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
               opacity: isCreatingLap ? 0.5 : 1,
             }}>
@@ -399,8 +394,8 @@ export function LAPTracker() {
         {STATUSES.map(status => (
           <button key={status} onClick={() => setActiveStatus(status)} style={{
             padding: '0.4rem 0.85rem',
-            background: activeStatus === status ? `${STATUS_COLORS[status]}18` : 'transparent',
-            color: activeStatus === status ? STATUS_COLORS[status] : '#64748b',
+            background: activeStatus === status ? 'rgba(255,255,255,0.08)' : 'transparent',
+            color: activeStatus === status ? STATUS_COLORS[status] : '#555',
             border: 'none', borderRadius: '8px', cursor: 'pointer',
             fontFamily: 'inherit', fontSize: '0.8rem',
             fontWeight: activeStatus === status ? 600 : 400,
@@ -410,8 +405,8 @@ export function LAPTracker() {
           </button>
         ))}
         <div style={{ marginLeft: 'auto', display: 'flex', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
-          <button onClick={() => setViewMode('list')} style={{ padding: '0.35rem 0.85rem', background: viewMode === 'list' ? '#F59E0B' : 'transparent', color: viewMode === 'list' ? '#06080c' : '#64748b', border: 'none', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700, fontFamily: 'inherit' }}>☰ List</button>
-          <button onClick={() => setViewMode('map')} style={{ padding: '0.35rem 0.85rem', background: viewMode === 'map' ? '#F59E0B' : 'transparent', color: viewMode === 'map' ? '#06080c' : '#64748b', border: 'none', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700, fontFamily: 'inherit' }}>⊙ Map</button>
+          <button onClick={() => setViewMode('list')} style={{ padding: '0.35rem 0.85rem', background: viewMode === 'list' ? '#EAEAE0' : 'transparent', color: viewMode === 'list' ? '#06080c' : '#555', border: 'none', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700, fontFamily: 'inherit' }}>☰ List</button>
+          <button onClick={() => setViewMode('map')} style={{ padding: '0.35rem 0.85rem', background: viewMode === 'map' ? '#EAEAE0' : 'transparent', color: viewMode === 'map' ? '#06080c' : '#555', border: 'none', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700, fontFamily: 'inherit' }}>⊙ Map</button>
         </div>
       </div>
 
@@ -435,9 +430,9 @@ export function LAPTracker() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: '0.85rem' }}>
           {isLoading ? (
-            <p style={{ color: '#475569' }}>Loading…</p>
+            <p style={{ color: '#555' }}>Loading…</p>
           ) : filtered.length === 0 ? (
-            <p style={{ color: '#475569' }}>No LAPs in {activeStatus} status</p>
+            <p style={{ color: '#555' }}>No LAPs in {activeStatus} status</p>
           ) : (
             filtered.map(lap => (
               <LapCard

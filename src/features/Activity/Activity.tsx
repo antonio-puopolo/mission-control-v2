@@ -45,7 +45,7 @@ export function Activity() {
         <StatCard
           label="Points (This Month)"
           value={pointsThisMonth.toString()}
-          color="#F59E0B"
+          color="#EAEAE0"
         />
         <StatCard
           label="Total Activities"
@@ -130,7 +130,7 @@ export function Activity() {
                 <div
                   style={{
                     background: 'rgba(0, 212, 170, 0.2)',
-                    color: '#F59E0B',
+                    color: '#EAEAE0',
                     padding: '0.5rem 1rem',
                     borderRadius: '4px',
                     fontWeight: '600',
@@ -167,7 +167,7 @@ function StatCard({ label, value, color }: StatCardProps) {
 
 function getColorForActivity(type: string): string {
   const colors: Record<string, string> = {
-    call: '#F59E0B',
+    call: '#EAEAE0',
     appraisal: '#6c63ff',
     listing: '#ffa502',
     follow_up: '#ff6b6b',

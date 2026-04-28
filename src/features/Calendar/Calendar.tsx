@@ -43,26 +43,26 @@ export function Calendar() {
   const now = new Date()
   const dateLabel = now.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' })
 
-  if (loading) return <div style={{ color: '#64748b', textAlign: 'center', padding: '3rem' }}>Loading calendar...</div>
+  if (loading) return <div style={{ color: '#555', textAlign: 'center', padding: '3rem' }}>Loading calendar...</div>
   if (error) return <div style={{ color: '#ff6b6b', padding: '1rem' }}>{error}</div>
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
         <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Calendar</h3>
-        <p style={{ color: '#475569', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>{dateLabel} • Work schedule</p>
+        <p style={{ color: '#555', margin: '0.15rem 0 0', fontSize: '0.72rem' }}>{dateLabel} • Work schedule</p>
       </div>
 
       {/* Today */}
       <div>
-        <h3 style={{ color: '#F59E0B', marginBottom: '0.75rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+        <h3 style={{ color: '#EAEAE0', marginBottom: '0.75rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
           Today — {today.length} event{today.length !== 1 ? 's' : ''}
         </h3>
         {today.length === 0 ? (
-          <div style={{ color: '#64748b', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', padding: '1rem', textAlign: 'center' }}>No events today 🎉</div>
+          <div style={{ color: '#555', background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '1rem', textAlign: 'center' }}>No events today 🎉</div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {today.map((e, i) => <EventCard key={i} event={e} accent="#F59E0B" />)}
+            {today.map((e, i) => <EventCard key={i} event={e} accent="#EAEAE0" />)}
           </div>
         )}
       </div>
@@ -73,7 +73,7 @@ export function Calendar() {
           This Week — {thisWeek.length} event{thisWeek.length !== 1 ? 's' : ''}
         </h3>
         {thisWeek.length === 0 ? (
-          <div style={{ color: '#64748b', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', padding: '1rem', textAlign: 'center' }}>Nothing else this week</div>
+          <div style={{ color: '#555', background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '1rem', textAlign: 'center' }}>Nothing else this week</div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {thisWeek.map((e, i) => <EventCard key={i} event={e} accent="#60a5fa" showDate />)}
@@ -92,15 +92,15 @@ function EventCard({ event, accent, showDate }: { event: CalEvent; accent: strin
   const datePart = parts.length >= 2 ? parts.slice(0, 2).join(', ') : ''
 
   return (
-    <div style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.09)', backdropFilter: 'blur(24px)', borderLeft: `3px solid ${accent}`, borderRadius: '8px', padding: '0.75rem 1rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+    <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderLeft: `3px solid ${accent}`, borderRadius: '8px', padding: '0.75rem 1rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
       <div style={{ color: accent, fontSize: '0.8rem', fontWeight: '600', minWidth: '80px', paddingTop: '0.1rem' }}>
-        {showDate && <div style={{ color: '#64748b', fontSize: '0.75rem' }}>{datePart}</div>}
+        {showDate && <div style={{ color: '#555', fontSize: '0.75rem' }}>{datePart}</div>}
         <div>{timePart}</div>
       </div>
       <div style={{ flex: 1 }}>
         <div style={{ fontWeight: '500', fontSize: '0.9rem' }}>{event.title}</div>
-        {event.location && <div style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.2rem' }}>📍 {event.location}</div>}
-        {event.end && <div style={{ color: '#64748b', fontSize: '0.75rem', marginTop: '0.2rem' }}>Until {event.end}</div>}
+        {event.location && <div style={{ color: '#555', fontSize: '0.8rem', marginTop: '0.2rem' }}>📍 {event.location}</div>}
+        {event.end && <div style={{ color: '#555', fontSize: '0.75rem', marginTop: '0.2rem' }}>Until {event.end}</div>}
       </div>
     </div>
   )

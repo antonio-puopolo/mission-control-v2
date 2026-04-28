@@ -13,8 +13,8 @@ interface Agent {
 
 // Cost per 1M tokens (input+output blended estimate), in USD
 const MODEL_META: Record<string, { name: string; costPer1M: number; badge: string; badgeColor: string }> = {
-  'haiku':      { name: 'Claude Haiku 3.5',      costPer1M: 1.00,  badge: '⚡ Fast & Cheap',    badgeColor: '#F59E0B' },
-  'deepseek':   { name: 'DeepSeek v3',            costPer1M: 0.40,  badge: '💰 Ultra Cheap',     badgeColor: '#F59E0B' },
+  'haiku':      { name: 'Claude Haiku 3.5',      costPer1M: 1.00,  badge: '⚡ Fast & Cheap',    badgeColor: '#EAEAE0' },
+  'deepseek':   { name: 'DeepSeek v3',            costPer1M: 0.40,  badge: '💰 Ultra Cheap',     badgeColor: '#EAEAE0' },
   'llama':      { name: 'Llama 3.3 70B',          costPer1M: 0.60,  badge: '🆓 Open Source',     badgeColor: '#6c63ff' },
   'sonnet':     { name: 'Claude Sonnet 4',         costPer1M: 15.00, badge: '🧠 Balanced',        badgeColor: '#ffa502' },
   'gpt-4o':     { name: 'GPT-4o',                 costPer1M: 10.00, badge: '🧠 Balanced',        badgeColor: '#ffa502' },
@@ -50,7 +50,7 @@ const agents: Agent[] = [
     description: 'Property listings, email campaigns, marketing copy',
     smartModel: 'sonnet',
     smartReason: 'Writing quality matters — Sonnet gives the best output for copy.',
-    color: '#F59E0B',
+    color: '#EAEAE0',
   },
   {
     id: 'researcher',
@@ -77,7 +77,7 @@ const agents: Agent[] = [
     description: 'Campaign planning, pricing strategy, listing advice',
     smartModel: 'sonnet',
     smartReason: 'Strategic thinking needs nuance — Sonnet is the right balance.',
-    color: '#F59E0B',
+    color: '#EAEAE0',
   },
   {
     id: 'coder',
@@ -95,7 +95,7 @@ const agents: Agent[] = [
     description: 'Full listing appointment brief — comps, price range, talking points, objection handlers',
     smartModel: 'sonnet',
     smartReason: 'LAP prep needs nuance and local market knowledge — Sonnet is the right call.',
-    color: '#F59E0B',
+    color: '#EAEAE0',
   },
   {
     id: 'pipeline',
@@ -203,7 +203,7 @@ export function Agents() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxHeight: '400px', overflowY: 'auto' }}>
             {results.map(result => {
               const agentInfo = agents.find(a => a.id === result.agent_type)
-              const statusColor = result.status === 'completed' ? '#F59E0B' : result.status === 'failed' ? '#ff6b6b' : '#ffa502'
+              const statusColor = result.status === 'completed' ? '#EAEAE0' : result.status === 'failed' ? '#ff6b6b' : '#ffa502'
               return (
                 <div key={result.id} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderLeft: `3px solid ${statusColor}`, borderRadius: '8px', padding: '1rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
@@ -239,7 +239,7 @@ export function Agents() {
               {/* Smart recommendation */}
               <div
                 onClick={() => setUseSmartModel(true)}
-                style={{ padding: '0.75rem 1rem', borderRadius: '8px', border: `2px solid ${useSmartModel ? '#F59E0B' : 'rgba(255,255,255,0.1)'}`, background: useSmartModel ? 'rgba(0,212,170,0.08)' : 'transparent', cursor: 'pointer', marginBottom: '0.5rem', transition: 'all 0.15s' }}
+                style={{ padding: '0.75rem 1rem', borderRadius: '8px', border: `2px solid ${useSmartModel ? '#EAEAE0' : 'rgba(255,255,255,0.1)'}`, background: useSmartModel ? 'rgba(0,212,170,0.08)' : 'transparent', cursor: 'pointer', marginBottom: '0.5rem', transition: 'all 0.15s' }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
@@ -247,7 +247,7 @@ export function Agents() {
                     <div style={{ color: '#a0a0b0', fontSize: '0.78rem', marginTop: '0.2rem' }}>{agent.smartReason}</div>
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: '1rem' }}>
-                    <div style={{ color: '#F59E0B', fontSize: '0.75rem', fontWeight: 600 }}>{modelMeta?.badge}</div>
+                    <div style={{ color: '#EAEAE0', fontSize: '0.75rem', fontWeight: 600 }}>{modelMeta?.badge}</div>
                     <div style={{ color: '#666', fontSize: '0.72rem' }}>{estimateCost(activeModel)} / task</div>
                   </div>
                 </div>

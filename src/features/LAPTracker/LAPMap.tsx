@@ -7,7 +7,7 @@ import type { Lap } from '@/hooks/useLaps'
 // Dot colour by pipeline section
 const SECTION_COLORS: Record<string, string> = {
   pipeline_a: '#ef4444',
-  pipeline_b: '#F59E0B',
+  pipeline_b: '#EAEAE0',
   pipeline_c: '#60a5fa',
   under_construction: '#a78bfa',
 }
@@ -25,7 +25,7 @@ type Status = typeof STATUSES[number]
 const PRIORITY_COLORS: Record<string, string> = {
   urgent: '#ff4444',
   high: '#ff9500',
-  normal: '#F59E0B',
+  normal: '#EAEAE0',
   low: '#666',
 }
 
@@ -196,7 +196,7 @@ export function LAPMap({ activeStatus, onUpdate, onDelete }: Props) {
         }}>
           <div style={{ flex: 1, height: '4px', background: '#1a1a24', borderRadius: '2px', overflow: 'hidden' }}>
             <div style={{
-              height: '100%', background: '#F59E0B', borderRadius: '2px',
+              height: '100%', background: '#EAEAE0', borderRadius: '2px',
               width: `${(progress.done / progress.total) * 100}%`,
               transition: 'width 0.3s ease',
             }} />
@@ -347,7 +347,7 @@ export function LAPMap({ activeStatus, onUpdate, onDelete }: Props) {
 
           {/* Next action */}
           {selected.next_action && (
-            <p style={{ margin: 0, fontSize: '0.82rem', color: '#F59E0B' }}>→ {selected.next_action}</p>
+            <p style={{ margin: 0, fontSize: '0.82rem', color: '#EAEAE0' }}>→ {selected.next_action}</p>
           )}
 
           {/* Notes */}

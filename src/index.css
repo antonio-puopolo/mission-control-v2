@@ -5,7 +5,7 @@
 
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #060a14;
+  background-color: #0d0d0d;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,7 +18,7 @@ body {
   padding: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #060a14;
+  background-color: #0d0d0d;
 }
 
 #root {
@@ -28,12 +28,12 @@ body {
 
 a {
   font-weight: 500;
-  color: #F59E0B;
+  color: #EAEAE0;
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #D97706;
+  color: #EAEAE0;
 }
 
 button {
@@ -49,7 +49,7 @@ button {
 }
 
 button:hover {
-  border-color: #F59E0B;
+  border-color: #EAEAE0;
 }
 
 button:focus,

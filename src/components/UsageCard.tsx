@@ -50,7 +50,7 @@ function formatTokens(tokens: number): string {
 
 function spendColor(daily: number): string {
   if (daily < 8) return '#22c55e'
-  if (daily < 15) return '#f59e0b'
+  if (daily < 15) return '#EAEAE0'
   return '#ef4444'
 }
 
@@ -218,7 +218,7 @@ export function UsageCard() {
               height: '100%',
               borderRadius: '999px',
               background: budget.percent_used > 80 ? '#ef4444' :
-                        budget.percent_used > 50 ? '#f59e0b' : '#00d4aa',
+                        budget.percent_used > 50 ? '#EAEAE0' : '#00d4aa',
               width: `${Math.min(100, budget.percent_used)}%`,
               transition: 'width 0.6s ease',
             }}
@@ -366,12 +366,12 @@ export function UsageCard() {
                   <div
                     style={{
                       height: '100%',
-                      background: '#f59e0b',
+                      background: '#EAEAE0',
                       width: `${model.percent}%`,
                     }}
                   />
                 </div>
-                <div style={{ fontSize: '0.82rem', color: '#f59e0b', width: '40px', textAlign: 'right' }}>
+                <div style={{ fontSize: '0.82rem', color: '#EAEAE0', width: '40px', textAlign: 'right' }}>
                   {model.percent}%
                 </div>
               </div>

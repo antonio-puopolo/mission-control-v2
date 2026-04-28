@@ -15,7 +15,7 @@ export function GeorgeOrb({ size = 200 }: GeorgeOrbProps) {
       width: size,
       height: size,
       borderRadius: '50%',
-      background: 'radial-gradient(circle at 35% 35%, #F59E0B, #D97706)',
+      background: 'radial-gradient(circle at 35% 35%, #EAEAE0, #EAEAE0)',
       boxShadow: '0 0 40px rgba(245,158,11,0.4)',
       display: 'flex',
       alignItems: 'center',

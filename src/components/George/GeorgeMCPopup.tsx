@@ -406,14 +406,14 @@ export function GeorgeMCPopup({
         }
         .george-input:focus {
           outline: none;
-          border-color: #F59E0B !important;
+          border-color: #EAEAE0 !important;
           box-shadow: 0 0 0 2px rgba(245,158,11,0.15) !important;
         }
         .george-input::placeholder {
           color: #4B5563;
         }
         .george-send-btn:hover {
-          background: #D97706 !important;
+          background: #EAEAE0 !important;
           transform: scale(1.05);
         }
         .george-send-btn:disabled {
@@ -424,7 +424,7 @@ export function GeorgeMCPopup({
         .george-quick-btn:hover {
           background: rgba(245,158,11,0.15) !important;
           border-color: rgba(245,158,11,0.4) !important;
-          color: #F59E0B !important;
+          color: #EAEAE0 !important;
         }
         .george-messages::-webkit-scrollbar {
           width: 4px;
@@ -449,7 +449,7 @@ export function GeorgeMCPopup({
             width: '56px',
             height: '56px',
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+            background: 'linear-gradient(135deg, #EAEAE0, #EAEAE0)',
             border: 'none',
             cursor: 'pointer',
             boxShadow: '0 4px 20px rgba(245,158,11,0.4), 0 2px 8px rgba(0,0,0,0.3)',
@@ -529,7 +529,7 @@ export function GeorgeMCPopup({
                 width: '32px',
                 height: '32px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+                background: 'linear-gradient(135deg, #EAEAE0, #EAEAE0)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -544,7 +544,7 @@ export function GeorgeMCPopup({
                 width: '9px',
                 height: '9px',
                 borderRadius: '50%',
-                background: isLoading ? '#F59E0B' : '#10B981',
+                background: isLoading ? '#EAEAE0' : '#10B981',
                 border: '1.5px solid #111827',
                 animation: isLoading ? 'george-pulse 1s infinite' : 'none',
               }} />
@@ -552,10 +552,10 @@ export function GeorgeMCPopup({
 
             {/* Name + Tab context */}
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ color: '#F59E0B', fontWeight: 700, fontSize: '0.85rem', lineHeight: 1.2 }}>
+              <div style={{ color: '#EAEAE0', fontWeight: 700, fontSize: '0.85rem', lineHeight: 1.2 }}>
                 George
               </div>
-              <div style={{ color: retryStatus ? '#F59E0B' : '#6B7280', fontSize: '0.68rem', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              <div style={{ color: retryStatus ? '#EAEAE0' : '#6B7280', fontSize: '0.68rem', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 {retryStatus ?? (isLoading ? 'Thinking…' : `Viewing: ${tabLabel(currentTab)}`)}
               </div>
             </div>
@@ -702,7 +702,7 @@ export function GeorgeMCPopup({
                       onClick={() => { unlockAudio(); sendMessage(input) }}
                       disabled={isLoading || !input.trim()}
                       style={{
-                        background: '#F59E0B',
+                        background: '#EAEAE0',
                         border: 'none',
                         borderRadius: '8px',
                         color: '#000',
@@ -744,7 +744,7 @@ function WelcomeScreen({ currentTab, onQuickAction }: { currentTab: string; onQu
       animation: 'george-fade-in 0.3s ease-out',
     }}>
       <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>🤖</div>
-      <div style={{ color: '#F59E0B', fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>
+      <div style={{ color: '#EAEAE0', fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>
         Hey Antonio, I'm George
       </div>
       <div style={{ color: '#6B7280', fontSize: '0.78rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
@@ -768,7 +768,7 @@ function WelcomeScreen({ currentTab, onQuickAction }: { currentTab: string; onQu
             }}
             onMouseEnter={e => {
               (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,158,11,0.15)'
-              ;(e.currentTarget as HTMLButtonElement).style.color = '#F59E0B'
+              ;(e.currentTarget as HTMLButtonElement).style.color = '#EAEAE0'
             }}
             onMouseLeave={e => {
               (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,158,11,0.08)'

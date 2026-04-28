@@ -3,28 +3,22 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --accent:           #F59E0B;
-  --accent-rich:      #D97706;
-  --accent-dim:       rgba(245,158,11,0.12);
-  --accent-glow:      rgba(245,158,11,0.22);
+  --accent:           #EAEAE0;
+  --accent-dim:       rgba(234,234,224,0.10);
+  /* Functional status colors — NOT decorative */
   --green:            #22c55e;
-  --green-dim:        rgba(34,197,94,0.12);
   --blue:             #60a5fa;
-  --blue-dim:         rgba(96,165,250,0.12);
   --red:              #f87171;
-  --red-dim:          rgba(248,113,113,0.12);
   --violet:           #a78bfa;
-  --violet-dim:       rgba(167,139,250,0.12);
-  --bg:               #060a14;
-  --bg2:              #0a1020;
-  --bg3:              rgba(255,255,255,0.025);
-  --card:             rgba(255,255,255,0.07);
-  --card-hover:       rgba(255,255,255,0.10);
-  --border:           rgba(255,255,255,0.09);
-  --border-bright:    rgba(255,255,255,0.20);
-  --text:             #f1f5f9;
-  --text-soft:        #cbd5e1;
-  --muted:            #64748b;
+  /* Surfaces */
+  --bg:               #0d0d0d;
+  --bg2:              #161616;
+  --card:             rgba(255,255,255,0.04);
+  --card-hover:       rgba(255,255,255,0.07);
+  --border:           rgba(255,255,255,0.08);
+  --text:             #f0f0f0;
+  --text-soft:        #a0a0a0;
+  --muted:            #555;
 }
 
 body {
@@ -43,36 +37,12 @@ body {
   isolation: isolate;
 }
 
-/* Ambient depth layers — glass needs something to blur through */
-.mc-app::before {
-  content: '';
-  position: fixed;
-  top: -15%;
-  right: -10%;
-  width: 60%;
-  height: 70%;
-  background: radial-gradient(ellipse, rgba(245,158,11,0.09) 0%, rgba(245,158,11,0.03) 45%, transparent 70%);
-  pointer-events: none;
-  z-index: -1;
-}
-.mc-app::after {
-  content: '';
-  position: fixed;
-  bottom: -20%;
-  left: -15%;
-  width: 65%;
-  height: 65%;
-  background: radial-gradient(ellipse, rgba(96,165,250,0.08) 0%, rgba(99,102,241,0.05) 40%, transparent 70%);
-  pointer-events: none;
-  z-index: -1;
-}
+/* No ambient glows — flat pure dark */
 
 /* ── Header ── */
 .mc-header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(6,8,12,0.85);
-  backdrop-filter: blur(28px) saturate(1.4);
-  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  background: rgba(13,13,13,0.95);
   border-bottom: 1px solid var(--border);
   padding: 0.75rem 2rem;
 }
@@ -149,9 +119,9 @@ body {
   background: rgba(255,255,255,0.05);
 }
 .mc-nav-btn.active {
-  color: var(--accent);
-  background: var(--accent-dim);
-  font-weight: 600;
+  color: #0d0d0d;
+  background: var(--accent);
+  font-weight: 700;
   border-radius: 8px;
 }
 .mc-nav-icon { display: flex; align-items: center; opacity: 0.9; }
@@ -159,7 +129,7 @@ body {
 /* ── Main ── */
 .mc-main {
   flex: 1;
-  padding: 1.75rem 2rem;
+  padding: 2.5rem 2.5rem;
   max-width: 1600px;
   margin: 0 auto;
   width: 100%;
@@ -175,28 +145,16 @@ body {
   letter-spacing: 0.02em;
 }
 
-/* ── Glass cards ── */
-.glass-card {
+/* ── Cards — flat dark surface, no blur ── */
+.glass-card, .mc-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-top: 1px solid var(--border-bright);
-  border-radius: 16px;
-  padding: 1.5rem;
-  backdrop-filter: blur(32px) saturate(1.8);
-  -webkit-backdrop-filter: blur(32px) saturate(1.8);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    0 8px 32px rgba(0,0,0,0.5),
-    0 2px 8px rgba(0,0,0,0.3);
-  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 14px;
+  padding: 2rem;
+  transition: background 0.15s ease;
 }
-.glass-card:hover {
+.glass-card:hover, .mc-card:hover {
   background: var(--card-hover);
-  border-color: rgba(255,255,255,0.14);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.15),
-    0 16px 48px rgba(0,0,0,0.55),
-    0 2px 8px rgba(0,0,0,0.35);
 }
 
 /* ── Scrollbar ── */
@@ -213,7 +171,7 @@ body {
   .mc-nav { padding: 0.5rem 0.75rem 0; }
   .mc-nav-inner { gap: 0.15rem; }
   .mc-nav-btn { padding: 0.4rem 0.7rem; font-size: 0.74rem; }
-  .mc-main { padding: 1rem; }
+  .mc-main { padding: 1.5rem 1.25rem; }
 }
 
 /* ── Mobile (480px) ── */
@@ -224,6 +182,6 @@ body {
   .mc-nav-btn { padding: 0.4rem 0.6rem; font-size: 0.7rem; gap: 0.3rem; }
   .mc-nav-label { display: none; }
   .mc-nav-icon { opacity: 1; }
-  .mc-main { padding: 0.75rem; }
-  .glass-card { padding: 1rem; border-radius: 12px; }
+  .mc-main { padding: 1.25rem 1rem; }
+  .glass-card { padding: 1.5rem; border-radius: 12px; }
 }
