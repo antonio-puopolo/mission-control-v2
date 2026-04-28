@@ -43,7 +43,7 @@ const CustomTooltip = ({
   return (
     <div style={{
       background: '#0f172a',
-      border: '1px solid #2a3a4a',
+      border: '1px solid rgba(255,255,255,0.12)',
       borderRadius: '8px',
       padding: '0.75rem 1rem',
       fontSize: '0.82rem',
@@ -71,8 +71,12 @@ function KPICard ({ icon, label, value, sub, color }: {
 }) {
   return (
     <div style={{
-      background: '#1a2332',
+      background: 'rgba(255,255,255,0.07)',
       border: `1px solid ${color}33`,
+      borderTop: '1px solid rgba(255,255,255,0.18)',
+      backdropFilter: 'blur(32px) saturate(1.8)',
+      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
       borderRadius: '12px',
       padding: '1.2rem',
       display: 'flex',
@@ -86,7 +90,7 @@ function KPICard ({ icon, label, value, sub, color }: {
         {icon}
         <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</span>
       </div>
-      <div style={{ color: '#e2e8f0', fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.02em' }}>{value}</div>
+      <div style={{ color: '#f1f5f9', fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.02em' }}>{value}</div>
       <div style={{ color: '#475569', fontSize: '0.72rem' }}>{sub}</div>
     </div>
   )
@@ -97,8 +101,12 @@ function KPICard ({ icon, label, value, sub, color }: {
 function ChartCard ({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{
-      background: '#1a2332',
-      border: '1px solid #2a3a4a',
+      background: 'rgba(255,255,255,0.07)',
+      border: '1px solid rgba(255,255,255,0.09)',
+      borderTop: '1px solid rgba(255,255,255,0.18)',
+      backdropFilter: 'blur(32px) saturate(1.8)',
+      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
       borderRadius: '12px',
       padding: '1.25rem',
       display: 'flex',
@@ -118,16 +126,20 @@ function ChartCard ({ title, children }: { title: string; children: React.ReactN
 function SkeletonCard () {
   return (
     <div style={{
-      background: '#1a2332',
-      border: '1px solid #2a3a4a',
+      background: 'rgba(255,255,255,0.07)',
+      border: '1px solid rgba(255,255,255,0.09)',
+      borderTop: '1px solid rgba(255,255,255,0.18)',
+      backdropFilter: 'blur(32px) saturate(1.8)',
+      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
       borderRadius: '12px',
       padding: '1.2rem',
       height: '100px',
       animation: 'pulse 1.5s ease-in-out infinite',
     }}>
-      <div style={{ background: '#2a3a4a', borderRadius: '4px', height: '12px', width: '60%', marginBottom: '12px' }} />
-      <div style={{ background: '#2a3a4a', borderRadius: '4px', height: '24px', width: '40%', marginBottom: '8px' }} />
-      <div style={{ background: '#2a3a4a', borderRadius: '4px', height: '10px', width: '80%' }} />
+      <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '4px', height: '12px', width: '60%', marginBottom: '12px' }} />
+      <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '4px', height: '24px', width: '40%', marginBottom: '8px' }} />
+      <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '4px', height: '10px', width: '80%' }} />
     </div>
   )
 }
@@ -158,11 +170,11 @@ function AppraisalCalculator () {
   const years = Array.from({ length: currentYear - 2000 + 1 }, (_, i) => String(2000 + i)).reverse()
 
   const inputStyle = {
-    background: '#0f172a',
-    border: '1px solid #2a3a4a',
+    background: 'rgba(255,255,255,0.05)',
+    border: '1px solid rgba(255,255,255,0.1)',
     borderRadius: '8px',
     padding: '0.6rem 0.85rem',
-    color: '#e2e8f0',
+    color: '#f1f5f9',
     fontSize: '0.9rem',
     outline: 'none',
     width: '100%',
@@ -238,8 +250,12 @@ function AppraisalCalculator () {
 
   return (
     <div style={{
-      background: '#1a2332',
-      border: '1px solid #2a3a4a',
+      background: 'rgba(255,255,255,0.07)',
+      border: '1px solid rgba(255,255,255,0.09)',
+      borderTop: '1px solid rgba(255,255,255,0.18)',
+      backdropFilter: 'blur(32px) saturate(1.8)',
+      WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
       borderRadius: '12px',
       padding: '1.5rem',
       display: 'flex',
@@ -250,7 +266,7 @@ function AppraisalCalculator () {
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         <Calculator size={18} color="#14b8a6" />
         <div>
-          <div style={{ color: '#e2e8f0', fontSize: '1rem', fontWeight: 700 }}>Appraisal Calculator</div>
+          <div style={{ color: '#f1f5f9', fontSize: '1rem', fontWeight: 700 }}>Appraisal Calculator</div>
           <div style={{ color: '#475569', fontSize: '0.75rem' }}>Live Camp Hill comps from real sales data</div>
         </div>
       </div>
@@ -273,7 +289,7 @@ function AppraisalCalculator () {
             value={address}
             onChange={e => setAddress(e.target.value)}
             onFocus={e => (e.currentTarget.style.borderColor = '#14b8a6')}
-            onBlur={e => (e.currentTarget.style.borderColor = '#2a3a4a')}
+            onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
           />
         </div>
 
@@ -288,9 +304,9 @@ function AppraisalCalculator () {
                 style={{
                   flex: 1,
                   padding: '0.55rem',
-                  background: propertyType === t ? '#14b8a6' : '#0f172a',
+                  background: propertyType === t ? '#14b8a6' : 'rgba(255,255,255,0.05)',
                   color: propertyType === t ? '#0a0f19' : '#94a3b8',
-                  border: `1px solid ${propertyType === t ? '#14b8a6' : '#2a3a4a'}`,
+                  border: `1px solid ${propertyType === t ? '#14b8a6' : 'rgba(255,255,255,0.1)'}`,
                   borderRadius: '8px',
                   fontSize: '0.82rem',
                   fontWeight: 700,
@@ -316,7 +332,7 @@ function AppraisalCalculator () {
             value={purchaseYear}
             onChange={e => setPurchaseYear(e.target.value)}
             onFocus={e => (e.currentTarget.style.borderColor = '#14b8a6')}
-            onBlur={e => (e.currentTarget.style.borderColor = '#2a3a4a')}
+            onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
           >
             {years.map(y => <option key={y} value={y}>{y}</option>)}
           </select>
@@ -334,7 +350,7 @@ function AppraisalCalculator () {
             value={purchasePrice}
             onChange={e => setPurchasePrice(e.target.value)}
             onFocus={e => (e.currentTarget.style.borderColor = '#14b8a6')}
-            onBlur={e => (e.currentTarget.style.borderColor = '#2a3a4a')}
+            onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
           />
         </div>
       </div>
@@ -344,9 +360,9 @@ function AppraisalCalculator () {
         onClick={handleCalculate}
         disabled={calculating}
         style={{
-          background: calculating ? '#0f172a' : 'linear-gradient(90deg, #14b8a6, #0ea5e9)',
+          background: calculating ? 'rgba(255,255,255,0.05)' : 'linear-gradient(90deg, #14b8a6, #0ea5e9)',
           color: calculating ? '#475569' : '#000',
-          border: calculating ? '1px solid #2a3a4a' : 'none',
+          border: calculating ? '1px solid rgba(255,255,255,0.1)' : 'none',
           borderRadius: '8px',
           padding: '0.7rem 1.5rem',
           fontWeight: 800,
@@ -413,7 +429,7 @@ function AppraisalCalculator () {
           }}>
             {/* Comp Value */}
             <div style={{
-              background: '#0f172a',
+              background: 'rgba(255,255,255,0.05)',
               border: '1px solid #14b8a633',
               borderRadius: '10px',
               padding: '1rem',
@@ -429,7 +445,7 @@ function AppraisalCalculator () {
             {/* Appreciation */}
             {purchasePrice && result.appreciation !== 0 && (
               <div style={{
-                background: '#0f172a',
+                background: 'rgba(255,255,255,0.05)',
                 border: `1px solid ${result.appreciation >= 0 ? '#22c55e33' : '#ef444433'}`,
                 borderRadius: '10px',
                 padding: '1rem',
@@ -449,7 +465,7 @@ function AppraisalCalculator () {
 
             {/* List Price Range */}
             <div style={{
-              background: '#0f172a',
+              background: 'rgba(255,255,255,0.05)',
               border: '1px solid #6366f133',
               borderRadius: '10px',
               padding: '1rem',
@@ -466,7 +482,7 @@ function AppraisalCalculator () {
 
             {/* Days to Sell */}
             <div style={{
-              background: '#0f172a',
+              background: 'rgba(255,255,255,0.05)',
               border: '1px solid #f59e0b33',
               borderRadius: '10px',
               padding: '1rem',
@@ -483,7 +499,7 @@ function AppraisalCalculator () {
       )}
 
       {/* Disclaimer */}
-      <div style={{ color: '#334155', fontSize: '0.7rem', borderTop: '1px solid #1e293b', paddingTop: '0.75rem' }}>
+      <div style={{ color: '#334155', fontSize: '0.7rem', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '0.75rem' }}>
         ⚠️ Estimates based on real Camp Hill sales data (2021–2026). For a precise appraisal, book a property inspection with Antonio.
       </div>
     </div>
@@ -520,12 +536,12 @@ export function MarketPulse () {
   const periodLabel = kpis.month && kpis.year ? `${monthLabel} ${kpis.year}` : 'Camp Hill'
 
   return (
-    <div style={{ padding: '1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
       {/* Header */}
       <div style={{ marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
           <div>
-            <h1 style={{ color: '#e2e8f0', fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <h1 style={{ color: '#f1f5f9', fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
               <TrendingUp size={22} color="#14b8a6" />
               Market Pulse
             </h1>
@@ -536,8 +552,12 @@ export function MarketPulse () {
           {/* Last Updated */}
           {kpis.lastUpdated && (
             <div style={{
-              background: '#0f172a',
-              border: '1px solid #2a3a4a',
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.09)',
+              borderTop: '1px solid rgba(255,255,255,0.18)',
+              backdropFilter: 'blur(32px) saturate(1.8)',
+              WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)',
               borderRadius: '8px',
               padding: '0.4rem 0.75rem',
               fontSize: '0.72rem',
@@ -632,7 +652,7 @@ export function MarketPulse () {
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={housePriceTrend} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
                 <XAxis dataKey="year" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tickFormatter={formatM} tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} width={60} />
                 <Tooltip content={<CustomTooltip formatter={formatCurrency} />} />
@@ -659,7 +679,7 @@ export function MarketPulse () {
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={unitPriceTrend} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
                 <XAxis dataKey="year" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tickFormatter={formatM} tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} width={60} />
                 <Tooltip content={<CustomTooltip formatter={formatCurrency} />} />
@@ -686,7 +706,7 @@ export function MarketPulse () {
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={daysOnMarketData} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
                 <XAxis dataKey="category" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} domain={[0, 80]} />
                 <Tooltip content={<CustomTooltip formatter={(v) => `${v} days`} />} />
@@ -705,7 +725,7 @@ export function MarketPulse () {
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={purchasingTrends} margin={{ top: 4, right: 16, left: 8, bottom: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
                 <XAxis dataKey="year" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} domain={[0, 100]} tickFormatter={v => `${v}%`} />
                 <Tooltip content={<CustomTooltip formatter={(v) => `${v}%`} />} />

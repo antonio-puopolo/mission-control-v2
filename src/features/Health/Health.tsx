@@ -36,7 +36,7 @@ function calcStreak(workouts: Workout[]): number {
 }
 
 function MiniLineGraph({ data, color = '#F59E0B', label = '' }: { data: number[]; color?: string; label?: string }) {
-  if (data.length < 2) return <div style={{ color: '#555', fontSize: '0.8rem', textAlign: 'center', padding: '2rem' }}>Log more entries to see trend</div>
+  if (data.length < 2) return <div style={{ color: '#475569', fontSize: '0.8rem', textAlign: 'center', padding: '2rem' }}>Log more entries to see trend</div>
   const min = Math.min(...data); const max = Math.max(...data)
   const range = max - min || 1
   const w = 300; const h = 80; const pad = 10
@@ -53,8 +53,8 @@ function MiniLineGraph({ data, color = '#F59E0B', label = '' }: { data: number[]
         const y = pad + ((max - v) / range) * (h - pad * 2)
         return <circle key={i} cx={x} cy={y} r="3" fill={color} />
       })}
-      <text x={pad} y={h - 2} fontSize="9" fill="#555">{data[0]}{label}</text>
-      <text x={w - pad} y={h - 2} fontSize="9" fill="#555" textAnchor="end">{data[data.length-1]}{label}</text>
+      <text x={pad} y={h - 2} fontSize="9" fill="#475569">{data[0]}{label}</text>
+      <text x={w - pad} y={h - 2} fontSize="9" fill="#475569" textAnchor="end">{data[data.length-1]}{label}</text>
     </svg>
   )
 }
@@ -187,8 +187,8 @@ export function Health() {
     setGoals(goalDraft); setEditingGoals(false)
   }
 
-  const inputStyle: React.CSSProperties = { padding: '0.6rem 0.75rem', background: '#080c14', border: '1px solid #333', borderRadius: '6px', color: '#fff', fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' }
-  const cardStyle: React.CSSProperties = { background: '#0d1320', borderRadius: '12px', padding: '1.25rem' }
+  const inputStyle: React.CSSProperties = { padding: '0.6rem 0.75rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', color: '#f1f5f9', fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' }
+  const cardStyle: React.CSSProperties = { background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.09)', borderTop: '1px solid rgba(255,255,255,0.18)', backdropFilter: 'blur(32px) saturate(1.8)', WebkitBackdropFilter: 'blur(32px) saturate(1.8)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)', borderRadius: '12px', padding: '1.25rem' }
   const TABS = ['overview', 'workouts', 'weight', 'metrics', 'goals'] as const
 
   return (
@@ -201,23 +201,23 @@ export function Health() {
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <button onClick={() => setShowWorkoutModal(true)} style={{ padding: '0.6rem 1rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}>+ Workout</button>
-          <button onClick={() => setShowWeightModal(true)} style={{ padding: '0.6rem 1rem', background: '#1a2a3a', color: '#60a5fa', border: '1px solid #60a5fa44', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '0.85rem' }}>⚖️ Weight</button>
-          <button onClick={() => setShowMetricModal(true)} style={{ padding: '0.6rem 1rem', background: '#1a1a2a', color: '#a78bfa', border: '1px solid #a78bfa44', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '0.85rem' }}>📏 Metrics</button>
+          <button onClick={() => setShowWeightModal(true)} style={{ padding: '0.6rem 1rem', background: 'rgba(96,165,250,0.1)', color: '#60a5fa', border: '1px solid #60a5fa44', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '0.85rem' }}>⚖️ Weight</button>
+          <button onClick={() => setShowMetricModal(true)} style={{ padding: '0.6rem 1rem', background: 'rgba(167,139,250,0.1)', color: '#a78bfa', border: '1px solid #a78bfa44', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '0.85rem' }}>📏 Metrics</button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div style={{ overflowX: 'auto', borderBottom: '1px solid #1a1a24', WebkitOverflowScrolling: 'touch' }}>
+      <div style={{ overflowX: 'auto', borderBottom: '1px solid rgba(255,255,255,0.08)', WebkitOverflowScrolling: 'touch' }}>
         <div style={{ display: 'flex', gap: '0.25rem', minWidth: 'max-content' }}>
           {TABS.map(t => (
-            <button key={t} onClick={() => setTab(t)} style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', borderBottom: tab === t ? '2px solid #F59E0B' : '2px solid transparent', color: tab === t ? '#F59E0B' : '#666', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'capitalize', fontWeight: tab === t ? 600 : 400, whiteSpace: 'nowrap' }}>
+            <button key={t} onClick={() => setTab(t)} style={{ padding: '0.5rem 1rem', background: tab === t ? 'rgba(245,158,11,0.12)' : 'transparent', border: 'none', borderRadius: '8px', color: tab === t ? '#F59E0B' : '#64748b', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'capitalize', fontWeight: tab === t ? 600 : 400, whiteSpace: 'nowrap' }}>
               {t}
             </button>
           ))}
         </div>
       </div>
 
-      {loading ? <p style={{ color: '#a0a0b0' }}>Loading...</p> : (
+      {loading ? <p style={{ color: '#64748b' }}>Loading...</p> : (
         <>
           {/* OVERVIEW */}
           {tab === 'overview' && (
@@ -225,12 +225,12 @@ export function Health() {
 
               {/* Body outline card */}
               <div style={{ ...cardStyle, gridRow: 'span 2' }}>
-                <h4 style={{ margin: '0 0 1rem', color: '#a0a0b0', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Your Body</h4>
+                <h4 style={{ margin: '0 0 1rem', color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Your Body</h4>
                 <BodyOutline workouts={workouts} />
                 {latestWeight && <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
                   <span style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>{latestWeight}</span>
-                  <span style={{ color: '#a0a0b0', marginLeft: '4px' }}>kg</span>
-                  {weightChange !== null && <span style={{ marginLeft: '8px', fontSize: '0.85rem', color: weightChange < 0 ? '#F59E0B' : weightChange > 0 ? '#ff6b6b' : '#666' }}>
+                  <span style={{ color: '#64748b', marginLeft: '4px' }}>kg</span>
+                  {weightChange !== null && <span style={{ marginLeft: '8px', fontSize: '0.85rem', color: weightChange < 0 ? '#F59E0B' : weightChange > 0 ? '#f87171' : '#64748b' }}>
                     {weightChange > 0 ? '+' : ''}{weightChange} kg
                   </span>}
                 </div>}
@@ -239,30 +239,30 @@ export function Health() {
               {/* Stats */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div style={cardStyle}>
-                  <div style={{ color: '#a0a0b0', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>This Week</div>
+                  <div style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>This Week</div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
                     <span style={{ fontSize: '2.5rem', fontWeight: 700, color: thisWeekWorkouts.length >= goals.weekly_workout_target ? '#F59E0B' : '#fff' }}>
                       {thisWeekWorkouts.length}
                     </span>
-                    <span style={{ color: '#555', marginBottom: '0.5rem' }}>/ {goals.weekly_workout_target} workouts</span>
+                    <span style={{ color: '#475569', marginBottom: '0.5rem' }}>/ {goals.weekly_workout_target} workouts</span>
                   </div>
                   {/* Progress bar */}
-                  <div style={{ height: '6px', background: '#1a1a24', borderRadius: '999px', marginTop: '0.5rem' }}>
+                  <div style={{ height: '6px', background: 'rgba(255,255,255,0.07)', borderRadius: '999px', marginTop: '0.5rem' }}>
                     <div style={{ height: '100%', borderRadius: '999px', background: '#F59E0B', width: `${Math.min(100, (thisWeekWorkouts.length / goals.weekly_workout_target) * 100)}%`, transition: 'width 0.5s ease' }} />
                   </div>
                 </div>
 
                 <div style={cardStyle}>
-                  <div style={{ color: '#a0a0b0', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Current Streak</div>
+                  <div style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Current Streak</div>
                   <div style={{ fontSize: '2.5rem', fontWeight: 700 }}>
                     {streak > 0 ? `🔥 ${streak}` : '–'}
-                    <span style={{ fontSize: '1rem', color: '#a0a0b0', fontWeight: 400, marginLeft: '4px' }}>{streak === 1 ? 'day' : 'days'}</span>
+                    <span style={{ fontSize: '1rem', color: '#64748b', fontWeight: 400, marginLeft: '4px' }}>{streak === 1 ? 'day' : 'days'}</span>
                   </div>
                 </div>
 
                 {goals.weight_goal_kg && latestWeight && (
                   <div style={cardStyle}>
-                    <div style={{ color: '#a0a0b0', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Weight Goal</div>
+                    <div style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Weight Goal</div>
                     <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>
                       {latestWeight} → {goals.weight_goal_kg} kg
                       <span style={{ marginLeft: '8px', color: '#F59E0B', fontSize: '0.85rem' }}>
@@ -276,7 +276,7 @@ export function Health() {
               {/* Weight mini graph */}
               {weights.length >= 2 && (
                 <div style={cardStyle}>
-                  <h4 style={{ margin: '0 0 1rem', color: '#a0a0b0', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Weight Trend</h4>
+                  <h4 style={{ margin: '0 0 1rem', color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Weight Trend</h4>
                   <MiniLineGraph data={[...weights].reverse().map(w => w.weight_kg)} label="kg" />
                 </div>
               )}
@@ -288,15 +288,15 @@ export function Health() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem', marginBottom: '0.5rem' }}>
                 <div style={cardStyle}>
-                  <div style={{ color: '#a0a0b0', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.25rem' }}>This Week</div>
-                  <div style={{ fontSize: '2rem', fontWeight: 700 }}>{thisWeekWorkouts.length} <span style={{ fontSize: '0.9rem', color: '#a0a0b0', fontWeight: 400 }}>/ {goals.weekly_workout_target}</span></div>
+                  <div style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.25rem' }}>This Week</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 700 }}>{thisWeekWorkouts.length} <span style={{ fontSize: '0.9rem', color: '#64748b', fontWeight: 400 }}>/ {goals.weekly_workout_target}</span></div>
                 </div>
                 <div style={cardStyle}>
-                  <div style={{ color: '#a0a0b0', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Total Sessions</div>
+                  <div style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Total Sessions</div>
                   <div style={{ fontSize: '2rem', fontWeight: 700 }}>{workouts.length}</div>
                 </div>
                 <div style={cardStyle}>
-                  <div style={{ color: '#a0a0b0', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Streak</div>
+                  <div style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Streak</div>
                   <div style={{ fontSize: '2rem', fontWeight: 700 }}>{streak > 0 ? `🔥 ${streak}d` : '–'}</div>
                 </div>
               </div>
@@ -304,15 +304,15 @@ export function Health() {
                 <div key={w.id} style={{ ...cardStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: 600 }}>{w.workout_type}</div>
-                    {w.notes && <div style={{ color: '#a0a0b0', fontSize: '0.82rem', marginTop: '0.2rem' }}>{w.notes}</div>}
+                    {w.notes && <div style={{ color: '#64748b', fontSize: '0.82rem', marginTop: '0.2rem' }}>{w.notes}</div>}
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: '1rem' }}>
                     <div style={{ color: '#F59E0B', fontWeight: 600 }}>{w.duration_mins} min</div>
-                    <div style={{ color: '#555', fontSize: '0.78rem' }}>{new Date(w.logged_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</div>
+                    <div style={{ color: '#475569', fontSize: '0.78rem' }}>{new Date(w.logged_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</div>
                   </div>
                 </div>
               ))}
-              {workouts.length === 0 && <p style={{ color: '#555' }}>No workouts logged yet. Hit + Workout to start!</p>}
+              {workouts.length === 0 && <p style={{ color: '#475569' }}>No workouts logged yet. Hit + Workout to start!</p>}
             </div>
           )}
 
@@ -321,20 +321,20 @@ export function Health() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {weights.length >= 2 && (
                 <div style={cardStyle}>
-                  <h4 style={{ margin: '0 0 1rem', color: '#a0a0b0', fontSize: '0.8rem', textTransform: 'uppercase' }}>Weight Over Time</h4>
+                  <h4 style={{ margin: '0 0 1rem', color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase' }}>Weight Over Time</h4>
                   <MiniLineGraph data={[...weights].reverse().map(w => w.weight_kg)} color="#60a5fa" label="kg" />
                 </div>
               )}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '0.75rem' }}>
                 {weights.map((w, i) => (
-                  <div key={w.id} style={{ ...cardStyle, textAlign: 'center', borderLeft: i === 0 ? '3px solid #60a5fa' : '3px solid #1a1a24' }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{w.weight_kg}<span style={{ fontSize: '0.8rem', color: '#a0a0b0' }}>kg</span></div>
-                    <div style={{ color: '#555', fontSize: '0.75rem', marginTop: '0.25rem' }}>{new Date(w.logged_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</div>
-                    {i > 0 && (() => { const diff = +(w.weight_kg - weights[i-1].weight_kg).toFixed(1); return <div style={{ fontSize: '0.75rem', color: diff < 0 ? '#F59E0B' : diff > 0 ? '#ff6b6b' : '#555' }}>{diff > 0 ? '+' : ''}{diff}kg</div> })()}
+                  <div key={w.id} style={{ ...cardStyle, textAlign: 'center', borderLeft: i === 0 ? '3px solid #60a5fa' : '3px solid rgba(255,255,255,0.07)' }}>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{w.weight_kg}<span style={{ fontSize: '0.8rem', color: '#64748b' }}>kg</span></div>
+                    <div style={{ color: '#475569', fontSize: '0.75rem', marginTop: '0.25rem' }}>{new Date(w.logged_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</div>
+                    {i > 0 && (() => { const diff = +(w.weight_kg - weights[i-1].weight_kg).toFixed(1); return <div style={{ fontSize: '0.75rem', color: diff < 0 ? '#F59E0B' : diff > 0 ? '#f87171' : '#475569' }}>{diff > 0 ? '+' : ''}{diff}kg</div> })()}
                   </div>
                 ))}
               </div>
-              {weights.length === 0 && <p style={{ color: '#555' }}>No weight entries yet. Tap ⚖️ Weight to log your first.</p>}
+              {weights.length === 0 && <p style={{ color: '#475569' }}>No weight entries yet. Tap ⚖️ Weight to log your first.</p>}
             </div>
           )}
 
@@ -343,11 +343,11 @@ export function Health() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {latestMetrics && (
                 <div style={{ ...cardStyle }}>
-                  <h4 style={{ margin: '0 0 1rem', color: '#a0a0b0', fontSize: '0.8rem', textTransform: 'uppercase' }}>Latest Measurements</h4>
+                  <h4 style={{ margin: '0 0 1rem', color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase' }}>Latest Measurements</h4>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '1rem' }}>
                     {[['Chest', latestMetrics.chest_cm], ['Waist', latestMetrics.waist_cm], ['Hips', latestMetrics.hips_cm], ['Arms', latestMetrics.arms_cm], ['Legs', latestMetrics.legs_cm], ['Body Fat', latestMetrics.body_fat_pct ? `${latestMetrics.body_fat_pct}%` : null]].filter(([,v]) => v).map(([label, val]) => (
                       <div key={label as string} style={{ textAlign: 'center' }}>
-                        <div style={{ color: '#a0a0b0', fontSize: '0.72rem', textTransform: 'uppercase', marginBottom: '0.25rem' }}>{label}</div>
+                        <div style={{ color: '#64748b', fontSize: '0.72rem', textTransform: 'uppercase', marginBottom: '0.25rem' }}>{label}</div>
                         <div style={{ fontSize: '1.4rem', fontWeight: 700 }}>{typeof val === 'number' ? `${val}cm` : val}</div>
                       </div>
                     ))}
@@ -356,14 +356,14 @@ export function Health() {
               )}
               {metrics.length >= 2 && metrics[0].waist_cm && (
                 <div style={cardStyle}>
-                  <h4 style={{ margin: '0 0 1rem', color: '#a0a0b0', fontSize: '0.8rem', textTransform: 'uppercase' }}>Waist Trend</h4>
+                  <h4 style={{ margin: '0 0 1rem', color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase' }}>Waist Trend</h4>
                   <MiniLineGraph data={[...metrics].reverse().map(m => m.waist_cm!).filter(Boolean)} label="cm" color="#a78bfa" />
                 </div>
               )}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {metrics.map(m => (
                   <div key={m.id} style={{ ...cardStyle, fontSize: '0.85rem' }}>
-                    <div style={{ color: '#555', marginBottom: '0.5rem' }}>{new Date(m.logged_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
+                    <div style={{ color: '#475569', marginBottom: '0.5rem' }}>{new Date(m.logged_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
                     <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
                       {m.chest_cm && <span>Chest: <strong>{m.chest_cm}cm</strong></span>}
                       {m.waist_cm && <span>Waist: <strong>{m.waist_cm}cm</strong></span>}
@@ -375,7 +375,7 @@ export function Health() {
                   </div>
                 ))}
               </div>
-              {metrics.length === 0 && <p style={{ color: '#555' }}>No measurements yet. Tap 📏 Metrics to log your first.</p>}
+              {metrics.length === 0 && <p style={{ color: '#475569' }}>No measurements yet. Tap 📏 Metrics to log your first.</p>}
             </div>
           )}
 
@@ -386,18 +386,18 @@ export function Health() {
                 <div style={cardStyle}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
                     <h4 style={{ margin: 0 }}>Fitness Goals</h4>
-                    <button onClick={() => setEditingGoals(true)} style={{ padding: '0.4rem 0.75rem', background: '#1a2a3a', color: '#F59E0B', border: '1px solid #F59E0B44', borderRadius: '6px', cursor: 'pointer', fontSize: '0.8rem' }}>✏️ Edit</button>
+                    <button onClick={() => setEditingGoals(true)} style={{ padding: '0.4rem 0.75rem', background: 'rgba(245,158,11,0.1)', color: '#F59E0B', border: '1px solid #F59E0B44', borderRadius: '6px', cursor: 'pointer', fontSize: '0.8rem' }}>✏️ Edit</button>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: '#a0a0b0' }}>Weekly workouts target</span>
+                      <span style={{ color: '#64748b' }}>Weekly workouts target</span>
                       <strong>{goals.weekly_workout_target} sessions</strong>
                     </div>
                     {goals.weight_goal_kg && <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: '#a0a0b0' }}>Weight goal</span>
+                      <span style={{ color: '#64748b' }}>Weight goal</span>
                       <strong>{goals.weight_goal_kg} kg</strong>
                     </div>}
-                    {goals.goal_notes && <div style={{ marginTop: '0.5rem', color: '#a0a0b0', fontSize: '0.85rem', fontStyle: 'italic' }}>{goals.goal_notes}</div>}
+                    {goals.goal_notes && <div style={{ marginTop: '0.5rem', color: '#64748b', fontSize: '0.85rem', fontStyle: 'italic' }}>{goals.goal_notes}</div>}
                   </div>
                 </div>
               ) : (
@@ -418,7 +418,7 @@ export function Health() {
                     </div>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <button onClick={saveGoals} style={{ flex: 1, padding: '0.7rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer' }}>Save Goals</button>
-                      <button onClick={() => setEditingGoals(false)} style={{ padding: '0.7rem 1rem', background: 'transparent', color: '#a0a0b0', border: '1px solid #333', borderRadius: '6px', cursor: 'pointer' }}>Cancel</button>
+                      <button onClick={() => setEditingGoals(false)} style={{ padding: '0.7rem 1rem', background: 'transparent', color: '#64748b', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', cursor: 'pointer' }}>Cancel</button>
                     </div>
                   </div>
                 </div>
@@ -431,7 +431,7 @@ export function Health() {
       {/* Log Workout Modal */}
       {showWorkoutModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: '#080c14', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '420px', margin: '1rem' }}>
+          <div style={{ background: '#060a14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '420px', margin: '1rem' }}>
             <h3 style={{ margin: '0 0 1.5rem' }}>💪 Log Workout</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
@@ -441,12 +441,12 @@ export function Health() {
                 </select>
               </div>
               <div>
-                <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.4rem' }}>MUSCLE GROUPS <span style={{ color: '#555' }}>(tap to select)</span></label>
+                <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.4rem' }}>MUSCLE GROUPS <span style={{ color: '#475569' }}>(tap to select)</span></label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                   {MUSCLE_GROUPS.map(m => {
                     const active = wMuscles.includes(m)
                     return <button key={m} type="button" onClick={() => setWMuscles(prev => active ? prev.filter(x => x !== m) : [...prev, m])}
-                      style={{ padding: '0.35rem 0.75rem', borderRadius: '20px', border: active ? '1px solid #F59E0B' : '1px solid #333', background: active ? 'rgba(0,212,170,0.15)' : 'transparent', color: active ? '#F59E0B' : '#666', cursor: 'pointer', fontSize: '0.8rem', fontFamily: 'inherit', transition: 'all 0.15s' }}>
+                      style={{ padding: '0.35rem 0.75rem', borderRadius: '20px', border: active ? '1px solid #F59E0B' : '1px solid rgba(255,255,255,0.12)', background: active ? 'rgba(0,212,170,0.15)' : 'transparent', color: active ? '#F59E0B' : '#64748b', cursor: 'pointer', fontSize: '0.8rem', fontFamily: 'inherit', transition: 'all 0.15s' }}>
                       {m}
                     </button>
                   })}
@@ -461,7 +461,7 @@ export function Health() {
                 <input style={inputStyle} value={wNotes} onChange={e => setWNotes(e.target.value)} placeholder="e.g. Legs day, PB on squats" />
               </div>
               <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                <button onClick={() => setShowWorkoutModal(false)} style={{ flex: 1, padding: '0.75rem', background: 'transparent', color: '#a0a0b0', border: '1px solid #333', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
+                <button onClick={() => setShowWorkoutModal(false)} style={{ flex: 1, padding: '0.75rem', background: 'transparent', color: '#64748b', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
                 <button onClick={logWorkout} disabled={!wDuration} style={{ flex: 2, padding: '0.75rem', background: '#F59E0B', color: '#000', border: 'none', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', opacity: !wDuration ? 0.5 : 1 }}>Log It ✓</button>
               </div>
             </div>
@@ -472,14 +472,14 @@ export function Health() {
       {/* Log Weight Modal */}
       {showWeightModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: '#080c14', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '360px', margin: '1rem' }}>
+          <div style={{ background: '#060a14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '360px', margin: '1rem' }}>
             <h3 style={{ margin: '0 0 1.5rem' }}>⚖️ Log Weight</h3>
             <div>
               <label style={{ fontSize: '0.75rem', color: '#666', display: 'block', marginBottom: '0.3rem' }}>WEIGHT (KG)</label>
               <input type="number" step="0.1" style={inputStyle} value={newWeight} onChange={e => setNewWeight(e.target.value)} placeholder="e.g. 82.5" autoFocus />
             </div>
             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
-              <button onClick={() => setShowWeightModal(false)} style={{ flex: 1, padding: '0.75rem', background: 'transparent', color: '#a0a0b0', border: '1px solid #333', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setShowWeightModal(false)} style={{ flex: 1, padding: '0.75rem', background: 'transparent', color: '#64748b', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
               <button onClick={logWeight} disabled={!newWeight} style={{ flex: 2, padding: '0.75rem', background: '#60a5fa', color: '#000', border: 'none', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', opacity: !newWeight ? 0.5 : 1 }}>Log Weight</button>
             </div>
           </div>
@@ -489,7 +489,7 @@ export function Health() {
       {/* Log Metrics Modal */}
       {showMetricModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: '#080c14', border: '1px solid #1a1a24', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '420px', margin: '1rem' }}>
+          <div style={{ background: '#060a14', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '420px', margin: '1rem' }}>
             <h3 style={{ margin: '0 0 1.5rem' }}>📏 Log Body Measurements</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               {[['CHEST (CM)', 'chest_cm'], ['WAIST (CM)', 'waist_cm'], ['HIPS (CM)', 'hips_cm'], ['ARMS (CM)', 'arms_cm'], ['LEGS (CM)', 'legs_cm'], ['BODY FAT (%)', 'body_fat_pct']].map(([label, key]) => (
@@ -500,7 +500,7 @@ export function Health() {
               ))}
             </div>
             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
-              <button onClick={() => setShowMetricModal(false)} style={{ flex: 1, padding: '0.75rem', background: 'transparent', color: '#a0a0b0', border: '1px solid #333', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => setShowMetricModal(false)} style={{ flex: 1, padding: '0.75rem', background: 'transparent', color: '#64748b', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
               <button onClick={logMetrics} style={{ flex: 2, padding: '0.75rem', background: '#a78bfa', color: '#000', border: 'none', borderRadius: '8px', fontWeight: 700, cursor: 'pointer' }}>Save Measurements</button>
             </div>
           </div>

@@ -57,13 +57,13 @@ async function dbFetch(path: string, options?: RequestInit) {
 }
 
 const priorityColors: Record<Priority, string> = {
-  high: '#ff6b6b',
-  medium: '#ffa502',
+  high: '#f87171',
+  medium: '#fb923c',
   low: '#F59E0B',
 }
 
 const categoryLabels: Record<Category, { label: string; color: string }> = {
-  'mc-build': { label: 'MC Build', color: '#6c63ff' },
+  'mc-build': { label: 'MC Build', color: '#60a5fa' },
   'business': { label: 'Business', color: '#F59E0B' },
   'personal': { label: 'Personal', color: '#ffa502' },
   'hamm': { label: 'Hamm 🐷', color: '#F97316' },
@@ -348,7 +348,7 @@ export function Projects() {
     setDragOverCol(null)
   }
 
-  if (loading) return <div style={{ color: '#a0a0b0', textAlign: 'center', padding: '3rem' }}>Loading projects...</div>
+  if (loading) return <div style={{ color: '#94a3b8', textAlign: 'center', padding: '3rem' }}>Loading projects...</div>
 
   // Hamm Board view
   if (view === 'hamm') {
@@ -361,7 +361,7 @@ export function Projects() {
           </div>
           <button
             onClick={() => setView('kanban')}
-            style={{ background: 'rgba(255,255,255,0.08)', color: '#94a3b8', border: 'none', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+            style={{ background: 'rgba(255,255,255,0.07)', color: '#94a3b8', border: 'none', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
           >
             ⊞ Kanban View
           </button>
@@ -383,7 +383,7 @@ export function Projects() {
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <button
             onClick={() => setView('hamm')}
-            style={{ background: 'rgba(255,255,255,0.08)', color: '#94a3b8', border: 'none', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+            style={{ background: 'rgba(255,255,255,0.07)', color: '#94a3b8', border: 'none', borderRadius: '8px', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
           >
             🐷 Board
           </button>
@@ -396,40 +396,40 @@ export function Projects() {
 
       {/* New/Edit Form */}
       {showForm && (
-        <div style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(32px) saturate(1.8)', WebkitBackdropFilter: 'blur(32px) saturate(1.8)', border: '1px solid rgba(255,255,255,0.09)', borderTop: '1px solid rgba(255,255,255,0.18)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.4)', borderRadius: '10px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="Project title"
-            style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box' }} />
+            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#f1f5f9', width: '100%', boxSizing: 'border-box' }} />
           <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Description / next steps..." rows={3}
-            style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box', resize: 'vertical' }} />
+            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#f1f5f9', width: '100%', boxSizing: 'border-box', resize: 'vertical' }} />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
             <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value as Category })}
-              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#f1f5f9' }}>
               <option value="mc-build">MC Build</option>
               <option value="business">Business</option>
               <option value="personal">Personal</option>
               <option value="hamm">Hamm 🐷</option>
             </select>
             <select value={form.priority} onChange={e => setForm({ ...form, priority: e.target.value as Priority })}
-              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#f1f5f9' }}>
               <option value="high">High</option>
               <option value="medium">Medium</option>
               <option value="low">Low</option>
             </select>
             <select value={form.status} onChange={e => setForm({ ...form, status: e.target.value as Status })}
-              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#f1f5f9' }}>
               <option value="backlog">Backlog</option>
               <option value="in-progress">In Progress</option>
               <option value="done">Done</option>
               <option value="archive">Archive</option>
             </select>
             <select value={form.owner || ''} onChange={e => setForm({ ...form, owner: (e.target.value || null) as Owner })}
-              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }}>
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#f1f5f9' }}>
               <option value="">No owner</option>
               <option value="antonio">👤 Antonio</option>
               <option value="hamm">🐷 Hamm</option>
             </select>
             <input type="date" value={form.due_date} onChange={e => setForm({ ...form, due_date: e.target.value })}
-              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#fff' }} />
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem', color: '#f1f5f9' }} />
           </div>
           <div>
             <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
@@ -440,7 +440,7 @@ export function Projects() {
               onChange={e => setForm({ ...form, planStepsText: e.target.value })}
               placeholder="Step 1: Do this&#10;Step 2: Then this&#10;Step 3: Finally this"
               rows={4}
-              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box', resize: 'vertical', fontSize: '0.85rem' }}
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#f1f5f9', width: '100%', boxSizing: 'border-box', resize: 'vertical', fontSize: '0.85rem' }}
             />
           </div>
           <div>
@@ -452,7 +452,7 @@ export function Projects() {
               onChange={e => setForm({ ...form, checklistText: e.target.value })}
               placeholder="Write the brief&#10;Get sign-off&#10;Send to client"
               rows={4}
-              style={{ background: '#0d1320', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#fff', width: '100%', boxSizing: 'border-box', resize: 'vertical', fontSize: '0.85rem' }}
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '0.5rem 0.75rem', color: '#f1f5f9', width: '100%', boxSizing: 'border-box', resize: 'vertical', fontSize: '0.85rem' }}
             />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -482,10 +482,10 @@ export function Projects() {
               style={{
                 background: isDragOver
                   ? (isArchive ? 'rgba(100, 116, 139, 0.12)' : 'rgba(255,255,255,0.05)')
-                  : 'rgba(255,255,255,0.02)',
+                  : 'rgba(255,255,255,0.04)',
                 border: isDragOver
                   ? `1px solid ${isArchive ? '#64748b' : 'rgba(255,255,255,0.2)'}`
-                  : '1px solid rgba(255,255,255,0.06)',
+                  : '1px solid rgba(255,255,255,0.09)',
                 borderRadius: '10px',
                 padding: '1rem',
                 minHeight: '200px',
@@ -517,7 +517,7 @@ export function Projects() {
                     fontSize: '0.9rem',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
-                    color: isArchive ? '#64748b' : '#a0a0b0',
+                    color: isArchive ? '#64748b' : '#94a3b8',
                   }}>
                     {isArchive ? '🗄 ' : ''}{col.label}
                   </h3>
@@ -527,7 +527,7 @@ export function Projects() {
                   borderRadius: '999px',
                   padding: '0.1rem 0.5rem',
                   fontSize: '0.75rem',
-                  color: isArchive ? '#64748b' : '#a0a0b0',
+                  color: isArchive ? '#64748b' : '#94a3b8',
                 }}>
                   {colProjects.length}
                 </span>
@@ -537,7 +537,7 @@ export function Projects() {
               {(!isArchive || !archiveCollapsed) && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {colProjects.map(p => {
-                    const cat = categoryLabels[p.category] || { label: p.category, color: '#a0a0b0' }
+                    const cat = categoryLabels[p.category] || { label: p.category, color: '#94a3b8' }
                     const isOverdue = p.due_date && new Date(p.due_date) < new Date() && p.status !== 'done' && p.status !== 'archive'
                     const lastUpdated = new Date(p.updated_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
                     return (
@@ -547,8 +547,8 @@ export function Projects() {
                         onDragStart={() => onDragStart(p.id)}
                         onDragEnd={onDragEnd}
                         style={{
-                          background: isArchive ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.04)',
-                          border: '1px solid rgba(255,255,255,0.08)',
+                          background: isArchive ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.07)',
+                          border: '1px solid rgba(255,255,255,0.1)',
                           borderRadius: '8px',
                           padding: '0.75rem',
                           borderLeft: `3px solid ${isArchive ? '#475569' : priorityColors[p.priority]}`,
@@ -559,7 +559,7 @@ export function Projects() {
                       >
                         <div style={{ fontWeight: '600', fontSize: '0.9rem', marginBottom: '0.25rem', color: isArchive ? '#64748b' : '#fff' }}>{p.title}</div>
                         {p.description && (
-                          <div style={{ color: isArchive ? '#475569' : '#a0a0b0', fontSize: '0.8rem', marginBottom: '0.5rem', lineHeight: '1.4' }}>{p.description}</div>
+                          <div style={{ color: isArchive ? '#475569' : '#94a3b8', fontSize: '0.8rem', marginBottom: '0.5rem', lineHeight: '1.4' }}>{p.description}</div>
                         )}
                         <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
                           <span style={{ background: `${cat.color}22`, color: isArchive ? '#475569' : cat.color, borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>{cat.label}</span>
@@ -568,7 +568,7 @@ export function Projects() {
                           )}
                           <OwnerBadge owner={p.owner} />
                           {p.due_date && (
-                            <span style={{ background: isOverdue ? '#ff6b6b22' : 'rgba(255,255,255,0.06)', color: isOverdue ? '#ff6b6b' : '#a0a0b0', borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>
+                            <span style={{ background: isOverdue ? '#f8717122' : 'rgba(255,255,255,0.06)', color: isOverdue ? '#f87171' : '#94a3b8', borderRadius: '4px', padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>
                               {isOverdue ? '⚠️ ' : '📅 '}{new Date(p.due_date).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}
                             </span>
                           )}
@@ -597,7 +597,7 @@ export function Projects() {
                           <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.65rem', color: '#475569' }}>↻ {lastUpdated}</span>
                             <button onClick={() => startEdit(p)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✏️</button>
-                            <button onClick={() => deleteProject(p.id)} style={{ background: 'none', border: 'none', color: '#ff6b6b', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✕</button>
+                            <button onClick={() => deleteProject(p.id)} style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', fontSize: '0.85rem', padding: '0.25rem' }}>✕</button>
                           </div>
                         </div>
                       </div>
@@ -609,7 +609,7 @@ export function Projects() {
                       color: isArchive ? '#2d3748' : '#2d3748',
                       fontSize: '0.8rem',
                       padding: '1.5rem 0.5rem',
-                      border: `1px dashed ${isArchive ? '#1e2533' : 'rgba(255,255,255,0.04)'}`,
+                      border: `1px dashed ${isArchive ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.07)'}`,
                       borderRadius: '6px',
                     }}>
                       {isArchive ? 'Drag completed projects here' : 'Drop here'}
