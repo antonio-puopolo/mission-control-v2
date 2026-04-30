@@ -1,0 +1,4378 @@
+[
+  {
+    "raw_address": "10 / 22 Chatsworth Road GREENSLOPES (LID:834299, CID:196332)",
+    "address": "10 / 22 Chatsworth Road GREENSLOPES",
+    "suburb": "Greenslopes",
+    "settlement_date": "17/08/2016",
+    "lat": -27.506125,
+    "lng": 153.0543279
+  },
+  {
+    "raw_address": "62 Wickham Street Morningside (LID:833181, CID:198477)",
+    "address": "62 Wickham Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "22/08/2016",
+    "lat": -27.4739157,
+    "lng": 153.0726744
+  },
+  {
+    "raw_address": "10A Dalma Street NORMAN PARK (LID:833159, CID:199032)",
+    "address": "10A Dalma Street NORMAN PARK",
+    "suburb": "Norman Park",
+    "settlement_date": "23/08/2016",
+    "lat": -27.4852222,
+    "lng": 153.074877
+  },
+  {
+    "raw_address": "7 Banya Street BULIMBA (LID:855355, CID:210719)",
+    "address": "7 Banya Street BULIMBA",
+    "suburb": "Bulimba",
+    "settlement_date": "12/09/2016",
+    "lat": -27.4463384,
+    "lng": 153.0576914
+  },
+  {
+    "raw_address": "67 Woodhill Avenue Coorparoo (LID:859435, CID:211367)",
+    "address": "67 Woodhill Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "19/09/2016",
+    "lat": -27.4960476,
+    "lng": 153.0640833
+  },
+  {
+    "raw_address": "59 Nordenfeldt Road Cannon Hill (LID:856419, CID:211560)",
+    "address": "59 Nordenfeldt Road Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "20/09/2016",
+    "lat": -27.4649636,
+    "lng": 153.0836069
+  },
+  {
+    "raw_address": "7 Glen Street COORPAROO (LID:833157, CID:229654)",
+    "address": "7 Glen Street COORPAROO",
+    "suburb": "Coorparoo",
+    "settlement_date": "18/10/2016",
+    "lat": -27.4995428,
+    "lng": 153.0664651
+  },
+  {
+    "raw_address": "29 Beelarong Street MORNINGSIDE (LID:894334, CID:227384)",
+    "address": "29 Beelarong Street MORNINGSIDE",
+    "suburb": "Morningside",
+    "settlement_date": "21/10/2016",
+    "lat": -27.4596417,
+    "lng": 153.0738396
+  },
+  {
+    "raw_address": "3 Stoddart Court Carindale (LID:893293, CID:229842)",
+    "address": "3 Stoddart Court Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "24/10/2016",
+    "lat": -27.4956851,
+    "lng": 153.1175369
+  },
+  {
+    "raw_address": "23 Trundle Street Coorparoo (LID:883560, CID:227023)",
+    "address": "23 Trundle Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "2/11/2016",
+    "lat": -27.5045989,
+    "lng": 153.0580916
+  },
+  {
+    "raw_address": "46 Brisbane Avenue Camp Hill (LID:959176, CID:231870)",
+    "address": "46 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "2/11/2016",
+    "lat": -27.4863936,
+    "lng": 153.084339
+  },
+  {
+    "raw_address": "31 Raven Street Camp Hill (LID:895454, CID:232631)",
+    "address": "31 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "16/11/2016",
+    "lat": -27.494929,
+    "lng": 153.0799714
+  },
+  {
+    "raw_address": "48 Brisbane Avenue Camp Hill (LID:963200, CID:232892)",
+    "address": "48 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "16/11/2016",
+    "lat": -27.4864067,
+    "lng": 153.0844393
+  },
+  {
+    "raw_address": "11 Ashfield Street East Brisbane (LID:946069, CID:235097)",
+    "address": "11 Ashfield Street East Brisbane",
+    "suburb": "East Brisbane",
+    "settlement_date": "29/11/2016",
+    "lat": -27.4836214,
+    "lng": 153.048906
+  },
+  {
+    "raw_address": "91 Kirkland Avenue Coorparoo (LID:958870, CID:236244)",
+    "address": "91 Kirkland Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "12/12/2016",
+    "lat": -27.4998965,
+    "lng": 153.0527764
+  },
+  {
+    "raw_address": "37 McIlwraith Avenue Norman Park (LID:930567, CID:240385)",
+    "address": "37 McIlwraith Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "16/12/2016",
+    "lat": -27.4846083,
+    "lng": 153.065754
+  },
+  {
+    "raw_address": "31 Kingfisher Lane East Brisbane (LID:956485, CID:236952)",
+    "address": "31 Kingfisher Lane East Brisbane",
+    "suburb": "East Brisbane",
+    "settlement_date": "19/12/2016",
+    "lat": -27.4871461,
+    "lng": 153.0425559
+  },
+  {
+    "raw_address": "69 Woodhill Avenue COORPAROO (LID:893306, CID:240826)",
+    "address": "69 Woodhill Avenue COORPAROO",
+    "suburb": "Coorparoo",
+    "settlement_date": "9/01/2017",
+    "lat": -27.4959738,
+    "lng": 153.0641912
+  },
+  {
+    "raw_address": "127 Mowbray Terrace EAST BRISBANE (LID:946698, CID:239855)",
+    "address": "127 Mowbray Terrace EAST BRISBANE",
+    "suburb": "East Brisbane",
+    "settlement_date": "10/01/2017",
+    "lat": -27.4845299,
+    "lng": 153.048267
+  },
+  {
+    "raw_address": "25 Green Street Yeerongpilly (LID:955548, CID:239446)",
+    "address": "25 Green Street Yeerongpilly",
+    "suburb": "Yeerongpilly",
+    "settlement_date": "16/01/2017",
+    "lat": -27.5255291,
+    "lng": 153.0157715
+  },
+  {
+    "raw_address": "6 Graven Street Murarrie (LID:891980, CID:240417)",
+    "address": "6 Graven Street Murarrie",
+    "suburb": "Murarrie",
+    "settlement_date": "17/01/2017",
+    "lat": -27.4623208,
+    "lng": 153.0972073
+  },
+  {
+    "raw_address": "88/16 Hetherington Avenue Bulimba (LID:966070, CID:238472)",
+    "address": "88/16 Hetherington Avenue Bulimba",
+    "suburb": "Bulimba",
+    "settlement_date": "30/01/2017",
+    "lat": -27.4519924,
+    "lng": 153.0544213
+  },
+  {
+    "raw_address": "39 Third Street Camp Hill (LID:859032, CID:245123)",
+    "address": "39 Third Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/02/2017",
+    "lat": -27.4964114,
+    "lng": 153.0822302
+  },
+  {
+    "raw_address": "12 Viminal Hill Crescent Seven Hills (LID:1006755, CID:250720)",
+    "address": "12 Viminal Hill Crescent Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "5/04/2017",
+    "lat": -27.4863169,
+    "lng": 153.0793534
+  },
+  {
+    "raw_address": "9 Rowland Street Coorparoo (LID:1011025, CID:247964)",
+    "address": "9 Rowland Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "6/04/2017",
+    "lat": -27.4842703,
+    "lng": 153.0587606
+  },
+  {
+    "raw_address": "4 / 25 Rialto Street Coorparoo (LID:1022242, CID:254668)",
+    "address": "4 / 25 Rialto Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "27/04/2017",
+    "lat": -27.5012019,
+    "lng": 153.0507014
+  },
+  {
+    "raw_address": "61 Rawlins Street Kangaroo Point (LID:1035268, CID:256910)",
+    "address": "61 Rawlins Street Kangaroo Point",
+    "suburb": "Kangaroo Point",
+    "settlement_date": "4/05/2017",
+    "lat": -27.478407,
+    "lng": 153.0385394
+  },
+  {
+    "raw_address": "15 Watson Street CAMP HILL (LID:1087178, CID:264444)",
+    "address": "15 Watson Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/05/2017",
+    "lat": -27.4872113,
+    "lng": 153.0644571
+  },
+  {
+    "raw_address": "24 Annie Street New Farm (LID:1083128, CID:264508)",
+    "address": "24 Annie Street New Farm",
+    "suburb": "New Farm",
+    "settlement_date": "8/05/2017",
+    "lat": -27.4637957,
+    "lng": 153.0428043
+  },
+  {
+    "raw_address": "1 / 12 Durham Street Coorparoo (LID:962210, CID:262022)",
+    "address": "1 / 12 Durham Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "9/05/2017",
+    "lat": -27.4981016,
+    "lng": 153.0627693
+  },
+  {
+    "raw_address": "44 Edencourt Street Camp Hill (LID:1065201, CID:255831)",
+    "address": "44 Edencourt Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/05/2017",
+    "lat": -27.4903682,
+    "lng": 153.069656
+  },
+  {
+    "raw_address": "1 / 18 Bunya Street GREENSLOPES (LID:1085287, CID:267451)",
+    "address": "1 / 18 Bunya Street GREENSLOPES",
+    "suburb": "Greenslopes",
+    "settlement_date": "29/05/2017",
+    "lat": -27.5074033,
+    "lng": 153.0461824
+  },
+  {
+    "raw_address": "30 Lancaster Street Coorparoo (LID:982725, CID:258697)",
+    "address": "30 Lancaster Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "1/06/2017",
+    "lat": -27.5006198,
+    "lng": 153.0654141
+  },
+  {
+    "raw_address": "31A Raven Street Camp Hill (LID:1114225, CID:277799)",
+    "address": "31A Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/06/2017",
+    "lat": -27.4950179,
+    "lng": 153.0799547
+  },
+  {
+    "raw_address": "3 Gresham Street East Brisbane (LID:1091061, CID:264461)",
+    "address": "3 Gresham Street East Brisbane",
+    "suburb": "East Brisbane",
+    "settlement_date": "8/06/2017",
+    "lat": -27.4851667,
+    "lng": 153.0460781
+  },
+  {
+    "raw_address": "10 Viminal Hill Crescent Seven Hills (LID:1040600, CID:267002)",
+    "address": "10 Viminal Hill Crescent Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "12/06/2017",
+    "lat": -27.4863983,
+    "lng": 153.0792965
+  },
+  {
+    "raw_address": "170 Darcy Road Seven Hills (LID:1091949, CID:277786)",
+    "address": "170 Darcy Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "19/06/2017",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "Lot 524 / 22 Third Street Camp Hill (LID:1159715, CID:278978)",
+    "address": "22 Third Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/07/2017",
+    "lat": -27.4957407,
+    "lng": 153.0814251
+  },
+  {
+    "raw_address": "36 Illidge Street Coorparoo (LID:1118455, CID:282003)",
+    "address": "36 Illidge Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "28/07/2017",
+    "lat": -27.5009271,
+    "lng": 153.069987
+  },
+  {
+    "raw_address": "36 Mckie Crescent Cannon Hill (LID:1174080, CID:289105)",
+    "address": "36 Mckie Crescent Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "14/08/2017",
+    "lat": -27.4788239,
+    "lng": 153.1003819
+  },
+  {
+    "raw_address": "184 D'Arcy Road Seven Hills (LID:1042220, CID:293959)",
+    "address": "184 D'Arcy Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "7/09/2017",
+    "lat": -27.4787166,
+    "lng": 153.0707136
+  },
+  {
+    "raw_address": "24 Munce Place Cannon Hill (LID:1228104, CID:291723)",
+    "address": "24 Munce Place Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "8/09/2017",
+    "lat": -27.4781823,
+    "lng": 153.0985598
+  },
+  {
+    "raw_address": "Lot 14 Tiburtina Crescent Seven Hills (LID:1087293, CID:257559)",
+    "address": "Lot 14 Tiburtina Crescent Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "15/09/2017",
+    "lat": -27.4848338,
+    "lng": 153.0800013
+  },
+  {
+    "raw_address": "33 Dickson Street Morningside (LID:1169914, CID:291559)",
+    "address": "33 Dickson Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "15/09/2017",
+    "lat": -27.467023,
+    "lng": 153.0660753
+  },
+  {
+    "raw_address": "9 Greens Road Coorparoo (LID:1233499, CID:292961)",
+    "address": "9 Greens Road Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "15/09/2017",
+    "lat": -27.5004103,
+    "lng": 153.0687523
+  },
+  {
+    "raw_address": "18 Wotton Street Camp Hill (LID:1237082, CID:295091)",
+    "address": "18 Wotton Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/09/2017",
+    "lat": -27.4996682,
+    "lng": 153.077198
+  },
+  {
+    "raw_address": "2 / 51 Lancaster Street Coorparoo (LID:1216856, CID:294204)",
+    "address": "2 / 51 Lancaster Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "6/10/2017",
+    "lat": -27.5017843,
+    "lng": 153.0650138
+  },
+  {
+    "raw_address": "26 Frank Street Norman Park (LID:1239107, CID:299135)",
+    "address": "26 Frank Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "16/10/2017",
+    "lat": -27.4852929,
+    "lng": 153.0619238
+  },
+  {
+    "raw_address": "37 Thynne Avenue Norman Park (LID:1241450, CID:299223)",
+    "address": "37 Thynne Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "17/10/2017",
+    "lat": -27.4820757,
+    "lng": 153.0671919
+  },
+  {
+    "raw_address": "1206 / 45 Duncan Street West End (LID:1224319, CID:301032)",
+    "address": "1206 / 45 Duncan Street West End",
+    "suburb": "West End",
+    "settlement_date": "31/10/2017",
+    "lat": -27.4838935,
+    "lng": 153.0002117
+  },
+  {
+    "raw_address": "20 Wotton Street Camp Hill (LID:1246456, CID:302488)",
+    "address": "20 Wotton Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/11/2017",
+    "lat": -27.4997583,
+    "lng": 153.0771799
+  },
+  {
+    "raw_address": "46 Temple Street Coorparoo (LID:1262807, CID:303240)",
+    "address": "46 Temple Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "13/11/2017",
+    "lat": -27.4876538,
+    "lng": 153.0573507
+  },
+  {
+    "raw_address": "59 Raven Street Camp Hill (LID:1262975, CID:303310)",
+    "address": "59 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "13/11/2017",
+    "lat": -27.4968848,
+    "lng": 153.0796109
+  },
+  {
+    "raw_address": "18 Armstrong Road Cannon Hill (LID:1092407, CID:301882)",
+    "address": "18 Armstrong Road Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "20/11/2017",
+    "lat": -27.46562,
+    "lng": 153.0819901
+  },
+  {
+    "raw_address": "203 Ferguson Road Seven Hills (LID:1246600, CID:304366)",
+    "address": "203 Ferguson Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "27/11/2017",
+    "lat": -27.4837218,
+    "lng": 153.0757617
+  },
+  {
+    "raw_address": "16 Harmony Crescent Seven Hills (LID:1268210, CID:306200)",
+    "address": "16 Harmony Crescent Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "4/12/2017",
+    "lat": -27.4803775,
+    "lng": 153.0773545
+  },
+  {
+    "raw_address": "29 Balmoral Street HAWTHORNE (LID:1284188, CID:306590)",
+    "address": "29 Balmoral Street HAWTHORNE",
+    "suburb": "Hawthorne",
+    "settlement_date": "4/12/2017",
+    "lat": -27.4706733,
+    "lng": 153.062467
+  },
+  {
+    "raw_address": "52 Trafalgar Street Morningside (LID:1258507, CID:305438)",
+    "address": "52 Trafalgar Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "6/12/2017",
+    "lat": -27.4599173,
+    "lng": 153.0695294
+  },
+  {
+    "raw_address": "3 Grant Street Camp Hill (LID:1277747, CID:311903)",
+    "address": "3 Grant Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/12/2017",
+    "lat": -27.4955701,
+    "lng": 153.0706621
+  },
+  {
+    "raw_address": "10 Joan Street Norman Park (LID:1262522, CID:299370)",
+    "address": "10 Joan Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "18/12/2017",
+    "lat": -27.4835064,
+    "lng": 153.0744214
+  },
+  {
+    "raw_address": "77 Mowbray Terrace East Brisbane (LID:1286884, CID:311944)",
+    "address": "77 Mowbray Terrace East Brisbane",
+    "suburb": "East Brisbane",
+    "settlement_date": "18/12/2017",
+    "lat": -27.4841093,
+    "lng": 153.0453484
+  },
+  {
+    "raw_address": "Lot 3 / 9 Ison Street Morningside (LID:1319836, CID:309573)",
+    "address": "9 Ison Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "4/01/2018",
+    "lat": -27.4688449,
+    "lng": 153.0700567
+  },
+  {
+    "raw_address": "103 Temple Street COORPAROO (LID:1207232, CID:287945)",
+    "address": "103 Temple Street COORPAROO",
+    "suburb": "Coorparoo",
+    "settlement_date": "17/01/2018",
+    "lat": -27.4866783,
+    "lng": 153.0602009
+  },
+  {
+    "raw_address": "81 Chatsworth Road Greenslopes (LID:1255743, CID:310539)",
+    "address": "81 Chatsworth Road Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "22/01/2018",
+    "lat": -27.5060361,
+    "lng": 153.0549882
+  },
+  {
+    "raw_address": "Lot 1 / 9 Ison Street Morningside (LID:1332562, CID:313186)",
+    "address": "9 Ison Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "25/01/2018",
+    "lat": -27.4688449,
+    "lng": 153.0700567
+  },
+  {
+    "raw_address": "Lot 31 / Munce Place Cannon Hill (LID:1279772, CID:313165)",
+    "address": "Munce Place Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "31/01/2018",
+    "lat": -27.4780313,
+    "lng": 153.0987238
+  },
+  {
+    "raw_address": "49 Bruce Street CAMP HILL (LID:1333078, CID:317688)",
+    "address": "49 Bruce Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/02/2018",
+    "lat": -27.4904255,
+    "lng": 153.0754854
+  },
+  {
+    "raw_address": "21 / 14 Montrose Road Taringa (LID:1151902, CID:318335)",
+    "address": "21 / 14 Montrose Road Taringa",
+    "suburb": "Taringa",
+    "settlement_date": "19/02/2018",
+    "lat": -27.491907,
+    "lng": 152.9785758
+  },
+  {
+    "raw_address": "60 Tennyson Street Norman Park (LID:1325941, CID:321101)",
+    "address": "60 Tennyson Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "19/02/2018",
+    "lat": -27.4791014,
+    "lng": 153.0630613
+  },
+  {
+    "raw_address": "2 / 5 Hamel Street Camp Hill (LID:1360338, CID:328490)",
+    "address": "2 / 5 Hamel Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/03/2018",
+    "lat": -27.4949932,
+    "lng": 153.0679726
+  },
+  {
+    "raw_address": "8 Ernest Street Morningside (LID:1289412, CID:327792)",
+    "address": "8 Ernest Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "26/03/2018",
+    "lat": -27.4731747,
+    "lng": 153.0690141
+  },
+  {
+    "raw_address": "50 Johnston Street Bulimba (LID:1277989, CID:322914)",
+    "address": "50 Johnston Street Bulimba",
+    "suburb": "Bulimba",
+    "settlement_date": "3/04/2018",
+    "lat": -27.443467,
+    "lng": 153.0587682
+  },
+  {
+    "raw_address": "42 Raven Street Camp Hill (LID:1344453, CID:326631)",
+    "address": "42 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "3/04/2018",
+    "lat": -27.4961531,
+    "lng": 153.0803653
+  },
+  {
+    "raw_address": "104 Watson Street Camp Hill (LID:1418821, CID:329756)",
+    "address": "104 Watson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/04/2018",
+    "lat": -27.4875183,
+    "lng": 153.0697082
+  },
+  {
+    "raw_address": "4 Miawela Street Seven Hills (LID:1344360, CID:316966)",
+    "address": "4 Miawela Street Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "11/04/2018",
+    "lat": -27.4794717,
+    "lng": 153.0765212
+  },
+  {
+    "raw_address": "62 Parkview Avenue Wynnum (LID:1289343, CID:326606)",
+    "address": "62 Parkview Avenue Wynnum",
+    "suburb": "Wynnum",
+    "settlement_date": "19/04/2018",
+    "lat": -27.4542337,
+    "lng": 153.1727979
+  },
+  {
+    "raw_address": "51 Raven Street CAMP HILL (LID:1327124, CID:331738)",
+    "address": "51 Raven Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "26/04/2018",
+    "lat": -27.4963472,
+    "lng": 153.0797098
+  },
+  {
+    "raw_address": "3 / 108 Richmond Road Morningside (LID:1413413, CID:332785)",
+    "address": "3 / 108 Richmond Road Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "26/04/2018",
+    "lat": -27.4714756,
+    "lng": 153.0758153
+  },
+  {
+    "raw_address": "810 / 117 Flockton Street Everton Park (LID:1150131, CID:331812)",
+    "address": "810 / 117 Flockton Street Everton Park",
+    "suburb": "Everton Park",
+    "settlement_date": "30/04/2018",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "23 Marian Street Coorparoo (LID:1388979, CID:335241)",
+    "address": "23 Marian Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "22/05/2018",
+    "lat": -27.5046223,
+    "lng": 153.0564881
+  },
+  {
+    "raw_address": "93 Broadway Street Carina (LID:1400517, CID:339515)",
+    "address": "93 Broadway Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "29/05/2018",
+    "lat": -27.4925038,
+    "lng": 153.0872399
+  },
+  {
+    "raw_address": "72 Macdonald Street NORMAN PARK (LID:1449886, CID:340694)",
+    "address": "72 Macdonald Street NORMAN PARK",
+    "suburb": "Norman Park",
+    "settlement_date": "5/06/2018",
+    "lat": -27.4863099,
+    "lng": 153.0677382
+  },
+  {
+    "raw_address": "91 Broadway Street Carina (LID:1415906, CID:346550)",
+    "address": "91 Broadway Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "13/06/2018",
+    "lat": -27.4923785,
+    "lng": 153.08726
+  },
+  {
+    "raw_address": "126 Macrossan Avenue Norman Park (LID:1424400, CID:346401)",
+    "address": "126 Macrossan Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "15/06/2018",
+    "lat": -27.4839855,
+    "lng": 153.0709156
+  },
+  {
+    "raw_address": "30 Lancaster Street Coorparoo (LID:1340966, CID:341926)",
+    "address": "30 Lancaster Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "22/06/2018",
+    "lat": -27.5006198,
+    "lng": 153.0654141
+  },
+  {
+    "raw_address": "6 / 14 Lima Street Auchenflower (LID:1418674, CID:347674)",
+    "address": "6 / 14 Lima Street Auchenflower",
+    "suburb": "Auchenflower",
+    "settlement_date": "25/06/2018",
+    "lat": -27.4760999,
+    "lng": 152.9985214
+  },
+  {
+    "raw_address": "2 / 9 Ison Street Morningside (LID:1259433, CID:348015)",
+    "address": "2 / 9 Ison Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "25/06/2018",
+    "lat": -27.4682426,
+    "lng": 153.0671607
+  },
+  {
+    "raw_address": "6 / 24 Rogoona Street Morningside (LID:1439087, CID:347560)",
+    "address": "6 / 24 Rogoona Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "9/07/2018",
+    "lat": -27.467614,
+    "lng": 153.0716523
+  },
+  {
+    "raw_address": "58 Carranya Street Camp Hill (LID:1460984, CID:350073)",
+    "address": "58 Carranya Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "10/07/2018",
+    "lat": -27.4949778,
+    "lng": 153.0694678
+  },
+  {
+    "raw_address": "24 Bernecker Street Carina (LID:1429495, CID:345095)",
+    "address": "24 Bernecker Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "13/07/2018",
+    "lat": -27.493901,
+    "lng": 153.0985181
+  },
+  {
+    "raw_address": "19 Noble Street CAMP HILL (LID:1478654, CID:350955)",
+    "address": "19 Noble Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "16/07/2018",
+    "lat": -27.493151,
+    "lng": 153.0694137
+  },
+  {
+    "raw_address": "4 Didsbury Street East Brisbane (LID:1418797, CID:346423)",
+    "address": "4 Didsbury Street East Brisbane",
+    "suburb": "East Brisbane",
+    "settlement_date": "18/07/2018",
+    "lat": -27.4868614,
+    "lng": 153.0479947
+  },
+  {
+    "raw_address": "90A Morehead Avenue Norman Park (LID:1531421, CID:355800)",
+    "address": "90A Morehead Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "6/08/2018",
+    "lat": -27.4828132,
+    "lng": 153.0693438
+  },
+  {
+    "raw_address": "68 Jubilee Terrace Bardon (LID:1505661, CID:356484)",
+    "address": "68 Jubilee Terrace Bardon",
+    "suburb": "Bardon",
+    "settlement_date": "10/08/2018",
+    "lat": -27.4504599,
+    "lng": 152.9893765
+  },
+  {
+    "raw_address": "87A Burn Street Camp Hill (LID:1404568, CID:358696)",
+    "address": "87A Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "17/08/2018",
+    "lat": -27.4984724,
+    "lng": 153.0820695
+  },
+  {
+    "raw_address": "20 Third Street Camp Hill (LID:1505187, CID:351930)",
+    "address": "20 Third Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "21/08/2018",
+    "lat": -27.4957256,
+    "lng": 153.0813245
+  },
+  {
+    "raw_address": "14 Pinecroft Street Camp Hill (LID:1504157, CID:352069)",
+    "address": "14 Pinecroft Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/08/2018",
+    "lat": -27.4907145,
+    "lng": 153.0683035
+  },
+  {
+    "raw_address": "77 Kingsbury Street Norman Park (LID:1428516, CID:358491)",
+    "address": "77 Kingsbury Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "22/08/2018",
+    "lat": -27.4754505,
+    "lng": 153.0613707
+  },
+  {
+    "raw_address": "7 / 18 Selangor Place Carina (LID:1427282, CID:347684)",
+    "address": "7 / 18 Selangor Place Carina",
+    "suburb": "Carina",
+    "settlement_date": "27/08/2018",
+    "lat": -27.48148,
+    "lng": 153.0960664
+  },
+  {
+    "raw_address": "4 Miawela Street Seven Hills (LID:1514690, CID:349911)",
+    "address": "4 Miawela Street Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "31/08/2018",
+    "lat": -27.4794717,
+    "lng": 153.0765212
+  },
+  {
+    "raw_address": "5 Yass Street Carina (LID:1533003, CID:356180)",
+    "address": "5 Yass Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "7/09/2018",
+    "lat": -27.4826595,
+    "lng": 153.0980694
+  },
+  {
+    "raw_address": "30 Brisbane Avenue Camp Hill (LID:1509633, CID:364602)",
+    "address": "30 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/09/2018",
+    "lat": -27.4862897,
+    "lng": 153.0835367
+  },
+  {
+    "raw_address": "16 Arrowsmith Street Camp Hill (LID:1558126, CID:362939)",
+    "address": "16 Arrowsmith Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "18/09/2018",
+    "lat": -27.4883771,
+    "lng": 153.0852478
+  },
+  {
+    "raw_address": "26 Taylor Street Balmoral (LID:1421440, CID:354656)",
+    "address": "26 Taylor Street Balmoral",
+    "suburb": "Balmoral",
+    "settlement_date": "2/10/2018",
+    "lat": -27.4514935,
+    "lng": 153.0686475
+  },
+  {
+    "raw_address": "46 Temple Street Coorparoo (LID:1561211, CID:365170)",
+    "address": "46 Temple Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "12/10/2018",
+    "lat": -27.4876538,
+    "lng": 153.0573507
+  },
+  {
+    "raw_address": "35 Frank Street Norman Park (LID:1629052, CID:376389)",
+    "address": "35 Frank Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "19/10/2018",
+    "lat": -27.4858963,
+    "lng": 153.0622752
+  },
+  {
+    "raw_address": "24 Prout Street CAMP HILL (LID:1607748, CID:376597)",
+    "address": "24 Prout Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/10/2018",
+    "lat": -27.4985373,
+    "lng": 153.077855
+  },
+  {
+    "raw_address": "11 Melbourne Avenue Camp Hill (LID:1665510, CID:384217)",
+    "address": "11 Melbourne Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "26/11/2018",
+    "lat": -27.4849656,
+    "lng": 153.0832422
+  },
+  {
+    "raw_address": "24 Brussels Avenue Morningside (LID:1664282, CID:384239)",
+    "address": "24 Brussels Avenue Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "26/11/2018",
+    "lat": -27.4760899,
+    "lng": 153.0836901
+  },
+  {
+    "raw_address": "13 Newman Avenue Camp Hill (LID:1673614, CID:384202)",
+    "address": "13 Newman Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "27/11/2018",
+    "lat": -27.4981698,
+    "lng": 153.0689015
+  },
+  {
+    "raw_address": "6 Abbott Street CAMP HILL (LID:1671348, CID:383496)",
+    "address": "6 Abbott Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "4/12/2018",
+    "lat": -27.4986486,
+    "lng": 153.081666
+  },
+  {
+    "raw_address": "7 / 11-13 Bilyana Street Balmoral (LID:1664970, CID:386212)",
+    "address": "7 / 11-13 Bilyana Street Balmoral",
+    "suburb": "Balmoral",
+    "settlement_date": "6/12/2018",
+    "lat": -27.4567203,
+    "lng": 153.0624862
+  },
+  {
+    "raw_address": "11 The Promenade Camp Hill (LID:1533299, CID:379313)",
+    "address": "11 The Promenade Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "12/12/2018",
+    "lat": -27.4866198,
+    "lng": 153.0821977
+  },
+  {
+    "raw_address": "50 Brooks Street CAMP HILL (LID:1660409, CID:384286)",
+    "address": "50 Brooks Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "12/12/2018",
+    "lat": -27.4999109,
+    "lng": 153.0814152
+  },
+  {
+    "raw_address": "19 Bradnor Street Carina (LID:1665554, CID:386900)",
+    "address": "19 Bradnor Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "13/12/2018",
+    "lat": -27.485934,
+    "lng": 153.0968224
+  },
+  {
+    "raw_address": "40 Boundary Road Camp Hill (LID:1602547, CID:376621)",
+    "address": "40 Boundary Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/12/2018",
+    "lat": -27.4950766,
+    "lng": 153.0771772
+  },
+  {
+    "raw_address": "16 Burchell Street Carina (LID:1728793, CID:389086)",
+    "address": "16 Burchell Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "17/12/2018",
+    "lat": -27.4809381,
+    "lng": 153.0911417
+  },
+  {
+    "raw_address": "3 Newbury Place Carindale (LID:1636053, CID:388065)",
+    "address": "3 Newbury Place Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "20/12/2018",
+    "lat": -27.5223283,
+    "lng": 153.1173999
+  },
+  {
+    "raw_address": "86 Raven Street Camp Hill (LID:1665819, CID:390525)",
+    "address": "86 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "25/01/2019",
+    "lat": -27.4983819,
+    "lng": 153.0799443
+  },
+  {
+    "raw_address": "20 Eric Road Holland Park (LID:1713941, CID:391072)",
+    "address": "20 Eric Road Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "25/01/2019",
+    "lat": -27.5248632,
+    "lng": 153.0761082
+  },
+  {
+    "raw_address": "8 Fred Street Camp Hill (LID:1753848, CID:395215)",
+    "address": "8 Fred Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "6/02/2019",
+    "lat": -27.5001353,
+    "lng": 153.0815276
+  },
+  {
+    "raw_address": "2 / 35 Crown Street Holland Park West (LID:1675814, CID:395716)",
+    "address": "2 / 35 Crown Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "4/03/2019",
+    "lat": -27.5198803,
+    "lng": 153.0584541
+  },
+  {
+    "raw_address": "72 Illidge Street Coorparoo (LID:1519092, CID:398992)",
+    "address": "72 Illidge Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "5/03/2019",
+    "lat": -27.5012202,
+    "lng": 153.0718418
+  },
+  {
+    "raw_address": "1A Agate Street Camp Hill (LID:1806592, CID:404212)",
+    "address": "1A Agate Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/03/2019",
+    "lat": -27.5031135,
+    "lng": 153.0854872
+  },
+  {
+    "raw_address": "30 Durimbil Street CAMP HILL (LID:1675990, CID:397231)",
+    "address": "30 Durimbil Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/03/2019",
+    "lat": -27.4949756,
+    "lng": 153.0824767
+  },
+  {
+    "raw_address": "15 Barton Street Holland Park West (LID:1800301, CID:404428)",
+    "address": "15 Barton Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "1/04/2019",
+    "lat": -27.5270381,
+    "lng": 153.0684006
+  },
+  {
+    "raw_address": "81 Hipwood Street Norman Park (LID:1802599, CID:405385)",
+    "address": "81 Hipwood Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "15/04/2019",
+    "lat": -27.4750204,
+    "lng": 153.0642796
+  },
+  {
+    "raw_address": "112 Macdonald Street Norman Park (LID:1664394, CID:403186)",
+    "address": "112 Macdonald Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "16/04/2019",
+    "lat": -27.4866824,
+    "lng": 153.0700906
+  },
+  {
+    "raw_address": "39 Third Street Camp Hill (LID:1782131, CID:405338)",
+    "address": "39 Third Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "26/04/2019",
+    "lat": -27.4964114,
+    "lng": 153.0822302
+  },
+  {
+    "raw_address": "70 Lloyd Street CAMP HILL (LID:1675553, CID:405311)",
+    "address": "70 Lloyd Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/04/2019",
+    "lat": -27.4881088,
+    "lng": 153.0676717
+  },
+  {
+    "raw_address": "19 Beeston Street Teneriffe (LID:1736974, CID:405446)",
+    "address": "19 Beeston Street Teneriffe",
+    "suburb": "Teneriffe",
+    "settlement_date": "29/04/2019",
+    "lat": -27.4593719,
+    "lng": 153.0455531
+  },
+  {
+    "raw_address": "1 / 58 Donald Street Camp Hill (LID:1752433, CID:406630)",
+    "address": "1 / 58 Donald Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/04/2019",
+    "lat": -27.4916526,
+    "lng": 153.0750961
+  },
+  {
+    "raw_address": "7 St Leonards Street Coorparoo (LID:1820266, CID:407753)",
+    "address": "7 St Leonards Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "30/04/2019",
+    "lat": -27.4931884,
+    "lng": 153.0518622
+  },
+  {
+    "raw_address": "14 Brooks Street CAMP HILL (LID:1861406, CID:410221)",
+    "address": "14 Brooks Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "10/05/2019",
+    "lat": -27.4976951,
+    "lng": 153.0817339
+  },
+  {
+    "raw_address": "123 Watson Street Camp Hill (LID:1813833, CID:407726)",
+    "address": "123 Watson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/05/2019",
+    "lat": -27.4881028,
+    "lng": 153.0702307
+  },
+  {
+    "raw_address": "27 Raven Street Camp Hill (LID:1836643, CID:411903)",
+    "address": "27 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/05/2019",
+    "lat": -27.4946623,
+    "lng": 153.0800211
+  },
+  {
+    "raw_address": "819 Wynnum Road Cannon Hill (LID:1752271, CID:410218)",
+    "address": "819 Wynnum Road Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "28/05/2019",
+    "lat": -27.4677228,
+    "lng": 153.0825998
+  },
+  {
+    "raw_address": "56 Phalerum Avenue Seven Hills (LID:1786884, CID:407741)",
+    "address": "56 Phalerum Avenue Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "29/05/2019",
+    "lat": -27.4814558,
+    "lng": 153.078543
+  },
+  {
+    "raw_address": "89 Amy Street Hawthorne (LID:1792392, CID:409400)",
+    "address": "89 Amy Street Hawthorne",
+    "suburb": "Hawthorne",
+    "settlement_date": "10/06/2019",
+    "lat": -27.4660798,
+    "lng": 153.0581491
+  },
+  {
+    "raw_address": "16 Harmony Crescent Seven Hills (LID:1787372, CID:413213)",
+    "address": "16 Harmony Crescent Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "21/06/2019",
+    "lat": -27.4803775,
+    "lng": 153.0773545
+  },
+  {
+    "raw_address": "8 Joan Street NORMAN PARK (LID:1861598, CID:417575)",
+    "address": "8 Joan Street NORMAN PARK",
+    "suburb": "Norman Park",
+    "settlement_date": "28/06/2019",
+    "lat": -27.4836612,
+    "lng": 153.0746102
+  },
+  {
+    "raw_address": "6 / 44 Adelaide Street Carina (LID:1857082, CID:412986)",
+    "address": "6 / 44 Adelaide Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "2/07/2019",
+    "lat": -27.493625,
+    "lng": 153.0953097
+  },
+  {
+    "raw_address": "48 Brisbane Avenue Camp Hill (LID:1803092, CID:423400)",
+    "address": "48 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "19/07/2019",
+    "lat": -27.4864067,
+    "lng": 153.0844393
+  },
+  {
+    "raw_address": "46 Edencourt Street Camp Hill (LID:1866679, CID:423389)",
+    "address": "46 Edencourt Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "24/07/2019",
+    "lat": -27.4903979,
+    "lng": 153.0698012
+  },
+  {
+    "raw_address": "146 Delaney Circuit Carindale (LID:1832922, CID:412529)",
+    "address": "146 Delaney Circuit Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "30/07/2019",
+    "lat": -27.5193815,
+    "lng": 153.1070497
+  },
+  {
+    "raw_address": "4 Cedlen Street Camp Hill (LID:1949522, CID:426024)",
+    "address": "4 Cedlen Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/08/2019",
+    "lat": -27.4985649,
+    "lng": 153.080312
+  },
+  {
+    "raw_address": "30 Macdonald Street Norman Park (LID:1940837, CID:422230)",
+    "address": "30 Macdonald Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "29/08/2019",
+    "lat": -27.4859355,
+    "lng": 153.0655
+  },
+  {
+    "raw_address": "3 Daly Street Camp Hill (LID:1976523, CID:432876)",
+    "address": "3 Daly Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "23/09/2019",
+    "lat": -27.4921514,
+    "lng": 153.0691862
+  },
+  {
+    "raw_address": "156 Watson Street Camp Hill (LID:1973232, CID:434116)",
+    "address": "156 Watson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "23/09/2019",
+    "lat": -27.4880867,
+    "lng": 153.0728153
+  },
+  {
+    "raw_address": "79A Burn Street Camp Hill (LID:1856852, CID:436574)",
+    "address": "79A Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "18/10/2019",
+    "lat": -27.4959831,
+    "lng": 153.0828794
+  },
+  {
+    "raw_address": "32 Gristock Street Coorparoo (LID:1951671, CID:434997)",
+    "address": "32 Gristock Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "28/10/2019",
+    "lat": -27.5037759,
+    "lng": 153.0679523
+  },
+  {
+    "raw_address": "28 Taylor Street Balmoral (LID:1865134, CID:444744)",
+    "address": "28 Taylor Street Balmoral",
+    "suburb": "Balmoral",
+    "settlement_date": "4/11/2019",
+    "lat": -27.4514046,
+    "lng": 153.0686645
+  },
+  {
+    "raw_address": "1 / 21 East Street Camp Hill (LID:2001643, CID:436476)",
+    "address": "1 / 21 East Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "5/11/2019",
+    "lat": -27.4968269,
+    "lng": 153.0860055
+  },
+  {
+    "raw_address": "118 Creek Road MOUNT GRAVATT EAST (LID:1873706, CID:443014)",
+    "address": "118 Creek Road MOUNT GRAVATT EAST",
+    "suburb": "Mount Gravatt East",
+    "settlement_date": "11/11/2019",
+    "lat": -27.5373033,
+    "lng": 153.0859351
+  },
+  {
+    "raw_address": "40 Pinecroft Street CAMP HILL (LID:1977135, CID:444561)",
+    "address": "40 Pinecroft Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/11/2019",
+    "lat": -27.4894521,
+    "lng": 153.0685675
+  },
+  {
+    "raw_address": "87 Albert Street Camp Hill (LID:1996359, CID:445397)",
+    "address": "87 Albert Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/12/2019",
+    "lat": -27.4948386,
+    "lng": 153.0746484
+  },
+  {
+    "raw_address": "5 / 11 Kennington Road Camp Hill (LID:2028688, CID:448567)",
+    "address": "5 / 11 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/12/2019",
+    "lat": -27.4939082,
+    "lng": 153.0861444
+  },
+  {
+    "raw_address": "52 Ashton Street Camp Hill (LID:1993334, CID:447915)",
+    "address": "52 Ashton Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "16/12/2019",
+    "lat": -27.4951533,
+    "lng": 153.0671183
+  },
+  {
+    "raw_address": "18 Patrick Street Norman Park (LID:2059144, CID:451514)",
+    "address": "18 Patrick Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "24/12/2019",
+    "lat": -27.4855964,
+    "lng": 153.069
+  },
+  {
+    "raw_address": "21 Margaret Street Camp Hill (LID:1976157, CID:444781)",
+    "address": "21 Margaret Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/01/2020",
+    "lat": -27.4916384,
+    "lng": 153.0817005
+  },
+  {
+    "raw_address": "26 Indus Street CAMP HILL (LID:2103650, CID:454843)",
+    "address": "26 Indus Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/01/2020",
+    "lat": -27.5034901,
+    "lng": 153.0778724
+  },
+  {
+    "raw_address": "93 Macrossan Avenue Norman Park (LID:2071961, CID:456073)",
+    "address": "93 Macrossan Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "15/01/2020",
+    "lat": -27.4843321,
+    "lng": 153.0696503
+  },
+  {
+    "raw_address": "92 Morehead Avenue Norman Park (LID:2070682, CID:456072)",
+    "address": "92 Morehead Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "21/01/2020",
+    "lat": -27.482834,
+    "lng": 153.0694696
+  },
+  {
+    "raw_address": "29 Martha Street CAMP HILL (LID:2092528, CID:447285)",
+    "address": "29 Martha Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "31/01/2020",
+    "lat": -27.4973219,
+    "lng": 153.0692961
+  },
+  {
+    "raw_address": "71 Lindsay Street Hawthorne (LID:1991526, CID:462477)",
+    "address": "71 Lindsay Street Hawthorne",
+    "suburb": "Hawthorne",
+    "settlement_date": "2/03/2020",
+    "lat": -27.4612346,
+    "lng": 153.0568511
+  },
+  {
+    "raw_address": "29 Raven Street Camp Hill (LID:2204093, CID:465391)",
+    "address": "29 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "2/03/2020",
+    "lat": -27.4947512,
+    "lng": 153.0800044
+  },
+  {
+    "raw_address": "27 Kempsie Road Upper Mount Gravatt (LID:2203667, CID:467776)",
+    "address": "27 Kempsie Road Upper Mount Gravatt",
+    "suburb": "Upper Mount Gravatt",
+    "settlement_date": "11/03/2020",
+    "lat": -27.5485026,
+    "lng": 153.0846304
+  },
+  {
+    "raw_address": "215 Ferguson Road Seven Hills (LID:2083738, CID:465441)",
+    "address": "215 Ferguson Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "1/04/2020",
+    "lat": -27.4834525,
+    "lng": 153.0753806
+  },
+  {
+    "raw_address": "46 Pampling Street CAMP HILL (LID:2237466, CID:472142)",
+    "address": "46 Pampling Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/05/2020",
+    "lat": -27.4897232,
+    "lng": 153.0727734
+  },
+  {
+    "raw_address": "123 Watson Street Camp Hill (LID:2225588, CID:477248)",
+    "address": "123 Watson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/05/2020",
+    "lat": -27.4881028,
+    "lng": 153.0702307
+  },
+  {
+    "raw_address": "67 City View Road Camp Hill (LID:2139390, CID:472328)",
+    "address": "67 City View Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "25/05/2020",
+    "lat": -27.4969787,
+    "lng": 153.0785766
+  },
+  {
+    "raw_address": "36 McKie Crescent Cannon Hill (LID:2053091, CID:480697)",
+    "address": "36 McKie Crescent Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "5/06/2020",
+    "lat": -27.4788239,
+    "lng": 153.1003819
+  },
+  {
+    "raw_address": "34 Arrol Street Camp Hill (LID:2282567, CID:479796)",
+    "address": "34 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "17/06/2020",
+    "lat": -27.4911596,
+    "lng": 153.0821915
+  },
+  {
+    "raw_address": "24 Margaret Street Camp Hill (LID:2352311, CID:485120)",
+    "address": "24 Margaret Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/07/2020",
+    "lat": -27.4916252,
+    "lng": 153.0810884
+  },
+  {
+    "raw_address": "151 Tarragindi Road Tarragindi (LID:2186373, CID:485270)",
+    "address": "151 Tarragindi Road Tarragindi",
+    "suburb": "Tarragindi",
+    "settlement_date": "15/07/2020",
+    "lat": -27.5268268,
+    "lng": 153.035335
+  },
+  {
+    "raw_address": "63 Brisbane Avenue Camp Hill (LID:2366910, CID:487569)",
+    "address": "63 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "16/07/2020",
+    "lat": -27.4871666,
+    "lng": 153.0857269
+  },
+  {
+    "raw_address": "109 Albert Street Camp Hill (LID:2320467, CID:493437)",
+    "address": "109 Albert Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "21/07/2020",
+    "lat": -27.4950447,
+    "lng": 153.0759314
+  },
+  {
+    "raw_address": "30 Stanton Street Cannon Hill (LID:2265432, CID:494982)",
+    "address": "30 Stanton Street Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "4/08/2020",
+    "lat": -27.472219,
+    "lng": 153.0853411
+  },
+  {
+    "raw_address": "16a Pinedale Street Morningside (LID:2365357, CID:493906)",
+    "address": "16a Pinedale Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "5/08/2020",
+    "lat": -27.4754659,
+    "lng": 153.0783712
+  },
+  {
+    "raw_address": "12 Pring Street Tarragindi (LID:2325472, CID:492983)",
+    "address": "12 Pring Street Tarragindi",
+    "suburb": "Tarragindi",
+    "settlement_date": "28/08/2020",
+    "lat": -27.5308495,
+    "lng": 153.044434
+  },
+  {
+    "raw_address": "45 Brinawa Street Camp Hill (LID:2320351, CID:499419)",
+    "address": "45 Brinawa Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "4/09/2020",
+    "lat": -27.4955907,
+    "lng": 153.0759999
+  },
+  {
+    "raw_address": "32 Stanton Street Cannon Hill (LID:2236633, CID:499606)",
+    "address": "32 Stanton Street Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "7/09/2020",
+    "lat": -27.4694711,
+    "lng": 153.086172
+  },
+  {
+    "raw_address": "16 Pinedale Street Morningside (LID:2045270, CID:506894)",
+    "address": "16 Pinedale Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "7/09/2020",
+    "lat": -27.4752621,
+    "lng": 153.0780988
+  },
+  {
+    "raw_address": "83A Burn Street Camp Hill (LID:2430682, CID:502477)",
+    "address": "83A Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/09/2020",
+    "lat": -27.4988509,
+    "lng": 153.0822833
+  },
+  {
+    "raw_address": "83 Burn Street Camp Hill (LID:2238692, CID:503275)",
+    "address": "83 Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/09/2020",
+    "lat": -27.4981694,
+    "lng": 153.0821261
+  },
+  {
+    "raw_address": "48 Pampling Street Camp Hill (LID:2067109, CID:504569)",
+    "address": "48 Pampling Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/09/2020",
+    "lat": -27.4899231,
+    "lng": 153.073013
+  },
+  {
+    "raw_address": "449 Old Cleveland Road Camp Hill (LID:2211780, CID:506907)",
+    "address": "449 Old Cleveland Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/09/2020",
+    "lat": -27.4922391,
+    "lng": 153.065753
+  },
+  {
+    "raw_address": "37 Third Street Camp Hill (LID:2350179, CID:512148)",
+    "address": "37 Third Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "17/09/2020",
+    "lat": -27.4963963,
+    "lng": 153.0821297
+  },
+  {
+    "raw_address": "12 / 20-22 Love Street Bulimba (LID:2430387, CID:511711)",
+    "address": "12 / 20-22 Love Street Bulimba",
+    "suburb": "Bulimba",
+    "settlement_date": "6/10/2020",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "137 Temple Street COORPAROO (LID:2336394, CID:509371)",
+    "address": "137 Temple Street COORPAROO",
+    "suburb": "Coorparoo",
+    "settlement_date": "9/10/2020",
+    "lat": -27.4867619,
+    "lng": 153.0619021
+  },
+  {
+    "raw_address": "26 Donald Street Camp Hill (LID:2139263, CID:510335)",
+    "address": "26 Donald Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/10/2020",
+    "lat": -27.491231,
+    "lng": 153.0742337
+  },
+  {
+    "raw_address": "38 Halifax Street Coorparoo (LID:2347120, CID:513085)",
+    "address": "38 Halifax Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "9/10/2020",
+    "lat": -27.4843518,
+    "lng": 153.0593808
+  },
+  {
+    "raw_address": "14 Citrus Street Moorooka (LID:2238947, CID:519467)",
+    "address": "14 Citrus Street Moorooka",
+    "suburb": "Moorooka",
+    "settlement_date": "23/10/2020",
+    "lat": -27.5285742,
+    "lng": 153.0272872
+  },
+  {
+    "raw_address": "11 Boundary Road Camp Hill (LID:2473902, CID:513747)",
+    "address": "11 Boundary Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/10/2020",
+    "lat": -27.4937042,
+    "lng": 153.076862
+  },
+  {
+    "raw_address": "24 Munce Place Cannon Hill (LID:2053822, CID:515884)",
+    "address": "24 Munce Place Cannon Hill",
+    "suburb": "Cannon Hill",
+    "settlement_date": "6/11/2020",
+    "lat": -27.4781823,
+    "lng": 153.0985598
+  },
+  {
+    "raw_address": "58 Kempsie Road Upper Mount Gravatt (LID:2451363, CID:516560)",
+    "address": "58 Kempsie Road Upper Mount Gravatt",
+    "suburb": "Upper Mount Gravatt",
+    "settlement_date": "9/11/2020",
+    "lat": -27.5481207,
+    "lng": 153.0839227
+  },
+  {
+    "raw_address": "19 Salaria Drive Seven Hills (LID:2440204, CID:524902)",
+    "address": "19 Salaria Drive Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "9/11/2020",
+    "lat": -27.4820973,
+    "lng": 153.0781061
+  },
+  {
+    "raw_address": "122 Stanley Road Camp Hill (LID:2485184, CID:518309)",
+    "address": "122 Stanley Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "18/11/2020",
+    "lat": -27.4874581,
+    "lng": 153.0849958
+  },
+  {
+    "raw_address": "131 Stanley Road Camp Hill (LID:2512453, CID:519410)",
+    "address": "131 Stanley Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/11/2020",
+    "lat": -27.4880123,
+    "lng": 153.0852386
+  },
+  {
+    "raw_address": "85 Raven Street Camp Hill (LID:2059743, CID:530929)",
+    "address": "85 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "4/12/2020",
+    "lat": -27.4983183,
+    "lng": 153.0793469
+  },
+  {
+    "raw_address": "57 Mcilwraith Avenue NORMAN PARK (LID:2107055, CID:524925)",
+    "address": "57 Mcilwraith Avenue NORMAN PARK",
+    "suburb": "Norman Park",
+    "settlement_date": "9/12/2020",
+    "lat": -27.484775,
+    "lng": 153.066757
+  },
+  {
+    "raw_address": "60 Brisbane Avenue Camp Hill (LID:2493375, CID:511688)",
+    "address": "60 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/12/2020",
+    "lat": -27.4865165,
+    "lng": 153.0852863
+  },
+  {
+    "raw_address": "3 Joan Street Norman Park (LID:2568809, CID:529314)",
+    "address": "3 Joan Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "17/12/2020",
+    "lat": -27.4840763,
+    "lng": 153.0744375
+  },
+  {
+    "raw_address": "34 Renton Street Camp Hill (LID:2120002, CID:534660)",
+    "address": "34 Renton Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/12/2020",
+    "lat": -27.4963703,
+    "lng": 153.0851733
+  },
+  {
+    "raw_address": "8 Majestic Outlook Seven Hills (LID:2530485, CID:539569)",
+    "address": "8 Majestic Outlook Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "12/01/2021",
+    "lat": -27.480111,
+    "lng": 153.0697736
+  },
+  {
+    "raw_address": "119 Buena Vista Avenue Coorparoo (LID:2513398, CID:532951)",
+    "address": "119 Buena Vista Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "20/01/2021",
+    "lat": -27.5067793,
+    "lng": 153.072338
+  },
+  {
+    "raw_address": "11 Hartley Street Camp Hill (LID:2241007, CID:541499)",
+    "address": "11 Hartley Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "3/02/2021",
+    "lat": -27.4961079,
+    "lng": 153.0714982
+  },
+  {
+    "raw_address": "35 PATTISON Avenue NORMAN PARK (LID:2490836, CID:546476)",
+    "address": "35 PATTISON Avenue NORMAN PARK",
+    "suburb": "Norman Park",
+    "settlement_date": "5/02/2021",
+    "lat": -27.4810179,
+    "lng": 153.0666094
+  },
+  {
+    "raw_address": "5 / 91 Pembroke Street Carina (LID:2426852, CID:538464)",
+    "address": "5 / 91 Pembroke Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "23/02/2021",
+    "lat": -27.4903745,
+    "lng": 153.0934287
+  },
+  {
+    "raw_address": "17 Faraday Street CAMP HILL (LID:2627008, CID:555425)",
+    "address": "17 Faraday Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "1/03/2021",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "77 Newman Avenue CAMP HILL (LID:2554709, CID:559735)",
+    "address": "77 Newman Avenue CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "2/03/2021",
+    "lat": -27.4989258,
+    "lng": 153.0735113
+  },
+  {
+    "raw_address": "24 Margaret Street Camp Hill (LID:2352424, CID:485126)",
+    "address": "24 Margaret Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "5/03/2021",
+    "lat": -27.4916252,
+    "lng": 153.0810884
+  },
+  {
+    "raw_address": "79 Arrol Street Camp Hill (LID:2286027, CID:546281)",
+    "address": "79 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "5/03/2021",
+    "lat": -27.4884464,
+    "lng": 153.0832985
+  },
+  {
+    "raw_address": "50 Brisbane Avenue Camp Hill (LID:2671599, CID:560261)",
+    "address": "50 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "5/03/2021",
+    "lat": -27.4864197,
+    "lng": 153.0845397
+  },
+  {
+    "raw_address": "97 Macrossan Avenue Norman Park (LID:2662771, CID:559717)",
+    "address": "97 Macrossan Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "15/03/2021",
+    "lat": -27.4842841,
+    "lng": 153.0699187
+  },
+  {
+    "raw_address": "6 Fred Street Camp Hill (LID:2632360, CID:561777)",
+    "address": "6 Fred Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/03/2021",
+    "lat": -27.5001201,
+    "lng": 153.0814278
+  },
+  {
+    "raw_address": "9 Rowland Street Coorparoo (LID:2697524, CID:566723)",
+    "address": "9 Rowland Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "6/04/2021",
+    "lat": -27.4842703,
+    "lng": 153.0587606
+  },
+  {
+    "raw_address": "2 Lewis Street CAMP HILL (LID:2611114, CID:557499)",
+    "address": "2 Lewis Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/04/2021",
+    "lat": -27.4901347,
+    "lng": 153.0731123
+  },
+  {
+    "raw_address": "33 Durimbil Street Camp Hill (LID:2471148, CID:558911)",
+    "address": "33 Durimbil Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "12/04/2021",
+    "lat": -27.4954707,
+    "lng": 153.0820962
+  },
+  {
+    "raw_address": "113 Birdwood Road HOLLAND PARK WEST (LID:2720213, CID:568869)",
+    "address": "113 Birdwood Road HOLLAND PARK WEST",
+    "suburb": "Holland Park West",
+    "settlement_date": "12/04/2021",
+    "lat": -27.5186562,
+    "lng": 153.0537139
+  },
+  {
+    "raw_address": "34 Audrey Street Camp Hill (LID:2692009, CID:563994)",
+    "address": "34 Audrey Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "27/04/2021",
+    "lat": -27.4895399,
+    "lng": 153.0698635
+  },
+  {
+    "raw_address": "7 Raven Street Camp Hill (LID:2750058, CID:575198)",
+    "address": "7 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "27/04/2021",
+    "lat": -27.4936538,
+    "lng": 153.0802231
+  },
+  {
+    "raw_address": "81 Hipwood Street Norman Park (LID:2238856, CID:575230)",
+    "address": "81 Hipwood Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "27/04/2021",
+    "lat": -27.4750204,
+    "lng": 153.0642796
+  },
+  {
+    "raw_address": "137 Ironwood Street Aspley (LID:2763265, CID:573355)",
+    "address": "137 Ironwood Street Aspley",
+    "suburb": "Aspley",
+    "settlement_date": "30/04/2021",
+    "lat": -27.3727804,
+    "lng": 153.0093098
+  },
+  {
+    "raw_address": "81 Hipwood Avenue Coorparoo (LID:2674360, CID:564268)",
+    "address": "81 Hipwood Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "5/05/2021",
+    "lat": -27.502583,
+    "lng": 153.0576247
+  },
+  {
+    "raw_address": "63 Brisbane Avenue Camp Hill (LID:2366912, CID:487570)",
+    "address": "63 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "11/05/2021",
+    "lat": -27.4871666,
+    "lng": 153.0857269
+  },
+  {
+    "raw_address": "44 Brisbane Avenue Camp Hill (LID:2720592, CID:583728)",
+    "address": "44 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "24/05/2021",
+    "lat": -27.4863676,
+    "lng": 153.0841385
+  },
+  {
+    "raw_address": "67 Power Street Norman Park (LID:2712561, CID:571480)",
+    "address": "67 Power Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "31/05/2021",
+    "lat": -27.4766376,
+    "lng": 153.0634061
+  },
+  {
+    "raw_address": "54 Wyena Street Camp Hill (LID:2742535, CID:587934)",
+    "address": "54 Wyena Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/06/2021",
+    "lat": -27.4878915,
+    "lng": 153.0815047
+  },
+  {
+    "raw_address": "55 Watson Street Camp Hill (LID:2710143, CID:583725)",
+    "address": "55 Watson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/06/2021",
+    "lat": -27.4875531,
+    "lng": 153.0665445
+  },
+  {
+    "raw_address": "5 Cedlen Street Camp Hill (LID:2186454, CID:587946)",
+    "address": "5 Cedlen Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/06/2021",
+    "lat": -27.4983578,
+    "lng": 153.0806203
+  },
+  {
+    "raw_address": "12 Braemar Place Carindale (LID:2749356, CID:586225)",
+    "address": "12 Braemar Place Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "29/06/2021",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "28 Prout Street Camp Hill (LID:2832228, CID:594732)",
+    "address": "28 Prout Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/06/2021",
+    "lat": -27.4984619,
+    "lng": 153.0780195
+  },
+  {
+    "raw_address": "53 Adelaide Street Carina (LID:2713168, CID:592458)",
+    "address": "53 Adelaide Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "30/06/2021",
+    "lat": -27.4931772,
+    "lng": 153.0959162
+  },
+  {
+    "raw_address": "63 City View Road Camp Hill (LID:2763956, CID:594486)",
+    "address": "63 City View Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "2/07/2021",
+    "lat": -27.4968711,
+    "lng": 153.0785964
+  },
+  {
+    "raw_address": "35 Hartley Street Camp Hill (LID:2818239, CID:599251)",
+    "address": "35 Hartley Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "12/07/2021",
+    "lat": -27.4972112,
+    "lng": 153.0712724
+  },
+  {
+    "raw_address": "9 Joan Street Norman Park (LID:2829433, CID:599255)",
+    "address": "9 Joan Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "12/07/2021",
+    "lat": -27.4839041,
+    "lng": 153.0747169
+  },
+  {
+    "raw_address": "37 Brisbane Avenue Camp Hill (LID:2816405, CID:594667)",
+    "address": "37 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "21/07/2021",
+    "lat": -27.4868892,
+    "lng": 153.0839014
+  },
+  {
+    "raw_address": "34 Henderson Street Camp Hill (LID:2820277, CID:594871)",
+    "address": "34 Henderson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/07/2021",
+    "lat": -27.4895603,
+    "lng": 153.0752742
+  },
+  {
+    "raw_address": "42 Lockyer Street Camp Hill (LID:2834520, CID:595006)",
+    "address": "42 Lockyer Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/07/2021",
+    "lat": -27.4962411,
+    "lng": 153.0753418
+  },
+  {
+    "raw_address": "59A Raven Street Camp Hill (LID:2897794, CID:610476)",
+    "address": "59A Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "17/08/2021",
+    "lat": -27.4969744,
+    "lng": 153.0795946
+  },
+  {
+    "raw_address": "3 / 141 Jones Road Carina Heights (LID:2927798, CID:617376)",
+    "address": "3 / 141 Jones Road Carina Heights",
+    "suburb": "Carina Heights",
+    "settlement_date": "20/08/2021",
+    "lat": -27.502596,
+    "lng": 153.0868428
+  },
+  {
+    "raw_address": "15 Rowland Street COORPAROO (LID:2490604, CID:612113)",
+    "address": "15 Rowland Street COORPAROO",
+    "suburb": "Coorparoo",
+    "settlement_date": "23/08/2021",
+    "lat": -27.4840419,
+    "lng": 153.0591575
+  },
+  {
+    "raw_address": "2 / 89 Ison Street MORNINGSIDE (LID:2864986, CID:619083)",
+    "address": "2 / 89 Ison Street MORNINGSIDE",
+    "suburb": "Morningside",
+    "settlement_date": "3/09/2021",
+    "lat": -27.4682426,
+    "lng": 153.0671607
+  },
+  {
+    "raw_address": "38 Brinawa Street Camp Hill (LID:2720299, CID:617203)",
+    "address": "38 Brinawa Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/09/2021",
+    "lat": -27.4953709,
+    "lng": 153.0762438
+  },
+  {
+    "raw_address": "26 Third Street Camp Hill (LID:2877223, CID:607872)",
+    "address": "26 Third Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/09/2021",
+    "lat": -27.4957594,
+    "lng": 153.0815509
+  },
+  {
+    "raw_address": "8 Joan Street Norman Park (LID:2888541, CID:617011)",
+    "address": "8 Joan Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "8/09/2021",
+    "lat": -27.4836612,
+    "lng": 153.0746102
+  },
+  {
+    "raw_address": "20 The Promenade Camp Hill (LID:2875481, CID:607965)",
+    "address": "20 The Promenade Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "10/09/2021",
+    "lat": -27.4862733,
+    "lng": 153.0816338
+  },
+  {
+    "raw_address": "47 Greens Road Coorparoo (LID:2877626, CID:622694)",
+    "address": "47 Greens Road Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "27/09/2021",
+    "lat": -27.5005813,
+    "lng": 153.0706822
+  },
+  {
+    "raw_address": "16 Nurstead Street Camp Hill (LID:2955174, CID:622840)",
+    "address": "16 Nurstead Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "27/09/2021",
+    "lat": -27.4846144,
+    "lng": 153.0869048
+  },
+  {
+    "raw_address": "33 Audrey Street Camp Hill (LID:2929609, CID:626713)",
+    "address": "33 Audrey Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "12/10/2021",
+    "lat": -27.4900447,
+    "lng": 153.0698843
+  },
+  {
+    "raw_address": "5 Viminal Hill Crescent Seven Hills (LID:2887228, CID:620795)",
+    "address": "5 Viminal Hill Crescent Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "13/10/2021",
+    "lat": -27.4866358,
+    "lng": 153.0797708
+  },
+  {
+    "raw_address": "530 Old Cleveland Road Camp Hill (LID:2520858, CID:617015)",
+    "address": "530 Old Cleveland Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/10/2021",
+    "lat": -27.4911187,
+    "lng": 153.071067
+  },
+  {
+    "raw_address": "85 Plimsoll Street Greenslopes (LID:2963939, CID:629100)",
+    "address": "85 Plimsoll Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "18/10/2021",
+    "lat": -27.5123589,
+    "lng": 153.0543668
+  },
+  {
+    "raw_address": "50 Pavo Street Camp Hill (LID:2929801, CID:617200)",
+    "address": "50 Pavo Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "25/10/2021",
+    "lat": -27.502859,
+    "lng": 153.0761006
+  },
+  {
+    "raw_address": "76 Buena Vista Avenue Coorparoo (LID:2903811, CID:626420)",
+    "address": "76 Buena Vista Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "27/10/2021",
+    "lat": -27.5037808,
+    "lng": 153.0721052
+  },
+  {
+    "raw_address": "113 Mowbray Terrace East Brisbane (LID:2898161, CID:623364)",
+    "address": "113 Mowbray Terrace East Brisbane",
+    "suburb": "East Brisbane",
+    "settlement_date": "1/11/2021",
+    "lat": -27.4844549,
+    "lng": 153.0475485
+  },
+  {
+    "raw_address": "46 Prout Street Camp Hill (LID:2861967, CID:635574)",
+    "address": "46 Prout Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "2/11/2021",
+    "lat": -27.498772,
+    "lng": 153.0801767
+  },
+  {
+    "raw_address": "73 Wellington Street Coorparoo (LID:2995616, CID:635759)",
+    "address": "73 Wellington Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "4/11/2021",
+    "lat": -27.5000111,
+    "lng": 153.0577219
+  },
+  {
+    "raw_address": "22 Brooks Street Camp Hill (LID:3004137, CID:631072)",
+    "address": "22 Brooks Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "23/11/2021",
+    "lat": -27.4979644,
+    "lng": 153.0816839
+  },
+  {
+    "raw_address": "48 Brooks Street Camp Hill (LID:2999572, CID:640645)",
+    "address": "48 Brooks Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "23/11/2021",
+    "lat": -27.4997766,
+    "lng": 153.0814408
+  },
+  {
+    "raw_address": "62 Brooks Street Camp Hill (LID:2964268, CID:635994)",
+    "address": "62 Brooks Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "25/11/2021",
+    "lat": -27.5008956,
+    "lng": 153.0812274
+  },
+  {
+    "raw_address": "38 Stanley Road Seven Hills (LID:2748659, CID:640629)",
+    "address": "38 Stanley Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "25/11/2021",
+    "lat": -27.4868019,
+    "lng": 153.0804677
+  },
+  {
+    "raw_address": "22A Arrol Street Camp Hill (LID:2977970, CID:645296)",
+    "address": "22A Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/12/2021",
+    "lat": -27.490292,
+    "lng": 153.0826631
+  },
+  {
+    "raw_address": "17 Edencourt Street Camp Hill (LID:3018095, CID:645351)",
+    "address": "17 Edencourt Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/12/2021",
+    "lat": -27.4907635,
+    "lng": 153.0680371
+  },
+  {
+    "raw_address": "1 / 19 Kennington Road Camp Hill (LID:2041643, CID:645392)",
+    "address": "1 / 19 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/12/2021",
+    "lat": -27.4932059,
+    "lng": 153.085995
+  },
+  {
+    "raw_address": "79 Burn Street Camp Hill (LID:3020616, CID:633044)",
+    "address": "79 Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/12/2021",
+    "lat": -27.4979001,
+    "lng": 153.0821765
+  },
+  {
+    "raw_address": "40 Porteus Drive Seven Hills (LID:2930959, CID:645289)",
+    "address": "40 Porteus Drive Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "17/12/2021",
+    "lat": -27.4844443,
+    "lng": 153.0782572
+  },
+  {
+    "raw_address": "132 Stanley Road Camp Hill (LID:3035429, CID:650194)",
+    "address": "132 Stanley Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/12/2021",
+    "lat": -27.4875756,
+    "lng": 153.0858379
+  },
+  {
+    "raw_address": "46 Latrobe Street East Brisbane (LID:2649329, CID:645359)",
+    "address": "46 Latrobe Street East Brisbane",
+    "suburb": "East Brisbane",
+    "settlement_date": "6/01/2022",
+    "lat": -27.4809962,
+    "lng": 153.0434364
+  },
+  {
+    "raw_address": "5 / 18 Kennington Road Camp Hill (LID:3060019, CID:652549)",
+    "address": "5 / 18 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "10/01/2022",
+    "lat": -27.49117,
+    "lng": 153.0861407
+  },
+  {
+    "raw_address": "22 Arrol Street Camp Hill (LID:3053068, CID:655132)",
+    "address": "22 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/01/2022",
+    "lat": -27.4920201,
+    "lng": 153.082036
+  },
+  {
+    "raw_address": "40 Brooks Street Camp Hill (LID:3007299, CID:660265)",
+    "address": "40 Brooks Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "21/01/2022",
+    "lat": -27.4978558,
+    "lng": 153.0813748
+  },
+  {
+    "raw_address": "10 Houthem Street Camp Hill (LID:3080918, CID:655072)",
+    "address": "10 Houthem Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "24/01/2022",
+    "lat": -27.4933417,
+    "lng": 153.0678059
+  },
+  {
+    "raw_address": "119 Railway Parade Norman Park (LID:2237672, CID:660007)",
+    "address": "119 Railway Parade Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "1/02/2022",
+    "lat": -27.4764876,
+    "lng": 153.0649066
+  },
+  {
+    "raw_address": "590 Vulture Street East Brisbane (LID:3060187, CID:655105)",
+    "address": "590 Vulture Street East Brisbane",
+    "suburb": "East Brisbane",
+    "settlement_date": "3/02/2022",
+    "lat": -27.4859219,
+    "lng": 153.047224
+  },
+  {
+    "raw_address": "21104 / 11 Beesley Street West End (LID:3080687, CID:656115)",
+    "address": "21104 / 11 Beesley Street West End",
+    "suburb": "West End",
+    "settlement_date": "7/02/2022",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "8 Lloyd Street Camp Hill (LID:3120985, CID:669036)",
+    "address": "8 Lloyd Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/03/2022",
+    "lat": -27.4875628,
+    "lng": 153.0643177
+  },
+  {
+    "raw_address": "9 Prout Street Camp Hill (LID:3137463, CID:673667)",
+    "address": "9 Prout Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/03/2022",
+    "lat": -27.498788,
+    "lng": 153.076849
+  },
+  {
+    "raw_address": "5 / 19 Dickenson Street Carina (LID:3162852, CID:678193)",
+    "address": "5 / 19 Dickenson Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "28/03/2022",
+    "lat": -27.4944661,
+    "lng": 153.09336
+  },
+  {
+    "raw_address": "109 The Promenade Camp Hill (LID:3135397, CID:678307)",
+    "address": "109 The Promenade Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "31/03/2022",
+    "lat": -27.4828291,
+    "lng": 153.0849566
+  },
+  {
+    "raw_address": "153 Watson Street Camp Hill (LID:3153608, CID:682341)",
+    "address": "153 Watson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/04/2022",
+    "lat": -27.4884831,
+    "lng": 153.072183
+  },
+  {
+    "raw_address": "7 Thomas Street Camp Hill (LID:3130430, CID:666973)",
+    "address": "7 Thomas Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/04/2022",
+    "lat": -27.4992113,
+    "lng": 153.0777042
+  },
+  {
+    "raw_address": "24 Asquith Street Morningside (LID:3141177, CID:678360)",
+    "address": "24 Asquith Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "14/04/2022",
+    "lat": -27.4733214,
+    "lng": 153.0781289
+  },
+  {
+    "raw_address": "65 Morehead Avenue NORMAN PARK (LID:3068762, CID:682381)",
+    "address": "65 Morehead Avenue NORMAN PARK",
+    "suburb": "Norman Park",
+    "settlement_date": "26/04/2022",
+    "lat": -27.4831914,
+    "lng": 153.0683115
+  },
+  {
+    "raw_address": "7 Baguette Street Carina (LID:3139388, CID:686586)",
+    "address": "7 Baguette Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "26/04/2022",
+    "lat": -27.4748054,
+    "lng": 153.089652
+  },
+  {
+    "raw_address": "32 Carranya Street Camp Hill (LID:3168697, CID:688695)",
+    "address": "32 Carranya Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "3/05/2022",
+    "lat": -27.4935327,
+    "lng": 153.0704614
+  },
+  {
+    "raw_address": "79 Arrol Camp Hill (LID:2643883, CID:546284)",
+    "address": "79 Arrol Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "5/05/2022",
+    "lat": -27.4884464,
+    "lng": 153.0832985
+  },
+  {
+    "raw_address": "78 Woodhill Avenue Coorparoo (LID:3198627, CID:684364)",
+    "address": "78 Woodhill Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "17/05/2022",
+    "lat": -27.4954514,
+    "lng": 153.0643573
+  },
+  {
+    "raw_address": "80 Porteus Drive Seven Hills (LID:3147422, CID:686663)",
+    "address": "80 Porteus Drive Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "17/05/2022",
+    "lat": -27.4829832,
+    "lng": 153.0776014
+  },
+  {
+    "raw_address": "7 Joachim Street Holland Park West (LID:3186123, CID:694285)",
+    "address": "7 Joachim Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "23/05/2022",
+    "lat": -27.5224666,
+    "lng": 153.0578683
+  },
+  {
+    "raw_address": "48 Kennington Road Camp Hill (LID:3240188, CID:695954)",
+    "address": "48 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "30/05/2022",
+    "lat": -27.4919412,
+    "lng": 153.0857443
+  },
+  {
+    "raw_address": "45 Stanley Road Camp Hill (LID:3205995, CID:688765)",
+    "address": "45 Stanley Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "1/06/2022",
+    "lat": -27.4873333,
+    "lng": 153.0809376
+  },
+  {
+    "raw_address": "5 Phalerum Avenue Seven Hills (LID:3240245, CID:697915)",
+    "address": "5 Phalerum Avenue Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "6/06/2022",
+    "lat": -27.4839454,
+    "lng": 153.0789489
+  },
+  {
+    "raw_address": "160 Morehead Avenue Norman Park (LID:3261859, CID:698003)",
+    "address": "160 Morehead Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "6/06/2022",
+    "lat": -27.4833533,
+    "lng": 153.0729672
+  },
+  {
+    "raw_address": "72 Donald Street Camp Hill (LID:3229896, CID:690751)",
+    "address": "72 Donald Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/06/2022",
+    "lat": -27.4916719,
+    "lng": 153.0769544
+  },
+  {
+    "raw_address": "43 Brinawa Street Camp Hill (LID:2326021, CID:686635)",
+    "address": "43 Brinawa Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "16/06/2022",
+    "lat": -27.4955907,
+    "lng": 153.0759999
+  },
+  {
+    "raw_address": "2 / 19 Dickenson Street Carina (LID:3196806, CID:694213)",
+    "address": "2 / 19 Dickenson Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "11/07/2022",
+    "lat": -27.4901224,
+    "lng": 153.0941703
+  },
+  {
+    "raw_address": "13 Adina Street Norman Park (LID:3251714, CID:701544)",
+    "address": "13 Adina Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "20/07/2022",
+    "lat": -27.4852876,
+    "lng": 153.0628623
+  },
+  {
+    "raw_address": "30 Arrowsmith Street Camp Hill (LID:3318105, CID:711984)",
+    "address": "30 Arrowsmith Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "25/07/2022",
+    "lat": -27.4891343,
+    "lng": 153.0858219
+  },
+  {
+    "raw_address": "37 Windemere Avenue Morningside (LID:3238348, CID:703540)",
+    "address": "37 Windemere Avenue Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "27/07/2022",
+    "lat": -27.4745652,
+    "lng": 153.0804215
+  },
+  {
+    "raw_address": "39 First Street Camp Hill (LID:3038833, CID:706853)",
+    "address": "39 First Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/07/2022",
+    "lat": -27.4946544,
+    "lng": 153.0827926
+  },
+  {
+    "raw_address": "52 Porteus Drive Seven Hills (LID:3314787, CID:714021)",
+    "address": "52 Porteus Drive Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "4/08/2022",
+    "lat": -27.4839237,
+    "lng": 153.0782044
+  },
+  {
+    "raw_address": "14 Servius Avenue Seven Hills (LID:3251262, CID:717341)",
+    "address": "14 Servius Avenue Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "15/08/2022",
+    "lat": -27.4817711,
+    "lng": 153.0757298
+  },
+  {
+    "raw_address": "69 Woodhill Avenue Coorparoo (LID:3279253, CID:701604)",
+    "address": "69 Woodhill Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "22/08/2022",
+    "lat": -27.4959738,
+    "lng": 153.0641912
+  },
+  {
+    "raw_address": "12 Viminal Hill Crescent Seven Hills (LID:2814506, CID:713998)",
+    "address": "12 Viminal Hill Crescent Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "31/08/2022",
+    "lat": -27.4863169,
+    "lng": 153.0793534
+  },
+  {
+    "raw_address": "7 / 159 Watson Street Camp Hill (LID:3380099, CID:722548)",
+    "address": "7 / 159 Watson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/09/2022",
+    "lat": -27.4891035,
+    "lng": 153.0718575
+  },
+  {
+    "raw_address": "34 Brinawa Street Camp Hill (LID:3281525, CID:724076)",
+    "address": "34 Brinawa Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "12/09/2022",
+    "lat": -27.4950164,
+    "lng": 153.0763189
+  },
+  {
+    "raw_address": "30 Lewis Street Camp Hill (LID:3316755, CID:727801)",
+    "address": "30 Lewis Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "19/09/2022",
+    "lat": -27.4904257,
+    "lng": 153.074916
+  },
+  {
+    "raw_address": "6 / 19 Kennington Road Camp Hill (LID:3079660, CID:713860)",
+    "address": "6 / 19 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "30/09/2022",
+    "lat": -27.4934551,
+    "lng": 153.0862044
+  },
+  {
+    "raw_address": "25 Renton Street CAMP HILL (LID:3280413, CID:735640)",
+    "address": "25 Renton Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "12/10/2022",
+    "lat": -27.4956135,
+    "lng": 153.0846971
+  },
+  {
+    "raw_address": "8 Perth Street Camp Hill (LID:3376336, CID:733460)",
+    "address": "8 Perth Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/10/2022",
+    "lat": -27.4860745,
+    "lng": 153.0723982
+  },
+  {
+    "raw_address": "17 Greta Street Manly West (LID:3426918, CID:737339)",
+    "address": "17 Greta Street Manly West",
+    "suburb": "Manly West",
+    "settlement_date": "19/10/2022",
+    "lat": -27.4617021,
+    "lng": 153.1769835
+  },
+  {
+    "raw_address": "56 Porteus Drive Seven Hills (LID:3400860, CID:737450)",
+    "address": "56 Porteus Drive Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "19/10/2022",
+    "lat": -27.4837682,
+    "lng": 153.0781692
+  },
+  {
+    "raw_address": "39 Brisbane Avenue Camp Hill (LID:3422026, CID:738526)",
+    "address": "39 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "23/11/2022",
+    "lat": -27.4869026,
+    "lng": 153.0840024
+  },
+  {
+    "raw_address": "4 / 55 Thorn Street Kangaroo Point (LID:3421373, CID:744993)",
+    "address": "4 / 55 Thorn Street Kangaroo Point",
+    "suburb": "Kangaroo Point",
+    "settlement_date": "30/11/2022",
+    "lat": -27.4767523,
+    "lng": 153.0404869
+  },
+  {
+    "raw_address": "8 Glanosmond Avenue Camp Hill (LID:3168863, CID:743189)",
+    "address": "8 Glanosmond Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/12/2022",
+    "lat": -27.4911765,
+    "lng": 153.0713781
+  },
+  {
+    "raw_address": "29 The Promenade Camp Hill (LID:3153202, CID:738621)",
+    "address": "29 The Promenade Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/12/2022",
+    "lat": -27.4859007,
+    "lng": 153.0823146
+  },
+  {
+    "raw_address": "42 Appia Avenue Seven Hills (LID:3380260, CID:749322)",
+    "address": "42 Appia Avenue Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "12/12/2022",
+    "lat": -27.4794582,
+    "lng": 153.0695412
+  },
+  {
+    "raw_address": "24 Jordan Street Greenslopes (LID:3432283, CID:752758)",
+    "address": "24 Jordan Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "12/12/2022",
+    "lat": -27.5150134,
+    "lng": 153.052936
+  },
+  {
+    "raw_address": "55 Brinawa Street Camp Hill (LID:3451341, CID:754856)",
+    "address": "55 Brinawa Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "19/12/2022",
+    "lat": -27.4960101,
+    "lng": 153.0756173
+  },
+  {
+    "raw_address": "1 / 18 Kennington Road Camp Hill (LID:3442166, CID:745588)",
+    "address": "1 / 18 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "16/01/2023",
+    "lat": -27.49117,
+    "lng": 153.0861407
+  },
+  {
+    "raw_address": "2 / 25 Pembroke Road Coorparoo (LID:3482716, CID:761088)",
+    "address": "2 / 25 Pembroke Road Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "23/01/2023",
+    "lat": -27.5027345,
+    "lng": 153.0537345
+  },
+  {
+    "raw_address": "38 Gum Street Wynnum (LID:3447684, CID:747548)",
+    "address": "38 Gum Street Wynnum",
+    "suburb": "Wynnum",
+    "settlement_date": "31/01/2023",
+    "lat": -27.4532405,
+    "lng": 153.1718009
+  },
+  {
+    "raw_address": "406 Ferguson Road Seven Hills (LID:3422380, CID:751244)",
+    "address": "406 Ferguson Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "6/02/2023",
+    "lat": -27.4828454,
+    "lng": 153.0745415
+  },
+  {
+    "raw_address": "128 D'Arcy Road Seven Hills (LID:3500630, CID:757136)",
+    "address": "128 D'Arcy Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "6/02/2023",
+    "lat": -27.4790541,
+    "lng": 153.0733329
+  },
+  {
+    "raw_address": "6 Nunney Place Carindale (LID:3533211, CID:765085)",
+    "address": "6 Nunney Place Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "6/02/2023",
+    "lat": -27.5052229,
+    "lng": 153.1085323
+  },
+  {
+    "raw_address": "408 Ferguson Road Seven Hills (LID:3426992, CID:766179)",
+    "address": "408 Ferguson Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "16/02/2023",
+    "lat": -27.4792067,
+    "lng": 153.0666529
+  },
+  {
+    "raw_address": "1 Fred Street Camp Hill (LID:3558553, CID:771783)",
+    "address": "1 Fred Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/03/2023",
+    "lat": -27.5006092,
+    "lng": 153.081145
+  },
+  {
+    "raw_address": "54 / 9 Ellen Street Carina (LID:3500536, CID:772966)",
+    "address": "54 / 9 Ellen Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "15/03/2023",
+    "lat": -27.4883058,
+    "lng": 153.1118575
+  },
+  {
+    "raw_address": "990 Creek Road Carina Heights (LID:3523566, CID:771599)",
+    "address": "990 Creek Road Carina Heights",
+    "suburb": "Carina Heights",
+    "settlement_date": "23/03/2023",
+    "lat": -27.5127308,
+    "lng": 153.097858
+  },
+  {
+    "raw_address": "9 Moolabar Street Morningside (LID:3580168, CID:775874)",
+    "address": "9 Moolabar Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "20/04/2023",
+    "lat": -27.4756184,
+    "lng": 153.0668788
+  },
+  {
+    "raw_address": "22 Orchard Terrace St Lucia (LID:3592611, CID:778396)",
+    "address": "22 Orchard Terrace St Lucia",
+    "suburb": "St Lucia",
+    "settlement_date": "21/04/2023",
+    "lat": -27.4988026,
+    "lng": 152.9926449
+  },
+  {
+    "raw_address": "36 Westmoreland Boulevard Springwood (LID:3611955, CID:783612)",
+    "address": "36 Westmoreland Boulevard Springwood",
+    "suburb": "Springwood",
+    "settlement_date": "28/04/2023",
+    "lat": -27.6235389,
+    "lng": 153.1319593
+  },
+  {
+    "raw_address": "79 Arrol Street Camp Hill (LID:3586176, CID:778406)",
+    "address": "79 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "3/05/2023",
+    "lat": -27.4884464,
+    "lng": 153.0832985
+  },
+  {
+    "raw_address": "84 Raven Street Camp Hill (LID:2556420, CID:792393)",
+    "address": "84 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/05/2023",
+    "lat": -27.498291,
+    "lng": 153.0799611
+  },
+  {
+    "raw_address": "61 Brisbane Avenue Camp Hill (LID:3597836, CID:778483)",
+    "address": "61 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "5/06/2023",
+    "lat": -27.4871433,
+    "lng": 153.0855529
+  },
+  {
+    "raw_address": "45 / 18 Bendena Terrace Carina Heights (LID:3642960, CID:792361)",
+    "address": "45 / 18 Bendena Terrace Carina Heights",
+    "suburb": "Carina Heights",
+    "settlement_date": "13/06/2023",
+    "lat": -27.5143586,
+    "lng": 153.0961525
+  },
+  {
+    "raw_address": "32 Worden Street Morningside (LID:3585227, CID:795895)",
+    "address": "32 Worden Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "13/06/2023",
+    "lat": -27.4640565,
+    "lng": 153.0766389
+  },
+  {
+    "raw_address": "706 / 27 Commercial Road Newstead (LID:3583357, CID:792179)",
+    "address": "706 / 27 Commercial Road Newstead",
+    "suburb": "Newstead",
+    "settlement_date": "19/06/2023",
+    "lat": -27.4533,
+    "lng": 153.0427748
+  },
+  {
+    "raw_address": "1 Drogheda Close Underwood (LID:3613728, CID:794735)",
+    "address": "1 Drogheda Close Underwood",
+    "suburb": "Underwood",
+    "settlement_date": "22/06/2023",
+    "lat": -27.6013358,
+    "lng": 153.1077397
+  },
+  {
+    "raw_address": "254 Weller Road Tarragindi (LID:3147387, CID:799540)",
+    "address": "254 Weller Road Tarragindi",
+    "suburb": "Tarragindi",
+    "settlement_date": "26/06/2023",
+    "lat": -27.5237183,
+    "lng": 153.0421309
+  },
+  {
+    "raw_address": "23 Arrol Street Camp Hill (LID:3633248, CID:792395)",
+    "address": "23 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/06/2023",
+    "lat": -27.4915803,
+    "lng": 153.0827092
+  },
+  {
+    "raw_address": "9 Kinrade Place CARINDALE (LID:2814869, CID:790811)",
+    "address": "9 Kinrade Place CARINDALE",
+    "suburb": "Carindale",
+    "settlement_date": "30/06/2023",
+    "lat": -27.5003211,
+    "lng": 153.1086967
+  },
+  {
+    "raw_address": "66 Cascade Drive Underwood (LID:3613722, CID:796623)",
+    "address": "66 Cascade Drive Underwood",
+    "suburb": "Underwood",
+    "settlement_date": "30/06/2023",
+    "lat": -27.6033011,
+    "lng": 153.108473
+  },
+  {
+    "raw_address": "33 / 18 Bendena Terrace Carina Heights (LID:3665753, CID:797141)",
+    "address": "33 / 18 Bendena Terrace Carina Heights",
+    "suburb": "Carina Heights",
+    "settlement_date": "3/07/2023",
+    "lat": -27.5133307,
+    "lng": 153.0949756
+  },
+  {
+    "raw_address": "46 Temple Street Coorparoo (LID:3685362, CID:806105)",
+    "address": "46 Temple Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "24/07/2023",
+    "lat": -27.4876538,
+    "lng": 153.0573507
+  },
+  {
+    "raw_address": "26 Torville Road Underwood (LID:3613768, CID:801652)",
+    "address": "26 Torville Road Underwood",
+    "suburb": "Underwood",
+    "settlement_date": "25/07/2023",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "5 / 19 Kennington Road Camp Hill (LID:3564127, CID:807647)",
+    "address": "5 / 19 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "31/07/2023",
+    "lat": -27.4933761,
+    "lng": 153.085961
+  },
+  {
+    "raw_address": "30 Joseph Street Camp Hill (LID:2807192, CID:806111)",
+    "address": "30 Joseph Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "10/08/2023",
+    "lat": -27.4876181,
+    "lng": 153.0711864
+  },
+  {
+    "raw_address": "24 Torville Road Underwood (LID:3613766, CID:801655)",
+    "address": "24 Torville Road Underwood",
+    "suburb": "Underwood",
+    "settlement_date": "11/08/2023",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "33 Torville Road Underwood (LID:3613779, CID:811425)",
+    "address": "33 Torville Road Underwood",
+    "suburb": "Underwood",
+    "settlement_date": "17/08/2023",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "12 / 18 Bendena Terrace Carina Heights (LID:3707274, CID:812126)",
+    "address": "12 / 18 Bendena Terrace Carina Heights",
+    "suburb": "Carina Heights",
+    "settlement_date": "28/08/2023",
+    "lat": -27.5138998,
+    "lng": 153.0962583
+  },
+  {
+    "raw_address": "523 Old Cleveland Road Camp Hill (LID:3756855, CID:814111)",
+    "address": "523 Old Cleveland Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/08/2023",
+    "lat": -27.4927623,
+    "lng": 153.0728425
+  },
+  {
+    "raw_address": "147 Fernvale Road Tarragindi (LID:3756854, CID:814336)",
+    "address": "147 Fernvale Road Tarragindi",
+    "suburb": "Tarragindi",
+    "settlement_date": "28/08/2023",
+    "lat": -27.528097,
+    "lng": 153.0364901
+  },
+  {
+    "raw_address": "24 Arrol Street Camp Hill (LID:3040929, CID:811242)",
+    "address": "24 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/09/2023",
+    "lat": -27.4918766,
+    "lng": 153.082062
+  },
+  {
+    "raw_address": "30 Herbert Street Camp Hill (LID:3756983, CID:814089)",
+    "address": "30 Herbert Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/09/2023",
+    "lat": -27.5003722,
+    "lng": 153.0802217
+  },
+  {
+    "raw_address": "3 / 29 East Street Camp Hill (LID:3709104, CID:803023)",
+    "address": "3 / 29 East Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/09/2023",
+    "lat": -27.4970951,
+    "lng": 153.0857626
+  },
+  {
+    "raw_address": "36 Judge Street Norman Park (LID:3674708, CID:820598)",
+    "address": "36 Judge Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "25/09/2023",
+    "lat": -27.4856897,
+    "lng": 153.0703773
+  },
+  {
+    "raw_address": "4 / 102 Pembroke Road Coorparoo (LID:3764281, CID:824204)",
+    "address": "4 / 102 Pembroke Road Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "11/10/2023",
+    "lat": -27.4975986,
+    "lng": 153.0541383
+  },
+  {
+    "raw_address": "104 Britannia Avenue Morningside (LID:3766452, CID:820894)",
+    "address": "104 Britannia Avenue Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "16/10/2023",
+    "lat": -27.4751569,
+    "lng": 153.082673
+  },
+  {
+    "raw_address": "115 Baringa Street Morningside (LID:3756993, CID:825761)",
+    "address": "115 Baringa Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "16/10/2023",
+    "lat": -27.4641696,
+    "lng": 153.0771751
+  },
+  {
+    "raw_address": "3 / 66 Woodhill Avenue Coorparoo (LID:3773833, CID:825795)",
+    "address": "3 / 66 Woodhill Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "16/10/2023",
+    "lat": -27.4965069,
+    "lng": 153.0629403
+  },
+  {
+    "raw_address": "Lot 20 / 57 Cascade Drive Underwood (LID:3793390, CID:822603)",
+    "address": "57 Cascade Drive Underwood",
+    "suburb": "Underwood",
+    "settlement_date": "19/10/2023",
+    "lat": -27.6055512,
+    "lng": 153.1083798
+  },
+  {
+    "raw_address": "12 Kidwelly Street Carindale (LID:3756989, CID:822298)",
+    "address": "12 Kidwelly Street Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "20/10/2023",
+    "lat": -27.5026331,
+    "lng": 153.1070947
+  },
+  {
+    "raw_address": "12 Warilda Street Camp Hill (LID:3598761, CID:820599)",
+    "address": "12 Warilda Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "25/10/2023",
+    "lat": -27.493325,
+    "lng": 153.0736499
+  },
+  {
+    "raw_address": "20 Donald Street Camp Hill (LID:3756844, CID:814350)",
+    "address": "20 Donald Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "30/10/2023",
+    "lat": -27.4911742,
+    "lng": 153.0738834
+  },
+  {
+    "raw_address": "33 Breadalbane Street Carindale (LID:3742216, CID:822286)",
+    "address": "33 Breadalbane Street Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "2/11/2023",
+    "lat": -27.5138384,
+    "lng": 153.1037205
+  },
+  {
+    "raw_address": "5 Tranters Avenue Camp Hill (LID:3757454, CID:829067)",
+    "address": "5 Tranters Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "6/11/2023",
+    "lat": -27.4831277,
+    "lng": 153.0815939
+  },
+  {
+    "raw_address": "77 Burn Street Camp Hill (LID:3788899, CID:836415)",
+    "address": "77 Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "27/11/2023",
+    "lat": -27.4977654,
+    "lng": 153.0822016
+  },
+  {
+    "raw_address": "106 Britannia Avenue Morningside (LID:3798042, CID:836444)",
+    "address": "106 Britannia Avenue Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "27/11/2023",
+    "lat": -27.4748727,
+    "lng": 153.0822758
+  },
+  {
+    "raw_address": "8 Lloyd Street Camp Hill (LID:3831005, CID:840003)",
+    "address": "8 Lloyd Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "11/12/2023",
+    "lat": -27.4875628,
+    "lng": 153.0643177
+  },
+  {
+    "raw_address": "76 Woodhill Avenue Coorparoo (LID:3799968, CID:838239)",
+    "address": "76 Woodhill Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "12/12/2023",
+    "lat": -27.4954902,
+    "lng": 153.0642917
+  },
+  {
+    "raw_address": "527 D'Arcy Road Camp Hill (LID:3756860, CID:837401)",
+    "address": "527 D'Arcy Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "13/12/2023",
+    "lat": -27.481668,
+    "lng": 153.0869059
+  },
+  {
+    "raw_address": "14 Halland Terrace Camp Hill (LID:3583082, CID:836448)",
+    "address": "14 Halland Terrace Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "19/12/2023",
+    "lat": -27.4889722,
+    "lng": 153.0756411
+  },
+  {
+    "raw_address": "20 Brinawa Street Camp Hill (LID:3837540, CID:844031)",
+    "address": "20 Brinawa Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "11/01/2024",
+    "lat": -27.4941917,
+    "lng": 153.0764819
+  },
+  {
+    "raw_address": "49 Pavo Street Camp Hill (LID:2960673, CID:852843)",
+    "address": "49 Pavo Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/01/2024",
+    "lat": -27.5023292,
+    "lng": 153.0762482
+  },
+  {
+    "raw_address": "24 Fryar Street Camp Hill (LID:3842969, CID:852845)",
+    "address": "24 Fryar Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/01/2024",
+    "lat": -27.4897099,
+    "lng": 153.0661852
+  },
+  {
+    "raw_address": "37 Torville Road Underwood (LID:3613796, CID:822003)",
+    "address": "37 Torville Road Underwood",
+    "suburb": "Underwood",
+    "settlement_date": "29/01/2024",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "234 / 44-52 Grantson Street Windsor (LID:3832856, CID:845007)",
+    "address": "234 / 44-52 Grantson Street Windsor",
+    "suburb": "Windsor",
+    "settlement_date": "29/01/2024",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "13 Albert Street Camp Hill (LID:3830617, CID:883850)",
+    "address": "13 Albert Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/02/2024",
+    "lat": -27.494215,
+    "lng": 153.0705951
+  },
+  {
+    "raw_address": "115 Ferguson Road Camp Hill (LID:3914543, CID:887001)",
+    "address": "115 Ferguson Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "4/03/2024",
+    "lat": -27.4872806,
+    "lng": 153.078891
+  },
+  {
+    "raw_address": "12 / 17 Hilltop Court Carina (LID:3947765, CID:896875)",
+    "address": "12 / 17 Hilltop Court Carina",
+    "suburb": "Carina",
+    "settlement_date": "15/03/2024",
+    "lat": -27.4925067,
+    "lng": 153.1117689
+  },
+  {
+    "raw_address": "64 Halland Terrace Camp Hill (LID:3878004, CID:883856)",
+    "address": "64 Halland Terrace Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "25/03/2024",
+    "lat": -27.4888492,
+    "lng": 153.0765899
+  },
+  {
+    "raw_address": "55 Mackay Street Coorparoo (LID:3955233, CID:900281)",
+    "address": "55 Mackay Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "25/03/2024",
+    "lat": -27.5030995,
+    "lng": 153.0588185
+  },
+  {
+    "raw_address": "54 City View Road Camp Hill (LID:3911570, CID:888058)",
+    "address": "54 City View Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/03/2024",
+    "lat": -27.4964873,
+    "lng": 153.0792665
+  },
+  {
+    "raw_address": "7 Lombard Street Carina (LID:4004704, CID:901410)",
+    "address": "7 Lombard Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "11/04/2024",
+    "lat": -27.4806142,
+    "lng": 153.093404
+  },
+  {
+    "raw_address": "52 Pampling Street Camp Hill (LID:3955996, CID:922959)",
+    "address": "52 Pampling Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/04/2024",
+    "lat": -27.4893634,
+    "lng": 153.0724896
+  },
+  {
+    "raw_address": "8 / 11 Kennington Road Camp Hill (LID:3907555, CID:923159)",
+    "address": "8 / 11 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/04/2024",
+    "lat": -27.4939843,
+    "lng": 153.0859646
+  },
+  {
+    "raw_address": "4 / 31 Kennington Road Camp Hill (LID:3998657, CID:923355)",
+    "address": "4 / 31 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/04/2024",
+    "lat": -27.49117,
+    "lng": 153.0861407
+  },
+  {
+    "raw_address": "41 / 13 Railway Terrace Milton (LID:3830689, CID:900435)",
+    "address": "41 / 13 Railway Terrace Milton",
+    "suburb": "Milton",
+    "settlement_date": "29/04/2024",
+    "lat": -27.4692904,
+    "lng": 153.0059104
+  },
+  {
+    "raw_address": "25 Love Street Holland Park (LID:3976665, CID:923227)",
+    "address": "25 Love Street Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "8/05/2024",
+    "lat": -27.5124716,
+    "lng": 153.059491
+  },
+  {
+    "raw_address": "38 Brisbane Avenue Camp Hill (LID:4004482, CID:922964)",
+    "address": "38 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "9/05/2024",
+    "lat": -27.4863417,
+    "lng": 153.0839379
+  },
+  {
+    "raw_address": "58 Capella Street Coorparoo (LID:4004601, CID:930248)",
+    "address": "58 Capella Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "16/05/2024",
+    "lat": -27.5099079,
+    "lng": 153.0741517
+  },
+  {
+    "raw_address": "14 Lloyd Street Camp Hill (LID:4014506, CID:930254)",
+    "address": "14 Lloyd Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "17/05/2024",
+    "lat": -27.4876227,
+    "lng": 153.0646843
+  },
+  {
+    "raw_address": "24 Lindisfarne Street Carindale (LID:3976160, CID:930016)",
+    "address": "24 Lindisfarne Street Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "20/05/2024",
+    "lat": -27.4949086,
+    "lng": 153.1071959
+  },
+  {
+    "raw_address": "4 / 47 East Street Camp Hill (LID:4011092, CID:930350)",
+    "address": "4 / 47 East Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "21/05/2024",
+    "lat": -27.4970951,
+    "lng": 153.0857626
+  },
+  {
+    "raw_address": "24 Goulburn Street Hawthorne (LID:3878434, CID:930357)",
+    "address": "24 Goulburn Street Hawthorne",
+    "suburb": "Hawthorne",
+    "settlement_date": "23/05/2024",
+    "lat": -27.4690463,
+    "lng": 153.0626402
+  },
+  {
+    "raw_address": "62 / 455 Brunswick Street Fortitude Valley (LID:4018577, CID:930017)",
+    "address": "62 / 455 Brunswick Street Fortitude Valley",
+    "suburb": "Fortitude Valley",
+    "settlement_date": "24/05/2024",
+    "lat": -27.4568555,
+    "lng": 153.0329525
+  },
+  {
+    "raw_address": "58 Arrol Street Camp Hill (LID:3978145, CID:930015)",
+    "address": "58 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "30/05/2024",
+    "lat": -27.4895349,
+    "lng": 153.0824846
+  },
+  {
+    "raw_address": "1044 / 123 Cavendish Road Coorparoo (LID:4026345, CID:930280)",
+    "address": "1044 / 123 Cavendish Road Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "31/05/2024",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "4 Lewis Street Camp Hill (LID:3917262, CID:919625)",
+    "address": "4 Lewis Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "11/06/2024",
+    "lat": -27.4901549,
+    "lng": 153.0732376
+  },
+  {
+    "raw_address": "3 / 38 Boundary Road Camp Hill (LID:3874430, CID:935654)",
+    "address": "3 / 38 Boundary Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "11/06/2024",
+    "lat": -27.499555,
+    "lng": 153.0758932
+  },
+  {
+    "raw_address": "4 / 31 Torville Road Underwood (LID:4000477, CID:921222)",
+    "address": "4 / 31 Torville Road Underwood",
+    "suburb": "Underwood",
+    "settlement_date": "17/06/2024",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "43 Brinawa Street Camp Hill (LID:3984035, CID:930171)",
+    "address": "43 Brinawa Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "19/06/2024",
+    "lat": -27.4955907,
+    "lng": 153.0759999
+  },
+  {
+    "raw_address": "70 Newman Avenue Camp Hill (LID:4095216, CID:937727)",
+    "address": "70 Newman Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/06/2024",
+    "lat": -27.4983274,
+    "lng": 153.0726133
+  },
+  {
+    "raw_address": "78 Tarana Street Camp Hill (LID:3964529, CID:905362)",
+    "address": "78 Tarana Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "25/06/2024",
+    "lat": -27.4976723,
+    "lng": 153.0736982
+  },
+  {
+    "raw_address": "107 Kennington Road Camp Hill (LID:3305909, CID:941508)",
+    "address": "107 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/06/2024",
+    "lat": -27.4893285,
+    "lng": 153.086762
+  },
+  {
+    "raw_address": "1 / 60 Hipwood Street Norman Park (LID:4046684, CID:937551)",
+    "address": "1 / 60 Hipwood Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "2/07/2024",
+    "lat": -27.4744098,
+    "lng": 153.0642758
+  },
+  {
+    "raw_address": "60 Brisbane Avenue Camp Hill (LID:4085775, CID:945092)",
+    "address": "60 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "30/07/2024",
+    "lat": -27.4865165,
+    "lng": 153.0852863
+  },
+  {
+    "raw_address": "365 Winstanley Street Carindale (LID:4095001, CID:947444)",
+    "address": "365 Winstanley Street Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "30/07/2024",
+    "lat": -27.5092928,
+    "lng": 153.10977
+  },
+  {
+    "raw_address": "39 Margaret Street Camp Hill (LID:4042072, CID:941562)",
+    "address": "39 Margaret Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "31/07/2024",
+    "lat": -27.4906652,
+    "lng": 153.0818763
+  },
+  {
+    "raw_address": "68 Arrol Street Camp Hill (LID:4118828, CID:951250)",
+    "address": "68 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "31/07/2024",
+    "lat": -27.4890794,
+    "lng": 153.082634
+  },
+  {
+    "raw_address": "4 / 38 Boundary Road Camp Hill (LID:4069807, CID:952139)",
+    "address": "4 / 38 Boundary Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "1/08/2024",
+    "lat": -27.4988091,
+    "lng": 153.0760624
+  },
+  {
+    "raw_address": "2 Sheffield Court Browns Plains (LID:4102802, CID:953308)",
+    "address": "2 Sheffield Court Browns Plains",
+    "suburb": "Browns Plains",
+    "settlement_date": "5/08/2024",
+    "lat": -27.6655992,
+    "lng": 153.0635324
+  },
+  {
+    "raw_address": "37 Amersham Crescent Carindale (LID:4052487, CID:947912)",
+    "address": "37 Amersham Crescent Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "26/08/2024",
+    "lat": -27.5221815,
+    "lng": 153.1167273
+  },
+  {
+    "raw_address": "27 Norman Street Coorparoo (LID:4146860, CID:967760)",
+    "address": "27 Norman Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "2/09/2024",
+    "lat": -27.5106522,
+    "lng": 153.0653406
+  },
+  {
+    "raw_address": "15 Risley Street Carina (LID:4120437, CID:971352)",
+    "address": "15 Risley Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "2/09/2024",
+    "lat": -27.4898231,
+    "lng": 153.0892147
+  },
+  {
+    "raw_address": "49 Raven Street Camp Hill (LID:4043835, CID:965592)",
+    "address": "49 Raven Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "3/09/2024",
+    "lat": -27.4961681,
+    "lng": 153.0797428
+  },
+  {
+    "raw_address": "1103 / 39 Banya Street Bulimba (LID:4127705, CID:965661)",
+    "address": "1103 / 39 Banya Street Bulimba",
+    "suburb": "Bulimba",
+    "settlement_date": "11/09/2024",
+    "lat": -27.4449215,
+    "lng": 153.0576921
+  },
+  {
+    "raw_address": "78 Mar Street Holland Park (LID:4067656, CID:969887)",
+    "address": "78 Mar Street Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "11/09/2024",
+    "lat": -27.5205359,
+    "lng": 153.0787579
+  },
+  {
+    "raw_address": "68 Burn Street Camp Hill (LID:4166649, CID:961767)",
+    "address": "68 Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "16/09/2024",
+    "lat": -27.4970921,
+    "lng": 153.0829838
+  },
+  {
+    "raw_address": "5 Cedlen Street Camp Hill (LID:4223253, CID:971340)",
+    "address": "5 Cedlen Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "26/09/2024",
+    "lat": -27.4983578,
+    "lng": 153.0806203
+  },
+  {
+    "raw_address": "20 Woodrow Drive Coorparoo (LID:4044480, CID:953312)",
+    "address": "20 Woodrow Drive Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "27/09/2024",
+    "lat": -27.4873031,
+    "lng": 153.0599979
+  },
+  {
+    "raw_address": "22 Woodrow Drive Coorparoo (LID:4044487, CID:953313)",
+    "address": "22 Woodrow Drive Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "27/09/2024",
+    "lat": -27.4872318,
+    "lng": 153.0601269
+  },
+  {
+    "raw_address": "9 Newdegate Street Greenslopes (LID:4095620, CID:975275)",
+    "address": "9 Newdegate Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "27/09/2024",
+    "lat": -27.5076561,
+    "lng": 153.0488861
+  },
+  {
+    "raw_address": "21 Tarana Street Camp Hill (LID:4189567, CID:975431)",
+    "address": "21 Tarana Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "27/09/2024",
+    "lat": -27.493808,
+    "lng": 153.0740031
+  },
+  {
+    "raw_address": "24 Bernhard Street Paddington (LID:4129817, CID:967672)",
+    "address": "24 Bernhard Street Paddington",
+    "suburb": "Paddington",
+    "settlement_date": "30/09/2024",
+    "lat": -27.4608154,
+    "lng": 152.9928817
+  },
+  {
+    "raw_address": "37 Morningview Place Carindale (LID:4139090, CID:976570)",
+    "address": "37 Morningview Place Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "4/10/2024",
+    "lat": -27.5222502,
+    "lng": 153.1243074
+  },
+  {
+    "raw_address": "1 Trundle Street Coorparoo (LID:4212872, CID:977760)",
+    "address": "1 Trundle Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "9/10/2024",
+    "lat": -27.5036487,
+    "lng": 153.0580955
+  },
+  {
+    "raw_address": "25 Picasso Street Carina (LID:4067923, CID:971311)",
+    "address": "25 Picasso Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "10/10/2024",
+    "lat": -27.4774188,
+    "lng": 153.0925085
+  },
+  {
+    "raw_address": "5 / 61 Prout Street Camp Hill (LID:4225507, CID:975432)",
+    "address": "5 / 61 Prout Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/10/2024",
+    "lat": -27.4992791,
+    "lng": 153.0797254
+  },
+  {
+    "raw_address": "11 Long Street Camp Hill (LID:4117639, CID:975430)",
+    "address": "11 Long Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "30/10/2024",
+    "lat": -27.4941151,
+    "lng": 153.08395
+  },
+  {
+    "raw_address": "4 / 25 Rialto Street Coorparoo (LID:4291257, CID:986269)",
+    "address": "4 / 25 Rialto Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "7/11/2024",
+    "lat": -27.5012019,
+    "lng": 153.0507014
+  },
+  {
+    "raw_address": "38 Briarwood Street Carindale (LID:4119804, CID:987388)",
+    "address": "38 Briarwood Street Carindale",
+    "suburb": "Carindale",
+    "settlement_date": "8/11/2024",
+    "lat": -27.5064664,
+    "lng": 153.1132468
+  },
+  {
+    "raw_address": "6 Errey Street Camp Hill (LID:4275576, CID:984984)",
+    "address": "6 Errey Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "12/11/2024",
+    "lat": -27.4912472,
+    "lng": 153.0839998
+  },
+  {
+    "raw_address": "164 Oateson Skyline Drive Seven Hills (LID:4308345, CID:984492)",
+    "address": "164 Oateson Skyline Drive Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "15/11/2024",
+    "lat": -27.4798916,
+    "lng": 153.0716922
+  },
+  {
+    "raw_address": "3 / 27 Brinawa Street Camp Hill (LID:4270639, CID:980356)",
+    "address": "3 / 27 Brinawa Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "18/11/2024",
+    "lat": -27.4955907,
+    "lng": 153.0759999
+  },
+  {
+    "raw_address": "14 Koondara Street Camp Hill (LID:3944151, CID:983097)",
+    "address": "14 Koondara Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "18/11/2024",
+    "lat": -27.4965565,
+    "lng": 153.0807553
+  },
+  {
+    "raw_address": "57 Lloyd Street Camp Hill (LID:4188994, CID:989087)",
+    "address": "57 Lloyd Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "18/11/2024",
+    "lat": -27.4885325,
+    "lng": 153.0668741
+  },
+  {
+    "raw_address": "1 / 28 Browne Street New Farm (LID:4270498, CID:989239)",
+    "address": "1 / 28 Browne Street New Farm",
+    "suburb": "New Farm",
+    "settlement_date": "18/11/2024",
+    "lat": -27.461069,
+    "lng": 153.0477164
+  },
+  {
+    "raw_address": "22 Diamond Street Holland Park (LID:4277519, CID:989537)",
+    "address": "22 Diamond Street Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "18/11/2024",
+    "lat": -27.5157203,
+    "lng": 153.0742435
+  },
+  {
+    "raw_address": "14 Mornington Crescent Morningside (LID:4104708, CID:989548)",
+    "address": "14 Mornington Crescent Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "3/12/2024",
+    "lat": -27.4688935,
+    "lng": 153.0778998
+  },
+  {
+    "raw_address": "5 Waite Street Norman Park (LID:4286808, CID:1009452)",
+    "address": "5 Waite Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "6/12/2024",
+    "lat": -27.4823208,
+    "lng": 153.0613851
+  },
+  {
+    "raw_address": "4 / 30 Maranda Street Shailer Park (LID:4314994, CID:995894)",
+    "address": "4 / 30 Maranda Street Shailer Park",
+    "suburb": "Shailer Park",
+    "settlement_date": "9/12/2024",
+    "lat": -27.6622384,
+    "lng": 153.1788193
+  },
+  {
+    "raw_address": "36 Moolabar Street Morningside (LID:4092166, CID:975271)",
+    "address": "36 Moolabar Street Morningside",
+    "suburb": "Morningside",
+    "settlement_date": "12/12/2024",
+    "lat": -27.4752719,
+    "lng": 153.0681846
+  },
+  {
+    "raw_address": "5 / 79 Jellicoe Street Coorparoo (LID:4305724, CID:997235)",
+    "address": "5 / 79 Jellicoe Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "13/12/2024",
+    "lat": -27.4896962,
+    "lng": 153.0596074
+  },
+  {
+    "raw_address": "3 / 31 Merinda Street Greenslopes (LID:4342973, CID:1009301)",
+    "address": "3 / 31 Merinda Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "16/12/2024",
+    "lat": -27.5067116,
+    "lng": 153.0564865
+  },
+  {
+    "raw_address": "3 / 29 East Street Camp Hill (LID:4258083, CID:995731)",
+    "address": "3 / 29 East Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "17/12/2024",
+    "lat": -27.4970951,
+    "lng": 153.0857626
+  },
+  {
+    "raw_address": "6 / 17 David Street Burpengary (LID:4345884, CID:996609)",
+    "address": "6 / 17 David Street Burpengary",
+    "suburb": "Burpengary",
+    "settlement_date": "17/12/2024",
+    "lat": -27.1561161,
+    "lng": 152.9681463
+  },
+  {
+    "raw_address": "76 Holland Road Holland Park (LID:4272128, CID:989529)",
+    "address": "76 Holland Road Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "18/12/2024",
+    "lat": -27.5178994,
+    "lng": 153.0676669
+  },
+  {
+    "raw_address": "92 Broadway Street Carina (LID:4332161, CID:1014930)",
+    "address": "92 Broadway Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "19/12/2024",
+    "lat": -27.4882538,
+    "lng": 153.0883187
+  },
+  {
+    "raw_address": "42 Lockyer Street Camp Hill (LID:4225092, CID:994101)",
+    "address": "42 Lockyer Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "2/01/2025",
+    "lat": -27.4962411,
+    "lng": 153.0753418
+  },
+  {
+    "raw_address": "124 Indus Street Camp Hill (LID:4295152, CID:993612)",
+    "address": "124 Indus Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "6/01/2025",
+    "lat": -27.5048283,
+    "lng": 153.0838493
+  },
+  {
+    "raw_address": "15 Adina Street Norman Park (LID:4223695, CID:993609)",
+    "address": "15 Adina Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "8/01/2025",
+    "lat": -27.4850205,
+    "lng": 153.0628956
+  },
+  {
+    "raw_address": "17 Digby Street Holland Park (LID:4304115, CID:1010973)",
+    "address": "17 Digby Street Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "14/01/2025",
+    "lat": -27.5255173,
+    "lng": 153.0746344
+  },
+  {
+    "raw_address": "48 Edencourt Street Camp Hill (LID:4268149, CID:1010858)",
+    "address": "48 Edencourt Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/01/2025",
+    "lat": -27.4904256,
+    "lng": 153.069955
+  },
+  {
+    "raw_address": "4 / 118 Chester Road Annerley (LID:4376244, CID:1041852)",
+    "address": "4 / 118 Chester Road Annerley",
+    "suburb": "Annerley",
+    "settlement_date": "15/01/2025",
+    "lat": -27.5159319,
+    "lng": 153.0365714
+  },
+  {
+    "raw_address": "2 / 118 Chester Road Annerley (LID:4390885, CID:1043940)",
+    "address": "2 / 118 Chester Road Annerley",
+    "suburb": "Annerley",
+    "settlement_date": "7/02/2025",
+    "lat": -27.5158164,
+    "lng": 153.0365849
+  },
+  {
+    "raw_address": "16 Kismet Street Camp Hill (LID:4201333, CID:1068527)",
+    "address": "16 Kismet Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "7/03/2025",
+    "lat": -27.4910672,
+    "lng": 153.0653456
+  },
+  {
+    "raw_address": "51 Stephen Street Camp Hill (LID:4280209, CID:1068599)",
+    "address": "51 Stephen Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "11/03/2025",
+    "lat": -27.4880905,
+    "lng": 153.07416
+  },
+  {
+    "raw_address": "18 Third Street Camp Hill (LID:4510926, CID:1084094)",
+    "address": "18 Third Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "21/03/2025",
+    "lat": -27.495724,
+    "lng": 153.0810236
+  },
+  {
+    "raw_address": "44 Edencourt Street Camp Hill (LID:4300590, CID:1072391)",
+    "address": "44 Edencourt Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/03/2025",
+    "lat": -27.4903682,
+    "lng": 153.069656
+  },
+  {
+    "raw_address": "56 Ashton Street Camp Hill (LID:4430951, CID:1076853)",
+    "address": "56 Ashton Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/03/2025",
+    "lat": -27.4953647,
+    "lng": 153.0671807
+  },
+  {
+    "raw_address": "19 Norman Street Coorparoo (LID:4365029, CID:1074624)",
+    "address": "19 Norman Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "8/04/2025",
+    "lat": -27.5105096,
+    "lng": 153.0649748
+  },
+  {
+    "raw_address": "25 Shire Street Coorparoo (LID:3974903, CID:1076854)",
+    "address": "25 Shire Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "10/04/2025",
+    "lat": -27.4964432,
+    "lng": 153.0617881
+  },
+  {
+    "raw_address": "6 Murton Avenue Holland Park (LID:4362244, CID:1068353)",
+    "address": "6 Murton Avenue Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "14/04/2025",
+    "lat": -27.5217197,
+    "lng": 153.0652121
+  },
+  {
+    "raw_address": "1 / 40 East Street Camp Hill (LID:4365930, CID:1080526)",
+    "address": "1 / 40 East Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/04/2025",
+    "lat": -27.4970951,
+    "lng": 153.0857626
+  },
+  {
+    "raw_address": "99 Sackville Street Greenslopes (LID:4436189, CID:1080649)",
+    "address": "99 Sackville Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "14/04/2025",
+    "lat": -27.509486,
+    "lng": 153.0571339
+  },
+  {
+    "raw_address": "444 Nursery Road Holland Park (LID:4386593, CID:1083475)",
+    "address": "444 Nursery Road Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "17/04/2025",
+    "lat": -27.5221034,
+    "lng": 153.0826532
+  },
+  {
+    "raw_address": "61 Watson Street Camp Hill (LID:4458566, CID:1080883)",
+    "address": "61 Watson Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "24/04/2025",
+    "lat": -27.4869974,
+    "lng": 153.0648459
+  },
+  {
+    "raw_address": "30 Durimbil Street Camp Hill (LID:4398669, CID:1084849)",
+    "address": "30 Durimbil Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "30/04/2025",
+    "lat": -27.4949756,
+    "lng": 153.0824767
+  },
+  {
+    "raw_address": "46 Pampling Street Camp Hill (LID:4436005, CID:1076928)",
+    "address": "46 Pampling Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "2/05/2025",
+    "lat": -27.4897232,
+    "lng": 153.0727734
+  },
+  {
+    "raw_address": "115 Camlet Street Mount Gravatt East (LID:4463398, CID:1086959)",
+    "address": "115 Camlet Street Mount Gravatt East",
+    "suburb": "Mount Gravatt East",
+    "settlement_date": "6/05/2025",
+    "lat": -27.530519,
+    "lng": 153.085165
+  },
+  {
+    "raw_address": "59 Lloyd Street Camp Hill (LID:3955548, CID:1068340)",
+    "address": "59 Lloyd Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "8/05/2025",
+    "lat": -27.4885569,
+    "lng": 153.0670246
+  },
+  {
+    "raw_address": "6 Vickers Street Carina Heights (LID:4308741, CID:1068619)",
+    "address": "6 Vickers Street Carina Heights",
+    "suburb": "Carina Heights",
+    "settlement_date": "8/05/2025",
+    "lat": -27.5032436,
+    "lng": 153.0943323
+  },
+  {
+    "raw_address": "4 Nora Street Balmoral (LID:4455203, CID:1082726)",
+    "address": "4 Nora Street Balmoral",
+    "suburb": "Balmoral",
+    "settlement_date": "8/05/2025",
+    "lat": -27.4537018,
+    "lng": 153.0624883
+  },
+  {
+    "raw_address": "13 Margaret Street Camp Hill (LID:4425385, CID:1065856)",
+    "address": "13 Margaret Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "30/05/2025",
+    "lat": -27.492175,
+    "lng": 153.0816034
+  },
+  {
+    "raw_address": "81 City View Road Camp Hill (LID:4049016, CID:1108036)",
+    "address": "81 City View Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "10/06/2025",
+    "lat": -27.4978661,
+    "lng": 153.0784131
+  },
+  {
+    "raw_address": "5 / 91-93 Pembroke Street Carina (LID:4088346, CID:1108285)",
+    "address": "5 / 91-93 Pembroke Street Carina",
+    "suburb": "Carina",
+    "settlement_date": "10/06/2025",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "raw_address": "12A Birdwood Road Holland Park West (LID:4447686, CID:1110250)",
+    "address": "12A Birdwood Road Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "16/06/2025",
+    "lat": -27.5157957,
+    "lng": 153.0557966
+  },
+  {
+    "raw_address": "111 Camlet Street Mount Gravatt East (LID:4497924, CID:1110338)",
+    "address": "111 Camlet Street Mount Gravatt East",
+    "suburb": "Mount Gravatt East",
+    "settlement_date": "16/06/2025",
+    "lat": -27.5304916,
+    "lng": 153.0853259
+  },
+  {
+    "raw_address": "68 Burn Street Camp Hill (LID:4483798, CID:1113642)",
+    "address": "68 Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/06/2025",
+    "lat": -27.4970921,
+    "lng": 153.0829838
+  },
+  {
+    "raw_address": "4 / 40 Princess Street Camp Hill (LID:4514961, CID:1112991)",
+    "address": "4 / 40 Princess Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "23/06/2025",
+    "lat": -27.4950746,
+    "lng": 153.0752546
+  },
+  {
+    "raw_address": "28 Clearview Terrace Seven Hills (LID:4260901, CID:1114815)",
+    "address": "28 Clearview Terrace Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "23/06/2025",
+    "lat": -27.476132,
+    "lng": 153.0720558
+  },
+  {
+    "raw_address": "43 Melbourne Avenue Camp Hill (LID:3877062, CID:1108246)",
+    "address": "43 Melbourne Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "24/06/2025",
+    "lat": -27.4851656,
+    "lng": 153.0847939
+  },
+  {
+    "raw_address": "44 Reuben Street Holland Park (LID:4469377, CID:1154180)",
+    "address": "44 Reuben Street Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "27/06/2025",
+    "lat": -27.5145115,
+    "lng": 153.0671741
+  },
+  {
+    "raw_address": "21 Adina Street Norman Park (LID:4507328, CID:1156626)",
+    "address": "21 Adina Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "14/07/2025",
+    "lat": -27.4847481,
+    "lng": 153.0629207
+  },
+  {
+    "raw_address": "68 Carranya Street Camp Hill (LID:4502495, CID:1114916)",
+    "address": "68 Carranya Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "24/07/2025",
+    "lat": -27.4956001,
+    "lng": 153.069336
+  },
+  {
+    "raw_address": "40 Indus Street CAMP HILL (LID:4603589, CID:1158091)",
+    "address": "40 Indus Street CAMP HILL",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/07/2025",
+    "lat": -27.5036658,
+    "lng": 153.0790669
+  },
+  {
+    "raw_address": "36 Pampling Street Camp Hill (LID:4575523, CID:1175280)",
+    "address": "36 Pampling Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "5/08/2025",
+    "lat": -27.4902609,
+    "lng": 153.0726631
+  },
+  {
+    "raw_address": "16 Halland Terrace Camp Hill (LID:4457856, CID:1178615)",
+    "address": "16 Halland Terrace Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/08/2025",
+    "lat": -27.488426,
+    "lng": 153.0739896
+  },
+  {
+    "raw_address": "88 Boundary Road Camp Hill (LID:4562900, CID:1176137)",
+    "address": "88 Boundary Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "18/08/2025",
+    "lat": -27.4975053,
+    "lng": 153.0767505
+  },
+  {
+    "raw_address": "420 Upper Cornwall Street Coorparoo (LID:4593217, CID:1175448)",
+    "address": "420 Upper Cornwall Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "3/09/2025",
+    "lat": -27.5049855,
+    "lng": 153.0545943
+  },
+  {
+    "raw_address": "236 Grassdale Road Gumdale (LID:4519617, CID:1190236)",
+    "address": "236 Grassdale Road Gumdale",
+    "suburb": "Gumdale",
+    "settlement_date": "8/09/2025",
+    "lat": -27.4957149,
+    "lng": 153.1413034
+  },
+  {
+    "raw_address": "23 Justin Street Holland Park West (LID:4516354, CID:1190265)",
+    "address": "23 Justin Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "9/09/2025",
+    "lat": -27.5226613,
+    "lng": 153.0632401
+  },
+  {
+    "raw_address": "1 / 32 McDonald Street Hawthorne (LID:4592020, CID:1190690)",
+    "address": "1 / 32 McDonald Street Hawthorne",
+    "suburb": "Hawthorne",
+    "settlement_date": "10/09/2025",
+    "lat": -27.4571877,
+    "lng": 153.0598557
+  },
+  {
+    "raw_address": "85 McIlwraith Avenue Norman Park (LID:4545425, CID:1190075)",
+    "address": "85 McIlwraith Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "23/09/2025",
+    "lat": -27.4850825,
+    "lng": 153.068733
+  },
+  {
+    "raw_address": "64 Halland Terrace Camp Hill (LID:4669260, CID:1198580)",
+    "address": "64 Halland Terrace Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "26/09/2025",
+    "lat": -27.4888492,
+    "lng": 153.0765899
+  },
+  {
+    "raw_address": "42 Brooks Street Camp Hill (LID:4455027, CID:1170959)",
+    "address": "42 Brooks Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/09/2025",
+    "lat": -27.4993415,
+    "lng": 153.0814703
+  },
+  {
+    "raw_address": "23A Arrol Street Camp Hill (LID:4540129, CID:1191814)",
+    "address": "23A Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/09/2025",
+    "lat": -27.490292,
+    "lng": 153.0826631
+  },
+  {
+    "raw_address": "11 Uranus Avenue Seven Hills (LID:4460078, CID:1207888)",
+    "address": "11 Uranus Avenue Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "10/10/2025",
+    "lat": -27.4846062,
+    "lng": 153.0793278
+  },
+  {
+    "raw_address": "10 Aruma Street Holland Park West (LID:4606233, CID:1200871)",
+    "address": "10 Aruma Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "14/10/2025",
+    "lat": -27.5194699,
+    "lng": 153.0556993
+  },
+  {
+    "raw_address": "6 Dakara Street Holland Park West (LID:4506200, CID:1205494)",
+    "address": "6 Dakara Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "16/10/2025",
+    "lat": -27.5353538,
+    "lng": 153.0614565
+  },
+  {
+    "raw_address": "61 Matthews Way Wakerley (LID:4661159, CID:1206886)",
+    "address": "61 Matthews Way Wakerley",
+    "suburb": "Wakerley",
+    "settlement_date": "16/10/2025",
+    "lat": -27.4885695,
+    "lng": 153.1445457
+  },
+  {
+    "raw_address": "21 Lewis Street Camp Hill (LID:4683016, CID:1207896)",
+    "address": "21 Lewis Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/10/2025",
+    "lat": -27.4908167,
+    "lng": 153.0739306
+  },
+  {
+    "raw_address": "35 Ashton Street Camp Hill (LID:4575054, CID:1198702)",
+    "address": "35 Ashton Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "22/10/2025",
+    "lat": -27.4938946,
+    "lng": 153.0663236
+  },
+  {
+    "raw_address": "28 Dansie Street Greenslopes (LID:4590215, CID:1186695)",
+    "address": "28 Dansie Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "23/10/2025",
+    "lat": -27.5047671,
+    "lng": 153.050518
+  },
+  {
+    "raw_address": "29 The Promenade Camp Hill (LID:4670196, CID:1200876)",
+    "address": "29 The Promenade Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "24/10/2025",
+    "lat": -27.4859007,
+    "lng": 153.0823146
+  },
+  {
+    "raw_address": "3 Joan Street Norman Park (LID:4691199, CID:1198249)",
+    "address": "3 Joan Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "27/10/2025",
+    "lat": -27.4840763,
+    "lng": 153.0744375
+  },
+  {
+    "raw_address": "23 Arrol Street Camp Hill (LID:4540073, CID:1202069)",
+    "address": "23 Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "27/10/2025",
+    "lat": -27.4915803,
+    "lng": 153.0827092
+  },
+  {
+    "raw_address": "23 / 70 Love Street Bulimba (LID:4677576, CID:1210018)",
+    "address": "23 / 70 Love Street Bulimba",
+    "suburb": "Bulimba",
+    "settlement_date": "27/10/2025",
+    "lat": -27.4541091,
+    "lng": 153.0550749
+  },
+  {
+    "raw_address": "52 Long Street Camp Hill (LID:4618563, CID:1198582)",
+    "address": "52 Long Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "29/10/2025",
+    "lat": -27.4970512,
+    "lng": 153.0840192
+  },
+  {
+    "raw_address": "10 Belvedere Street Tarragindi (LID:4672596, CID:1207908)",
+    "address": "10 Belvedere Street Tarragindi",
+    "suburb": "Tarragindi",
+    "settlement_date": "4/11/2025",
+    "lat": -27.5321231,
+    "lng": 153.0523705
+  },
+  {
+    "raw_address": "45 Brodie Street Holland Park West (LID:4520112, CID:1198901)",
+    "address": "45 Brodie Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "5/11/2025",
+    "lat": -27.5263785,
+    "lng": 153.065909
+  },
+  {
+    "raw_address": "68 Cradock Street Holland Park (LID:4514710, CID:1200875)",
+    "address": "68 Cradock Street Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "6/11/2025",
+    "lat": -27.5228202,
+    "lng": 153.0759836
+  },
+  {
+    "raw_address": "48 Hockings Street Holland Park West (LID:4502575, CID:1198884)",
+    "address": "48 Hockings Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "10/11/2025",
+    "lat": -27.5294382,
+    "lng": 153.0674184
+  },
+  {
+    "raw_address": "37 David Road Holland Park (LID:4546091, CID:1206129)",
+    "address": "37 David Road Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "17/11/2025",
+    "lat": -27.5245945,
+    "lng": 153.0779778
+  },
+  {
+    "raw_address": "79 Burn Street Camp Hill (LID:4601204, CID:1204246)",
+    "address": "79 Burn Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "21/11/2025",
+    "lat": -27.4979001,
+    "lng": 153.0821765
+  },
+  {
+    "raw_address": "32 Dansie Street Greenslopes (LID:4590219, CID:1190224)",
+    "address": "32 Dansie Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "28/11/2025",
+    "lat": -27.5047294,
+    "lng": 153.050664
+  },
+  {
+    "raw_address": "32 Steele Street Holland Park (LID:4516460, CID:1221567)",
+    "address": "32 Steele Street Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "1/12/2025",
+    "lat": -27.5271194,
+    "lng": 153.0730527
+  },
+  {
+    "raw_address": "40 Dobbs Street Holland Park West (LID:4750544, CID:1224085)",
+    "address": "40 Dobbs Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "8/12/2025",
+    "lat": -27.5335727,
+    "lng": 153.0636829
+  },
+  {
+    "raw_address": "84 Kennington Road Camp Hill (LID:4669144, CID:1226286)",
+    "address": "84 Kennington Road Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/12/2025",
+    "lat": -27.4900347,
+    "lng": 153.0860926
+  },
+  {
+    "raw_address": "22A Arrol Street Camp Hill (LID:4724829, CID:1227355)",
+    "address": "22A Arrol Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/12/2025",
+    "lat": -27.490292,
+    "lng": 153.0826631
+  },
+  {
+    "raw_address": "21 Frank Street Norman Park (LID:4727871, CID:1227356)",
+    "address": "21 Frank Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "15/12/2025",
+    "lat": -27.4857937,
+    "lng": 153.0615718
+  },
+  {
+    "raw_address": "20 Burlington Street Holland Park (LID:4576432, CID:1221566)",
+    "address": "20 Burlington Street Holland Park",
+    "suburb": "Holland Park",
+    "settlement_date": "16/12/2025",
+    "lat": -27.5177298,
+    "lng": 153.0615659
+  },
+  {
+    "raw_address": "75 Wyena Street Camp Hill (LID:4723582, CID:1227353)",
+    "address": "75 Wyena Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "14/01/2026",
+    "lat": -27.4885722,
+    "lng": 153.0824049
+  },
+  {
+    "raw_address": "13 Brisbane Avenue Camp Hill (LID:4762593, CID:1237947)",
+    "address": "13 Brisbane Avenue Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "15/01/2026",
+    "lat": -27.486724,
+    "lng": 153.0826456
+  },
+  {
+    "raw_address": "63 Dagmar Street Holland Park West (LID:4761113, CID:1230835)",
+    "address": "63 Dagmar Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "21/01/2026",
+    "lat": -27.5298224,
+    "lng": 153.0641188
+  },
+  {
+    "raw_address": "19 Iris Street Holland Park West (LID:4752996, CID:1232988)",
+    "address": "19 Iris Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "21/01/2026",
+    "lat": -27.5298174,
+    "lng": 153.0690382
+  },
+  {
+    "raw_address": "86 Macdonald Street Norman Park (LID:4714498, CID:1219081)",
+    "address": "86 Macdonald Street Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "23/01/2026",
+    "lat": -27.4864142,
+    "lng": 153.0684801
+  },
+  {
+    "raw_address": "47B Albert Street Camp Hill (LID:4720965, CID:1219093)",
+    "address": "47B Albert Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "23/01/2026",
+    "lat": -27.494424,
+    "lng": 153.0734376
+  },
+  {
+    "raw_address": "110 Bruce Street Camp Hill (LID:4724626, CID:1235102)",
+    "address": "110 Bruce Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "28/01/2026",
+    "lat": -27.4876236,
+    "lng": 153.0756477
+  },
+  {
+    "raw_address": "129 Morehead Avenue Norman Park (LID:4576886, CID:1227576)",
+    "address": "129 Morehead Avenue Norman Park",
+    "suburb": "Norman Park",
+    "settlement_date": "30/01/2026",
+    "lat": -27.4837222,
+    "lng": 153.071568
+  },
+  {
+    "raw_address": "5 Viminal Hill Crescent Seven Hills (LID:4784070, CID:1242618)",
+    "address": "5 Viminal Hill Crescent Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "30/01/2026",
+    "lat": -27.4866358,
+    "lng": 153.0797708
+  },
+  {
+    "raw_address": "95 Lloyd Street Camp Hill (LID:3942112, CID:1234395)",
+    "address": "95 Lloyd Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "4/02/2026",
+    "lat": -27.4888692,
+    "lng": 153.0685879
+  },
+  {
+    "raw_address": "10 Burn Street. Camp Hill (LID:4735622, CID:1237959)",
+    "address": "10 Burn Street. Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "4/02/2026",
+    "lat": -27.4938663,
+    "lng": 153.0835848
+  },
+  {
+    "raw_address": "39 First Street Camp Hill (LID:4754947, CID:1235224)",
+    "address": "39 First Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "5/02/2026",
+    "lat": -27.4946544,
+    "lng": 153.0827926
+  },
+  {
+    "raw_address": "44 Nicholson Street Greenslopes (LID:4450744, CID:1088019)",
+    "address": "44 Nicholson Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "23/02/2026",
+    "lat": -27.5142943,
+    "lng": 153.046432
+  },
+  {
+    "raw_address": "Lot 86 / 239 Bacton Road Chandler (LID:4774075, CID:1235109)",
+    "address": "239 Bacton Road Chandler",
+    "suburb": "Chandler",
+    "settlement_date": "27/02/2026",
+    "lat": -27.5246686,
+    "lng": 153.1536873
+  },
+  {
+    "raw_address": "11 Gower Street Holland Park West (LID:4766891, CID:1263410)",
+    "address": "11 Gower Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "27/02/2026",
+    "lat": -27.5261988,
+    "lng": 153.0679629
+  },
+  {
+    "raw_address": "170 D'Arcy Road Seven Hills (LID:4795063, CID:1295958)",
+    "address": "170 D'Arcy Road Seven Hills",
+    "suburb": "Seven Hills",
+    "settlement_date": "9/03/2026",
+    "lat": -27.47951,
+    "lng": 153.0761137
+  },
+  {
+    "raw_address": "20 Gower Street Holland Park West (LID:4805730, CID:1263400)",
+    "address": "20 Gower Street Holland Park West",
+    "suburb": "Holland Park West",
+    "settlement_date": "12/03/2026",
+    "lat": -27.5268039,
+    "lng": 153.0680629
+  },
+  {
+    "raw_address": "Lot 152 / 44 Nicholson Street Greenslopes (LID:4558653, CID:1198717)",
+    "address": "44 Nicholson Street Greenslopes",
+    "suburb": "Greenslopes",
+    "settlement_date": "24/03/2026",
+    "lat": -27.5142943,
+    "lng": 153.046432
+  },
+  {
+    "raw_address": "20 Baragoola Street Coorparoo (LID:4747830, CID:1307628)",
+    "address": "20 Baragoola Street Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "2/04/2026",
+    "lat": -27.4976683,
+    "lng": 153.0513756
+  },
+  {
+    "raw_address": "16 Wellstead Avenue Coorparoo (LID:4813722, CID:1311781)",
+    "address": "16 Wellstead Avenue Coorparoo",
+    "suburb": "Coorparoo",
+    "settlement_date": "13/04/2026",
+    "lat": -27.4997985,
+    "lng": 153.0659038
+  },
+  {
+    "raw_address": "63 Albert Street Camp Hill (LID:4463178, CID:1316354)",
+    "address": "63 Albert Street Camp Hill",
+    "suburb": "Camp Hill",
+    "settlement_date": "20/04/2026",
+    "lat": -27.494641,
+    "lng": 153.0734198
+  }
+]

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { LayoutDashboard, Home, FolderKanban, CalendarDays, Activity, BarChart2 } from "lucide-react"
+import { LayoutDashboard, Home, FolderKanban, CalendarDays, Activity, BarChart2, MapPin } from "lucide-react"
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
@@ -7,6 +7,7 @@ import { Health } from '@/features/Health/Health'
 import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
 import { MarketPulse } from '@/features/MarketPulse/MarketPulse'
+import { TrackRecord } from '@/features/TrackRecord/TrackRecord'
 import { GeorgeMCPopup } from '@/components/George/GeorgeMCPopup'
 import { BackgroundMap } from '@/components/BackgroundMap'
 import './App.css'
@@ -18,6 +19,7 @@ const tabs = [
   { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "calendar", label: "Calendar", icon: CalendarDays },
   { id: "health", label: "Health", icon: Activity },
+  { id: "track-record", label: "Track Record", icon: MapPin },
 ]
 
 function weatherIcon(code: number): string {
@@ -121,6 +123,7 @@ function App() {
         {activeTab === 'projects' && <Projects />}
         {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'health' && <Health />}
+        {activeTab === 'track-record' && <TrackRecord />}
 
       </main>
 

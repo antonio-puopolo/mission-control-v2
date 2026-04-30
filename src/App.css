@@ -187,3 +187,207 @@ body {
   .mc-main { padding: 1.25rem 1rem; }
   .glass-card { padding: 1.5rem; border-radius: 12px; }
 }
+
+/* ══════════════════════════════════════════
+   Track Record Tab
+══════════════════════════════════════════ */
+.mc-track-record {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+.tr-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+.tr-header-left {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+}
+.tr-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #f0f0f0;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.tr-counter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.tr-count {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0dd8d8;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.tr-count-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tr-print-btn {
+  background: rgba(13,216,216,0.08);
+  border: 1px solid rgba(13,216,216,0.25);
+  color: #0dd8d8;
+  border-radius: 6px;
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.tr-print-btn:hover { background: rgba(13,216,216,0.15); }
+
+.tr-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+.tr-filter-pill {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.45);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.tr-filter-pill:hover {
+  color: rgba(255,255,255,0.75);
+  border-color: rgba(255,255,255,0.2);
+}
+.tr-filter-pill.active {
+  background: rgba(13,216,216,0.12);
+  border-color: rgba(13,216,216,0.4);
+  color: #0dd8d8;
+  font-weight: 600;
+}
+
+.tr-map-wrapper {
+  position: relative;
+  flex: 1;
+  min-height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.tr-map-wrapper .leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: #0d0d0d;
+}
+
+.tr-map-brand {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 1000;
+  background: rgba(13,13,13,0.88);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  pointer-events: none;
+}
+.tr-brand-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  letter-spacing: -0.01em;
+}
+.tr-brand-sub {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.04em;
+}
+
+.tr-popup {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 1000;
+  background: rgba(13,13,13,0.95);
+  border: 1px solid rgba(13,216,216,0.3);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.tr-popup-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+.tr-popup-close:hover { color: #fff; }
+.tr-popup-address {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f0f0f0;
+  line-height: 1.35;
+  padding-right: 1rem;
+}
+.tr-popup-date {
+  font-size: 0.72rem;
+  color: #0dd8d8;
+  letter-spacing: 0.02em;
+}
+
+/* ── Print / Export ── */
+@media print {
+  .mc-header,
+  .mc-nav,
+  .mc-footer,
+  .tr-header,
+  .tr-filters,
+  .tr-print-btn,
+  .tr-popup,
+  .leaflet-control-zoom,
+  .leaflet-control-attribution { display: none !important; }
+
+  body, .mc-app, .mc-main, .mc-track-record {
+    background: #0d0d0d !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100vh !important;
+  }
+
+  .tr-map-wrapper {
+    position: fixed !important;
+    inset: 0 !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    min-height: unset !important;
+  }
+
+  .tr-map-brand { display: flex !important; bottom: 20px !important; left: 20px !important; }
+
+  @page { size: landscape; margin: 0; }
+}
