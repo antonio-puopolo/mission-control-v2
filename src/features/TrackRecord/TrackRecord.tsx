@@ -16,6 +16,10 @@ interface Sale {
 
 const sales = rawSales as Sale[]
 
+function getSaleYear(s: Sale): number {
+  return parseInt(s.settlement_date.split('/')[2], 10)
+}
+
 // Build sorted list of unique suburbs that have geocoded results
 function getSuburbs(data: Sale[]): string[] {
   const counts: Record<string, number> = {}
@@ -25,6 +29,12 @@ function getSuburbs(data: Sale[]): string[] {
   return Object.entries(counts)
     .sort((a, b) => b[1] - a[1])
     .map(([sub]) => sub)
+}
+
+// Build sorted list of years that have geocoded results
+function getYears(data: Sale[]): number[] {
+  const years = new Set(data.filter(s => s.lat !== null).map(getSaleYear))
+  return Array.from(years).sort((a, b) => b - a)
 }
 
 // Fit map bounds to visible markers
@@ -53,18 +63,33 @@ function formatDate(d: string) {
 
 export function TrackRecord() {
   const [suburbFilter, setSuburbFilter] = useState<string | null>(null)
+  const [yearFilter, setYearFilter] = useState<number | null>(null)
   const [selected, setSelected] = useState<Sale | null>(null)
 
   const suburbs = useMemo(() => getSuburbs(sales), [])
+  const years = useMemo(() => getYears(sales), [])
 
   const visible = useMemo(() =>
-    sales.filter(s => s.lat !== null && (!suburbFilter || s.suburb === suburbFilter)),
-    [suburbFilter]
+    sales.filter(s =>
+      s.lat !== null &&
+      (!suburbFilter || s.suburb === suburbFilter) &&
+      (!yearFilter || getSaleYear(s) === yearFilter)
+    ),
+    [suburbFilter, yearFilter]
   )
 
   const points: [number, number][] = visible.map(s => [s.lat!, s.lng!])
 
   const geocodedTotal = useMemo(() => sales.filter(s => s.lat !== null).length, [])
+
+  // Count for suburb pills respects year filter; count for year pills respects suburb filter
+  const suburbCount = (sub: string) =>
+    sales.filter(s => s.suburb === sub && s.lat !== null && (!yearFilter || getSaleYear(s) === yearFilter)).length
+
+  const yearCount = (yr: number) =>
+    sales.filter(s => getSaleYear(s) === yr && s.lat !== null && (!suburbFilter || s.suburb === suburbFilter)).length
+
+  const brandLabel = [suburbFilter, yearFilter?.toString()].filter(Boolean).join(' · ') || 'Brisbane Inner East'
 
   const handlePrint = () => window.print()
 
@@ -76,9 +101,7 @@ export function TrackRecord() {
           <h1 className="tr-title">Track Record</h1>
           <div className="tr-counter">
             <span className="tr-count">{visible.length}</span>
-            <span className="tr-count-label">
-              {suburbFilter ? `sales in ${suburbFilter}` : 'settled sales'}
-            </span>
+            <span className="tr-count-label">settled sales</span>
           </div>
         </div>
         <div className="tr-header-right">
@@ -94,7 +117,9 @@ export function TrackRecord() {
           className={`tr-filter-pill ${suburbFilter === null ? 'active' : ''}`}
           onClick={() => { setSuburbFilter(null); setSelected(null) }}
         >
-          All ({geocodedTotal})
+          All suburbs ({yearFilter
+            ? sales.filter(s => s.lat !== null && getSaleYear(s) === yearFilter).length
+            : geocodedTotal})
         </button>
         {suburbs.slice(0, 12).map(sub => (
           <button
@@ -102,7 +127,26 @@ export function TrackRecord() {
             className={`tr-filter-pill ${suburbFilter === sub ? 'active' : ''}`}
             onClick={() => { setSuburbFilter(sub === suburbFilter ? null : sub); setSelected(null) }}
           >
-            {sub} ({sales.filter(s => s.suburb === sub && s.lat !== null).length})
+            {sub} ({suburbCount(sub)})
+          </button>
+        ))}
+      </div>
+
+      {/* Year filter pills */}
+      <div className="tr-filters">
+        <button
+          className={`tr-filter-pill ${yearFilter === null ? 'active' : ''}`}
+          onClick={() => { setYearFilter(null); setSelected(null) }}
+        >
+          All years
+        </button>
+        {years.map(yr => (
+          <button
+            key={yr}
+            className={`tr-filter-pill ${yearFilter === yr ? 'active' : ''}`}
+            onClick={() => { setYearFilter(yr === yearFilter ? null : yr); setSelected(null) }}
+          >
+            {yr} ({yearCount(yr)})
           </button>
         ))}
       </div>
@@ -112,7 +156,7 @@ export function TrackRecord() {
         <MapContainer
           center={[-27.495, 153.065]}
           zoom={12}
-          style={{ height: 'calc(100vh - 260px)', width: '100%', background: '#0d0d0d' }}
+          style={{ height: 'calc(100vh - 300px)', width: '100%', background: '#0d0d0d' }}
           zoomControl={true}
         >
           <TileLayer
@@ -146,7 +190,7 @@ export function TrackRecord() {
         <div className="tr-map-brand">
           <span className="tr-brand-name">Shane Hicks</span>
           <span className="tr-brand-sub">
-            {visible.length} settled sales · {suburbFilter || 'Brisbane Inner East'} · 2016–2026
+            {visible.length} settled sales · {brandLabel} · 2016–2026
           </span>
         </div>
 
