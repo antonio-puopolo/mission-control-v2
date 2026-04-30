@@ -132,9 +132,14 @@ function parseDate (raw: string): string | null {
   return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 }
 
-function parsePropertyType (raw: string): 'house' | 'unit' {
+function parsePropertyType (raw: string, address: string): 'house' | 'unit' {
   const lower = raw.toLowerCase()
   if (lower.includes('unit') || lower.includes('apartment') || lower.includes('flat') || lower.includes('townhouse')) {
+    return 'unit'
+  }
+  // Strata addresses like "6/42 RIALTO ST" or "401/100 HOLDSWORTH ST" are units
+  // regardless of how RPDATA classifies the property type field
+  if (/^\d+\//.test(address.trim())) {
     return 'unit'
   }
   return 'house'
@@ -280,7 +285,7 @@ async function readCSV (filePath: string): Promise<ParsedProperty[]> {
         sale_month: saleMonth,
         sale_year: saleYear,
         days_on_market: daysOnMarket,
-        property_type: parsePropertyType(propTypeRaw),
+        property_type: parsePropertyType(propTypeRaw, cols[0]?.trim() || ''),
         occupancy_status: parseOccupancy(occupancyRaw),
         beds,
         baths,
