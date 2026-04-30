@@ -141,13 +141,13 @@ export function useMarketPulseData (suburb = 'camp_hill'): MarketPulseData {
 
       setSnapshots(snapshotData)
 
-      // Fetch properties sold in last 30 days for rolling DOM calc
-      const thirtyDaysAgo = new Date()
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-      const cutoff = thirtyDaysAgo.toISOString().split('T')[0]
+      // Fetch properties sold in last 12 months for rolling median + DOM calc
+      const twelveMonthsAgo = new Date()
+      twelveMonthsAgo.setFullYear(twelveMonthsAgo.getFullYear() - 1)
+      const cutoff = twelveMonthsAgo.toISOString().split('T')[0]
 
       const recentProps: Property[] = await sbFetch(
-        `/camp_hill_properties?suburb=eq.${suburb}&sale_date=gte.${cutoff}&select=*&order=sale_date.desc`
+        `/camp_hill_properties?suburb=eq.${suburb}&sale_date=gte.${cutoff}&price=not.is.null&select=*&order=sale_date.desc`
       )
 
       setRecentProperties(recentProps || [])
@@ -190,43 +190,52 @@ export function useMarketPulseData (suburb = 'camp_hill'): MarketPulseData {
     }
   }
 
-  // Latest snapshot — used for all KPI stats (current month)
+  // Latest snapshot — used for occupancy, DOM, and total count
   const latest = snapshots[snapshots.length - 1]
 
-  // DOM fallback: compute 30-day rolling avg from recent properties
-  // (older CSV exports have no DOM data, so this is null for most suburbs)
-  const houses30d = recentProperties.filter(p => p.property_type === 'house')
-  const units30d = recentProperties.filter(p => p.property_type === 'unit')
+  // 12-month rolling medians from actual property records (matches Domain/CoreLogic methodology)
+  const houses12m = recentProperties.filter(p => p.property_type === 'house')
+  const units12m = recentProperties.filter(p => p.property_type === 'unit')
 
-  const domHouses30d = houses30d
+  const housePrices12m = houses12m
+    .map(p => p.price)
+    .filter((p): p is number => p !== null && p > 0)
+    .sort((a, b) => a - b)
+  const unitPrices12m = units12m
+    .map(p => p.price)
+    .filter((p): p is number => p !== null && p > 0)
+    .sort((a, b) => a - b)
+
+  const median12m = (arr: number[]) => {
+    if (!arr.length) return null
+    const mid = Math.floor(arr.length / 2)
+    return arr.length % 2 === 0 ? Math.round((arr[mid - 1] + arr[mid]) / 2) : arr[mid]
+  }
+
+  // DOM: use snapshot values if available, else compute from 12-month window
+  const domHouses = houses12m
     .map(p => p.days_on_market)
     .filter((d): d is number => d !== null && d > 0)
-  const domUnits30d = units30d
+  const domUnits = units12m
     .map(p => p.days_on_market)
     .filter((d): d is number => d !== null && d > 0)
 
-  const avgDOMHouses30d = domHouses30d.length > 0
-    ? Math.round(domHouses30d.reduce((a, b) => a + b) / domHouses30d.length)
+  const avgDOMHouses = domHouses.length > 0
+    ? Math.round(domHouses.reduce((a, b) => a + b) / domHouses.length)
     : null
-  const avgDOMUnits30d = domUnits30d.length > 0
-    ? Math.round(domUnits30d.reduce((a, b) => a + b) / domUnits30d.length)
+  const avgDOMUnits = domUnits.length > 0
+    ? Math.round(domUnits.reduce((a, b) => a + b) / domUnits.length)
     : null
 
-  const avgDOM30d = recentProperties
-    .filter(p => p.days_on_market !== null && p.days_on_market > 0)
-    .map(p => p.days_on_market as number)
-    .reduce((a, b, _, arr) => a + b / arr.length, 0) || null
-
-  // KPIs come from the current month's snapshot
   const kpis: MarketPulseKPIs = {
-    medianHousePrice: latest.median_house_price,
-    medianUnitPrice: latest.median_unit_price,
-    avgDOMHouses: latest.avg_days_on_market_houses ?? avgDOMHouses30d,
-    avgDOMUnits: latest.avg_days_on_market_units ?? avgDOMUnits30d,
-    avgDOM30d: Math.round(avgDOM30d || 0) || null,
+    medianHousePrice: median12m(housePrices12m),
+    medianUnitPrice: median12m(unitPrices12m),
+    avgDOMHouses: latest.avg_days_on_market_houses ?? avgDOMHouses,
+    avgDOMUnits: latest.avg_days_on_market_units ?? avgDOMUnits,
+    avgDOM30d: null,
     ownerOccupiedPct: latest.owner_occupied_pct ?? null,
     rentedPct: latest.rented_pct ?? null,
-    totalProperties: latest.total_properties,
+    totalProperties: housePrices12m.length + unitPrices12m.length,
     lastUpdated: new Date().toISOString(),
     month: latest.month,
     year: latest.year,

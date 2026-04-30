@@ -631,8 +631,8 @@ export function MarketPulse () {
           </>
         ) : (
           <>
-            <KPICard icon={<Home size={13} />} label="Median House Price" value={medianHouseStr} sub={`${activeSuburbLabel} · ${periodLabel}`} />
-            <KPICard icon={<TrendingUp size={13} />} label="Median Unit Price" value={medianUnitStr} sub={`${activeSuburbLabel} · ${periodLabel}`} />
+            <KPICard icon={<Home size={13} />} label="Median House Price" value={medianHouseStr} sub={`${activeSuburbLabel} · 12-month rolling`} />
+            <KPICard icon={<TrendingUp size={13} />} label="Median Unit Price" value={medianUnitStr} sub={`${activeSuburbLabel} · 12-month rolling`} />
             <KPICard icon={<Clock size={13} />} label="Avg Days on Market" value={domStr} sub={kpis.avgDOMHouses || kpis.avgDOMUnits ? `Houses ${kpis.avgDOMHouses ?? '—'}d · Units ${kpis.avgDOMUnits ?? '—'}d` : periodLabel} />
             <KPICard icon={<Users size={13} />} label="Owner-Occupied" value={occupancyStr} sub="Owner vs. Rented split" />
           </>
