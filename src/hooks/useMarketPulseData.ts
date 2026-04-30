@@ -117,7 +117,7 @@ function medianOf (values: number[]): number | null {
 
 // ─── MAIN HOOK ──────────────────────────────────────────────────────────────
 
-export function useMarketPulseData (): MarketPulseData {
+export function useMarketPulseData (suburb = 'camp_hill'): MarketPulseData {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
@@ -128,13 +128,13 @@ export function useMarketPulseData (): MarketPulseData {
     setError(null)
 
     try {
-      // Fetch all snapshots ordered by year/month
+      // Fetch all snapshots for this suburb ordered by year/month
       const snapshotData: Snapshot[] = await sbFetch(
-        '/camp_hill_sales_snapshots?order=year.asc,month.asc&select=*'
+        `/camp_hill_sales_snapshots?suburb=eq.${suburb}&order=year.asc,month.asc&select=*`
       )
 
       if (!snapshotData || snapshotData.length === 0) {
-        setError('No data available yet. Run the CSV parser to seed data.')
+        setError('No data available yet for this suburb.')
         setLoading(false)
         return
       }
@@ -147,7 +147,7 @@ export function useMarketPulseData (): MarketPulseData {
       const cutoff = thirtyDaysAgo.toISOString().split('T')[0]
 
       const recentProps: Property[] = await sbFetch(
-        `/camp_hill_properties?sale_date=gte.${cutoff}&select=*&order=sale_date.desc`
+        `/camp_hill_properties?suburb=eq.${suburb}&sale_date=gte.${cutoff}&select=*&order=sale_date.desc`
       )
 
       setRecentProperties(recentProps || [])
@@ -157,7 +157,7 @@ export function useMarketPulseData (): MarketPulseData {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [suburb])
 
   useEffect(() => {
     fetchData()
@@ -312,11 +312,12 @@ export function useMarketPulseData (): MarketPulseData {
 export async function findComps (
   address: string,
   propertyType: 'house' | 'unit',
-  purchaseYear?: number
+  purchaseYear?: number,
+  suburb = 'camp_hill'
 ): Promise<CompResult> {
-  // Get all snapshots for growth ratio calculation
+  // Get all snapshots for this suburb for growth ratio calculation
   const snapshots: Snapshot[] = await sbFetch(
-    '/camp_hill_sales_snapshots?order=year.asc,month.asc&select=*'
+    `/camp_hill_sales_snapshots?suburb=eq.${suburb}&order=year.asc,month.asc&select=*`
   )
 
   // Find properties sold in last 2 years
@@ -325,14 +326,14 @@ export async function findComps (
   const cutoff = twoYearsAgo.toISOString().split('T')[0]
 
   // Extract street name for matching
-  const streetMatch = address.match(/\d+\s+(.+?)(,|\s+CAMP|\s+QLD|$)/i)
+  const streetMatch = address.match(/\d+\s+(.+?)(,|\s+QLD|$)/i)
   const streetName = streetMatch ? streetMatch[1].trim().toLowerCase() : ''
 
-  // First try: same street
+  // First try: same street, same suburb
   let comps: Property[] = []
   if (streetName) {
     const streetComps: Property[] = await sbFetch(
-      `/camp_hill_properties?property_type=eq.${propertyType}&sale_date=gte.${cutoff}&address=ilike.*${encodeURIComponent(streetName)}*&price=not.is.null&order=sale_date.desc&select=*`
+      `/camp_hill_properties?suburb=eq.${suburb}&property_type=eq.${propertyType}&sale_date=gte.${cutoff}&address=ilike.*${encodeURIComponent(streetName)}*&price=not.is.null&order=sale_date.desc&select=*`
     )
     comps = streetComps || []
   }
@@ -342,9 +343,9 @@ export async function findComps (
     const sixMonthsAgo = new Date()
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
     const sixCutoff = sixMonthsAgo.toISOString().split('T')[0]
-    
+
     const broadComps: Property[] = await sbFetch(
-      `/camp_hill_properties?property_type=eq.${propertyType}&sale_date=gte.${sixCutoff}&price=not.is.null&order=sale_date.desc&limit=20&select=*`
+      `/camp_hill_properties?suburb=eq.${suburb}&property_type=eq.${propertyType}&sale_date=gte.${sixCutoff}&price=not.is.null&order=sale_date.desc&limit=20&select=*`
     )
     comps = broadComps || []
   }

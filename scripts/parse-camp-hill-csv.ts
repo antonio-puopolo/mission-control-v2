@@ -1,15 +1,18 @@
 #!/usr/bin/env ts-node
 /**
- * Camp Hill Sales CSV Parser
- * 
- * Parses REA export CSV and populates Supabase with:
- *   - camp_hill_sales_snapshots (monthly aggregates)
+ * Market Pulse CSV Parser — Multi-Suburb
+ *
+ * Parses RPDATA export CSV and populates Supabase with:
+ *   - camp_hill_sales_snapshots (monthly aggregates, keyed by suburb+month+year)
  *   - camp_hill_properties (individual sales)
- * 
+ *
+ * Supported suburbs: Camp Hill, Coorparoo, Norman Park, Holland Park, Holland Park West
+ * Suburb is auto-detected from column [1] of the CSV — no flags needed.
+ *
  * Usage:
  *   npx ts-node scripts/parse-camp-hill-csv.ts path/to/recentSaleExport.csv
- *   
- * The CSV columns (REA export format, no header row):
+ *
+ * The CSV columns (RPDATA export format):
  *   [0] Address
  *   [1] Suburb
  *   [2] State
@@ -30,6 +33,20 @@
  *   [-3] Occupancy Status (e.g. 'Owner Occupied')
  */
 
+// Suburb name → slug mapping
+const SUBURB_SLUGS: Record<string, string> = {
+  'CAMP HILL': 'camp_hill',
+  'COORPAROO': 'coorparoo',
+  'NORMAN PARK': 'norman_park',
+  'HOLLAND PARK': 'holland_park',
+  'HOLLAND PARK WEST': 'holland_park_west',
+}
+
+function suburbToSlug (raw: string): string {
+  const upper = raw.trim().toUpperCase()
+  return SUBURB_SLUGS[upper] || upper.toLowerCase().replace(/\s+/g, '_')
+}
+
 import fs from 'fs'
 import path from 'path'
 import readline from 'readline'
@@ -44,6 +61,7 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ||
 
 interface ParsedProperty {
   address: string
+  suburb: string       // slug e.g. 'camp_hill', 'coorparoo'
   price: number | null
   sale_date: string    // YYYY-MM-DD
   sale_month: number
@@ -57,6 +75,7 @@ interface ParsedProperty {
 }
 
 interface SnapshotData {
+  suburb: string
   month: number
   year: number
   total_properties: number
@@ -211,15 +230,21 @@ async function readCSV (filePath: string): Promise<ParsedProperty[]> {
       const cols = parseCSVLine(line)
       if (cols.length < 13) return
 
-      const address = cols[0]?.trim() + ', ' + cols[1]?.trim() + ' QLD ' + cols[3]?.trim()
+      const suburbRaw = cols[1]?.trim() || ''
+      const suburb = suburbToSlug(suburbRaw)
+      const address = cols[0]?.trim() + ', ' + suburbRaw + ' QLD ' + cols[3]?.trim()
       const propTypeRaw = cols[4]?.trim() || ''
       const beds = parseIntOrNull(cols[5])
       const baths = parseIntOrNull(cols[6])
       const landSize = parseFloatOrNull(cols[8])
-      const daysOnMarket = parseIntOrNull(cols[10])
-      const priceRaw = cols[11]?.trim() || ''
-      const saleDateRaw = cols[12]?.trim() || ''
-      const saleType = cols[14]?.trim() || ''
+      // Detect format: if col[10] starts with '$' it's the price (no DOM column)
+      // Camp Hill exports: [10]=DOM, [11]=price, [12]=saleDate, [14]=saleType
+      // Coorparoo/Norman Park exports: [10]=price, [11]=saleDate, [12]=settlementDate, [13]=saleType
+      const hasDOMCol = !cols[10]?.trim().startsWith('$')
+      const daysOnMarket = hasDOMCol ? parseIntOrNull(cols[10]) : null
+      const priceRaw = hasDOMCol ? (cols[11]?.trim() || '') : (cols[10]?.trim() || '')
+      const saleDateRaw = hasDOMCol ? (cols[12]?.trim() || '') : (cols[11]?.trim() || '')
+      const saleType = hasDOMCol ? (cols[14]?.trim() || '') : (cols[13]?.trim() || '')
       
       // Find occupancy — it's in a variable position, scan from end
       let occupancyRaw = ''
@@ -248,7 +273,8 @@ async function readCSV (filePath: string): Promise<ParsedProperty[]> {
       const saleMonth = parseInt(parts[1])
 
       properties.push({
-        address: cols[0]?.trim() + ', Camp Hill QLD 4152',
+        address: cols[0]?.trim() + ', ' + suburbRaw + ' QLD ' + (cols[3]?.trim() || ''),
+        suburb,
         price,
         sale_date: saleDate,
         sale_month: saleMonth,
@@ -271,17 +297,17 @@ async function readCSV (filePath: string): Promise<ParsedProperty[]> {
   })
 }
 
-function groupByMonthYear (properties: ParsedProperty[]): Map<string, ParsedProperty[]> {
+function groupBySuburbMonthYear (properties: ParsedProperty[]): Map<string, ParsedProperty[]> {
   const groups = new Map<string, ParsedProperty[]>()
   for (const prop of properties) {
-    const key = `${prop.sale_year}-${prop.sale_month}`
+    const key = `${prop.suburb}|${prop.sale_year}-${prop.sale_month}`
     if (!groups.has(key)) groups.set(key, [])
     groups.get(key)!.push(prop)
   }
   return groups
 }
 
-function buildSnapshot (month: number, year: number, props: ParsedProperty[]): SnapshotData {
+function buildSnapshot (suburb: string, month: number, year: number, props: ParsedProperty[]): SnapshotData {
   const houses = props.filter(p => p.property_type === 'house')
   const units = props.filter(p => p.property_type === 'unit')
 
@@ -303,6 +329,7 @@ function buildSnapshot (month: number, year: number, props: ParsedProperty[]): S
     : null
 
   return {
+    suburb,
     month,
     year,
     total_properties: props.length,
@@ -316,11 +343,11 @@ function buildSnapshot (month: number, year: number, props: ParsedProperty[]): S
 }
 
 async function upsertSnapshot (snapshot: SnapshotData): Promise<string> {
-  console.log(`  📅 Upserting snapshot: ${snapshot.month}/${snapshot.year} (${snapshot.total_properties} props)`)
+  console.log(`  📅 Upserting snapshot: ${snapshot.suburb} ${snapshot.month}/${snapshot.year} (${snapshot.total_properties} props)`)
 
   // Check if snapshot already exists
   const existing = await supabaseFetch(
-    `/camp_hill_sales_snapshots?month=eq.${snapshot.month}&year=eq.${snapshot.year}&select=id`
+    `/camp_hill_sales_snapshots?suburb=eq.${snapshot.suburb}&month=eq.${snapshot.month}&year=eq.${snapshot.year}&select=id`
   )
 
   if (existing && existing.length > 0) {
@@ -356,6 +383,7 @@ async function insertProperties (snapshotId: string, props: ParsedProperty[]): P
   for (let i = 0; i < props.length; i += batchSize) {
     const batch = props.slice(i, i + batchSize).map(p => ({
       snapshot_id: snapshotId,
+      suburb: p.suburb,
       address: p.address,
       price: p.price,
       sale_date: p.sale_date,
@@ -403,22 +431,23 @@ async function main () {
     process.exit(1)
   }
 
-  // 2. Group by month/year
-  const groups = groupByMonthYear(properties)
-  console.log(`\n📆 Found ${groups.size} month(s) of data:`)
+  // 2. Group by suburb+month+year
+  const groups = groupBySuburbMonthYear(properties)
+  console.log(`\n📆 Found ${groups.size} suburb-month group(s):`)
   groups.forEach((props, key) => {
-    console.log(`  ${key}: ${props.length} properties`)
+    const [suburb] = key.split('|')
+    console.log(`  ${key.replace('|', ' ')}: ${props.length} properties (${suburb})`)
   })
 
-  // 3. Process each month
+  // 3. Process each suburb-month group
   let totalInserted = 0
   for (const [, props] of groups) {
-    const { sale_month, sale_year } = props[0]
-    
-    console.log(`\n🔄 Processing ${sale_month}/${sale_year}...`)
-    
+    const { suburb, sale_month, sale_year } = props[0]
+
+    console.log(`\n🔄 Processing ${suburb} ${sale_month}/${sale_year}...`)
+
     // Build snapshot aggregates
-    const snapshot = buildSnapshot(sale_month, sale_year, props)
+    const snapshot = buildSnapshot(suburb, sale_month, sale_year, props)
     
     console.log(`  📊 Stats:`)
     console.log(`    Houses: ${props.filter(p => p.property_type === 'house').length}`)
@@ -447,8 +476,8 @@ async function main () {
     }
   }
 
-  console.log(`\n✅ Done! Inserted/updated ${totalInserted} properties across ${groups.size} snapshots.`)
-  console.log(`\n🌐 View in Mission Control: https://mission-control-v2-delta.vercel.app`)
+  console.log(`\n✅ Done! Inserted/updated ${totalInserted} properties across ${groups.size} suburb-month snapshots.`)
+  console.log(`\n🌐 View in Mission Control: https://mission-control-v2-sandy.vercel.app`)
 }
 
 main().catch(err => {

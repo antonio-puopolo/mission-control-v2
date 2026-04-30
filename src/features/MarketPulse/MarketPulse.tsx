@@ -133,6 +133,16 @@ function SkeletonCard () {
   )
 }
 
+// ─── SUBURB CONFIG ───────────────────────────────────────────────────────────
+
+const SUBURBS: { slug: string; label: string }[] = [
+  { slug: 'camp_hill',        label: 'Camp Hill' },
+  { slug: 'coorparoo',        label: 'Coorparoo' },
+  { slug: 'norman_park',      label: 'Norman Park' },
+  { slug: 'holland_park',     label: 'Holland Park' },
+  { slug: 'holland_park_west',label: 'Holland Park West' },
+]
+
 // ─── APPRAISAL CALCULATOR ────────────────────────────────────────────────────
 
 interface AppraisalResult {
@@ -146,7 +156,7 @@ interface AppraisalResult {
   confidence: 'high' | 'medium' | 'low'
 }
 
-function AppraisalCalculator () {
+function AppraisalCalculator ({ suburb }: { suburb: string }) {
   const [address, setAddress] = useState('')
   const [purchaseYear, setPurchaseYear] = useState<string>('2020')
   const [purchasePrice, setPurchasePrice] = useState<string>('')
@@ -191,7 +201,7 @@ function AppraisalCalculator () {
     setResult(null)
 
     try {
-      const compData = await findComps(address, propertyType, year)
+      const compData = await findComps(address, propertyType, year, suburb)
 
       // Use comp median or fall back to input price adjusted by growth ratio
       let compValue: number
@@ -252,7 +262,9 @@ function AppraisalCalculator () {
         <Calculator size={18} color="#EAEAE0" />
         <div>
           <div style={{ color: '#f1f5f9', fontSize: '1rem', fontWeight: 700 }}>Appraisal Calculator</div>
-          <div style={{ color: '#475569', fontSize: '0.75rem' }}>Live Camp Hill comps from real sales data</div>
+          <div style={{ color: '#475569', fontSize: '0.75rem' }}>
+        Live {SUBURBS.find(s => s.slug === suburb)?.label ?? suburb} comps from real sales data
+      </div>
         </div>
       </div>
 
@@ -424,7 +436,9 @@ function AppraisalCalculator () {
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#EAEAE0' }} />
               <div style={{ color: '#64748b', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>Market Comp Value</div>
               <div style={{ color: '#EAEAE0', fontSize: '1.6rem', fontWeight: 800 }}>{formatM(result.compValue)}</div>
-              <div style={{ color: '#475569', fontSize: '0.72rem', marginTop: '4px' }}>Based on Camp Hill {propertyType} comps</div>
+              <div style={{ color: '#475569', fontSize: '0.72rem', marginTop: '4px' }}>
+        Based on {SUBURBS.find(s => s.slug === suburb)?.label ?? suburb} {propertyType} comps
+      </div>
             </div>
 
             {/* Appreciation */}
@@ -485,7 +499,7 @@ function AppraisalCalculator () {
 
       {/* Disclaimer */}
       <div style={{ color: '#334155', fontSize: '0.7rem', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '0.75rem' }}>
-        ⚠️ Estimates based on real Camp Hill sales data (2021–2026). For a precise appraisal, book a property inspection with Antonio.
+        ⚠️ Estimates based on real {SUBURBS.find(s => s.slug === suburb)?.label ?? suburb} sales data (2021–2026). For a precise appraisal, book a property inspection with Antonio.
       </div>
     </div>
   )
@@ -494,6 +508,8 @@ function AppraisalCalculator () {
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 
 export function MarketPulse () {
+  const [activeSuburb, setActiveSuburb] = useState('camp_hill')
+
   const {
     kpis,
     housePriceTrend,
@@ -503,7 +519,7 @@ export function MarketPulse () {
     loading,
     error,
     hasData,
-  } = useMarketPulseData()
+  } = useMarketPulseData(activeSuburb)
 
   // Format KPIs for display
   const medianHouseStr = kpis.medianHousePrice ? formatM(kpis.medianHousePrice) : '—'
@@ -520,6 +536,8 @@ export function MarketPulse () {
   const monthLabel = kpis.month ? snapshotMonths[kpis.month - 1] : ''
   const periodLabel = kpis.month && kpis.year ? `${monthLabel} ${kpis.year}` : 'Camp Hill'
 
+  const activeSuburbLabel = SUBURBS.find(s => s.slug === activeSuburb)?.label ?? activeSuburb
+
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
       {/* Header */}
@@ -531,7 +549,7 @@ export function MarketPulse () {
               Market Pulse
             </h1>
             <p style={{ color: '#64748b', fontSize: '0.82rem', margin: '4px 0 0' }}>
-              Camp Hill property market insights • 2021–2026 • {hasData ? `${kpis.totalProperties} recent sales` : '1,400+ sales'}
+              {activeSuburbLabel} property market insights • 2021–2026 • {hasData ? `${kpis.totalProperties} recent sales` : 'loading...'}
             </p>
           </div>
           {/* Last Updated */}
@@ -551,6 +569,30 @@ export function MarketPulse () {
               🕐 Last updated: {formatTimestamp(kpis.lastUpdated)}
             </div>
           )}
+        </div>
+
+        {/* Suburb Tabs */}
+        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '1rem' }}>
+          {SUBURBS.map(s => (
+            <button
+              key={s.slug}
+              onClick={() => setActiveSuburb(s.slug)}
+              style={{
+                padding: '0.4rem 0.85rem',
+                borderRadius: '20px',
+                border: `1px solid ${activeSuburb === s.slug ? '#EAEAE0' : 'rgba(255,255,255,0.1)'}`,
+                background: activeSuburb === s.slug ? '#EAEAE0' : 'rgba(255,255,255,0.04)',
+                color: activeSuburb === s.slug ? '#0d0d0d' : '#64748b',
+                fontSize: '0.78rem',
+                fontWeight: activeSuburb === s.slug ? 700 : 500,
+                cursor: 'pointer',
+                transition: 'all 0.15s',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {s.label}
+            </button>
+          ))}
         </div>
 
         {/* Error Banner */}
@@ -680,7 +722,7 @@ export function MarketPulse () {
       </div>
 
       {/* Appraisal Calculator */}
-      <AppraisalCalculator />
+      <AppraisalCalculator suburb={activeSuburb} />
 
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
