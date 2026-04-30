@@ -531,12 +531,12 @@ export function MarketPulse () {
   const rentedPct = kpis.rentedPct ?? (100 - ownerPct)
   const occupancyStr = ownerPct ? `${ownerPct}% / ${rentedPct}%` : '—'
 
+  const activeSuburbLabel = SUBURBS.find(s => s.slug === activeSuburb)?.label ?? activeSuburb
+
   // Month label for KPI sub text
   const snapshotMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   const monthLabel = kpis.month ? snapshotMonths[kpis.month - 1] : ''
-  const periodLabel = kpis.month && kpis.year ? `${monthLabel} ${kpis.year}` : 'Camp Hill'
-
-  const activeSuburbLabel = SUBURBS.find(s => s.slug === activeSuburb)?.label ?? activeSuburb
+  const periodLabel = kpis.month && kpis.year ? `${monthLabel} ${kpis.year}` : activeSuburbLabel
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -631,9 +631,9 @@ export function MarketPulse () {
           </>
         ) : (
           <>
-            <KPICard icon={<Home size={13} />} label="Median House Price" value={medianHouseStr} sub={`Camp Hill · ${periodLabel}`} />
-            <KPICard icon={<TrendingUp size={13} />} label="Median Unit Price" value={medianUnitStr} sub={`Camp Hill · ${periodLabel}`} />
-            <KPICard icon={<Clock size={13} />} label="Avg Days on Market" value={domStr} sub={kpis.avgDOM30d ? '30-day rolling avg' : `Houses ${kpis.avgDOMHouses ?? '—'}d · Units ${kpis.avgDOMUnits ?? '—'}d`} />
+            <KPICard icon={<Home size={13} />} label="Median House Price" value={medianHouseStr} sub={`${activeSuburbLabel} · ${periodLabel}`} />
+            <KPICard icon={<TrendingUp size={13} />} label="Median Unit Price" value={medianUnitStr} sub={`${activeSuburbLabel} · ${periodLabel}`} />
+            <KPICard icon={<Clock size={13} />} label="Avg Days on Market" value={domStr} sub={kpis.avgDOMHouses || kpis.avgDOMUnits ? `Houses ${kpis.avgDOMHouses ?? '—'}d · Units ${kpis.avgDOMUnits ?? '—'}d` : periodLabel} />
             <KPICard icon={<Users size={13} />} label="Owner-Occupied" value={occupancyStr} sub="Owner vs. Rented split" />
           </>
         )}

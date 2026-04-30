@@ -190,27 +190,14 @@ export function useMarketPulseData (suburb = 'camp_hill'): MarketPulseData {
     }
   }
 
-  // Latest snapshot (for historical context)
+  // Latest snapshot — used for all KPI stats (current month)
   const latest = snapshots[snapshots.length - 1]
 
-  // ─── CALCULATE TRUE 30-DAY ROLLING WINDOW ────────────────────────────────
-  // Don't use pre-calculated snapshots — calculate live from recent properties
-
+  // DOM fallback: compute 30-day rolling avg from recent properties
+  // (older CSV exports have no DOM data, so this is null for most suburbs)
   const houses30d = recentProperties.filter(p => p.property_type === 'house')
   const units30d = recentProperties.filter(p => p.property_type === 'unit')
 
-  // Median prices in last 30 days
-  const housePrices30d = houses30d
-    .map(p => p.price)
-    .filter((p): p is number => p !== null && p > 0)
-  const unitPrices30d = units30d
-    .map(p => p.price)
-    .filter((p): p is number => p !== null && p > 0)
-
-  const medianHouse30d = housePrices30d.length > 0 ? medianOf(housePrices30d) : null
-  const medianUnit30d = unitPrices30d.length > 0 ? medianOf(unitPrices30d) : null
-
-  // Average DOM in last 30 days
   const domHouses30d = houses30d
     .map(p => p.days_on_market)
     .filter((d): d is number => d !== null && d > 0)
@@ -230,20 +217,17 @@ export function useMarketPulseData (suburb = 'camp_hill'): MarketPulseData {
     .map(p => p.days_on_market as number)
     .reduce((a, b, _, arr) => a + b / arr.length, 0) || null
 
-  // Occupancy from latest sales snapshot (owner/rented pct stored on each snapshot)
-  const ownerPct30d = latest.owner_occupied_pct ?? null
-  const rentedPct30d = latest.rented_pct ?? null
-
+  // KPIs come from the current month's snapshot
   const kpis: MarketPulseKPIs = {
-    medianHousePrice: medianHouse30d,
-    medianUnitPrice: medianUnit30d,
-    avgDOMHouses: avgDOMHouses30d,
-    avgDOMUnits: avgDOMUnits30d,
+    medianHousePrice: latest.median_house_price,
+    medianUnitPrice: latest.median_unit_price,
+    avgDOMHouses: latest.avg_days_on_market_houses ?? avgDOMHouses30d,
+    avgDOMUnits: latest.avg_days_on_market_units ?? avgDOMUnits30d,
     avgDOM30d: Math.round(avgDOM30d || 0) || null,
-    ownerOccupiedPct: ownerPct30d,
-    rentedPct: rentedPct30d,
-    totalProperties: recentProperties.length, // Count of recent properties, not snapshot count
-    lastUpdated: new Date().toISOString(), // "Last updated NOW" (live calculation)
+    ownerOccupiedPct: latest.owner_occupied_pct ?? null,
+    rentedPct: latest.rented_pct ?? null,
+    totalProperties: latest.total_properties,
+    lastUpdated: new Date().toISOString(),
     month: latest.month,
     year: latest.year,
   }
