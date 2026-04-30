@@ -112,7 +112,7 @@ export function TrackRecord() {
         <MapContainer
           center={[-27.495, 153.065]}
           zoom={12}
-          style={{ height: '100%', width: '100%', background: '#0d0d0d' }}
+          style={{ height: 'calc(100vh - 260px)', width: '100%', background: '#0d0d0d' }}
           zoomControl={true}
         >
           <TileLayer
