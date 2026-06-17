@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { LayoutDashboard, Home, FolderKanban, CalendarDays, Activity, BarChart2, MapPin } from "lucide-react"
+import { LayoutDashboard, Home, FolderKanban, CalendarDays, Activity, BarChart2, MapPin, Target } from "lucide-react"
 import { useDashboardStore } from '@/store/dashboardStore'
 import { Dashboard } from '@/features/Dashboard/Dashboard'
 import { LAPTracker } from '@/features/LAPTracker/LAPTracker'
@@ -8,6 +8,7 @@ import { Projects } from '@/features/Projects/Projects'
 import { Calendar } from '@/features/Calendar/Calendar'
 import { MarketPulse } from '@/features/MarketPulse/MarketPulse'
 import { TrackRecord } from '@/features/TrackRecord/TrackRecord'
+import { GCIPlanner } from '@/features/GCIPlanner/GCIPlanner'
 import { GeorgeMCPopup } from '@/components/George/GeorgeMCPopup'
 import { BackgroundMap } from '@/components/BackgroundMap'
 import './App.css'
@@ -20,6 +21,7 @@ const tabs = [
   { id: "calendar", label: "Calendar", icon: CalendarDays },
   { id: "health", label: "Health", icon: Activity },
   { id: "track-record", label: "Track Record", icon: MapPin },
+  { id: "gci-planner", label: "GCI Planner", icon: Target },
 ]
 
 function weatherIcon(code: number): string {
@@ -124,6 +126,7 @@ function App() {
         {activeTab === 'calendar' && <Calendar />}
         {activeTab === 'health' && <Health />}
         {activeTab === 'track-record' && <TrackRecord />}
+        {activeTab === 'gci-planner' && <GCIPlanner />}
 
       </main>
 
