@@ -30,7 +30,7 @@ export interface Lap {
   id: string
   address: string
   client_name: string
-  status: 'LAP' | 'Listed' | 'Sold' | 'Withdrawn'
+  status: 'LAP' | 'Listed' | 'Sold' | 'Withdrawn' | 'Lost Listing'
   follow_up_date?: string | null
   notes?: Record<string, any>
   agent_assigned?: string | null
@@ -129,7 +129,7 @@ export const useLapStatusCounts = () => {
     queryKey: ['laps', 'statusCounts'],
     queryFn: async () => {
       const data = await lapFetch('/laps?select=status') as { status: string }[]
-      const counts: Record<string, number> = { LAP: 0, Listed: 0, Sold: 0, Withdrawn: 0 }
+      const counts: Record<string, number> = { LAP: 0, Listed: 0, Sold: 0, Withdrawn: 0, 'Lost Listing': 0 }
       data?.forEach(r => { if (counts[r.status] !== undefined) counts[r.status]++ })
       return counts
     },
