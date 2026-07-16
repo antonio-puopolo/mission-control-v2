@@ -19,7 +19,7 @@ const SECTION_LABELS: Record<string, string> = {
   under_construction: 'Under Construction',
 }
 
-const STATUSES = ['LAP', 'Listed', 'Sold', 'Withdrawn'] as const
+const STATUSES = ['LAP', 'Listed', 'Sold', 'Withdrawn', 'Lost Listing'] as const
 type Status = typeof STATUSES[number]
 
 const PRIORITY_COLORS: Record<string, string> = {
