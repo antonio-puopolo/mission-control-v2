@@ -3,7 +3,7 @@ import { useLapsByStatus, useCreateLap, useUpdateLap, useDeleteLap, useLapStatus
 import { useRealtimeSync } from '@/hooks/useRealtimeSync'
 import { LAPMap } from './LAPMap'
 
-const STATUSES = ['LAP', 'Listed', 'Sold', 'Withdrawn'] as const
+const STATUSES = ['LAP', 'Listed', 'Sold', 'Withdrawn', 'Lost Listing'] as const
 type Status = typeof STATUSES[number]
 
 const PRIORITIES = ['urgent', 'high', 'normal', 'low'] as const
@@ -13,6 +13,7 @@ const STATUS_COLORS: Record<Status, string> = {
   Listed: '#22c55e',
   Sold: '#60a5fa',
   Withdrawn: '#64748b',
+  'Lost Listing': '#ef4444',
 }
 
 const PIPELINE_SECTIONS = [
